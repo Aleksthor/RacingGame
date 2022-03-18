@@ -45,6 +45,7 @@ APlayerCar::APlayerCar()
 	/** Movement Component Default Values*/
 	MovementComponent = CreateDefaultSubobject<UPawnMovementComponent, UFloatingPawnMovement>(TEXT("MovementComponent"));
 	MovementComponent->UpdatedComponent = Collider;
+	
 
 	HoverComponent1 = CreateDefaultSubobject<UHoverComponent>(TEXT("HoverComponent1"));
 	HoverComponent1->SetupAttachment(Collider);
