@@ -87,7 +87,12 @@ void APlayerCar::Tick(float DeltaTime)
 
 	PawnRotation = GetActorRotation();
 	ControlRotation = GetControlRotation();
-
+	FRotator SetRotation;
+	if (FMath::IsNearlyEqual(DriftValue, 0.f))
+	{
+		SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(),FRotator(0.f, 180.f, 0.f),DeltaTime,5.f);
+	}
+	
 	// Function for Interp Rotation
 	if (!MovementComponent->Velocity.IsNearlyZero())
 	{
@@ -96,7 +101,11 @@ void APlayerCar::Tick(float DeltaTime)
 		FRotator Yaw = FMath::RInterpTo(PawnRotation, NewRotation, DeltaTime, 5.f);
 		FRotator UseRotator = PawnRotation;
 		UseRotator = FMath::RInterpTo(PawnRotation, FRotator(0.f,180.f,0.f), DeltaTime, 5.f);
+	
+		
 
+		
+		
 		// Function to make sure gravity works while in air - Only call when moving
 
 		FVector ImpactPoints1 = HoverComponent1->HitResult.ImpactPoint;
@@ -133,6 +142,18 @@ void APlayerCar::Tick(float DeltaTime)
 			HoverComponent4->AngularDamping = HoverComponent4->AngularDampingDefault;
 		}
 
+		if (DriftValue > 0.f)
+		{
+			FRotator SteerAngle  = FRotator(0.f, -170.f, -10.f);
+			SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), SteerAngle, DeltaTime, 5.f);
+			
+		}
+		else if (DriftValue < 0.f)
+		{
+			FRotator SteerAngle = FRotator(0.f, 170.f, 10.f);
+			SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), SteerAngle, DeltaTime, 5.f);
+		
+		}
 		SetActorRotation(FRotator(UseRotator.Pitch, Yaw.Yaw, UseRotator.Roll));
 
 	}
@@ -142,26 +163,21 @@ void APlayerCar::Tick(float DeltaTime)
 		FRotator DriftAngle;
 		if (DriftValue > 0.f)
 		{
-			DriftAngle = FRotator(0.f, -160.f, 0.f);
+			DriftAngle = FRotator(0.f, -160.f, -15.f);
 		}
 		else
 		{
-			DriftAngle = FRotator(0.f, 160.f, 0.f);
+			DriftAngle = FRotator(0.f, 160.f, 15.f);
 		}
 
-		FRotator SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), DriftAngle, DeltaTime, 5.f);
+		SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), DriftAngle, DeltaTime, 5.f);
 
-		PlayerMesh->SetRelativeRotation(SetRotation);
+		
 
 		//UE_LOG(LogTemp, Warning, TEXT("%f"), SetRotation.Yaw);
 	}
-	else
-	{
-		FRotator SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), FRotator(0.f, 180.f, 0.f), DeltaTime, 5.f);
 
-		PlayerMesh->SetRelativeRotation(SetRotation);
-	}
-
+	PlayerMesh->SetRelativeRotation(SetRotation);
 }
 
 
@@ -192,17 +208,18 @@ void APlayerCar::Forward(float value)
 
 void APlayerCar::Right(float value)
 {
+	DriftValue = value;
 	float factor;
 	if (bDrifting)
 	{
-		DriftValue = value;
+		
 	
-		factor = 0.4;
+		factor = 0.3;
 
 	}
 	else
 	{
-		factor = 0.3;
+		factor = 0.2;
 	}
 
 
@@ -210,6 +227,7 @@ void APlayerCar::Right(float value)
 	FVector AsymVector = GetActorRightVector() * value;
 	FVector NewRotationVector = GetActorForwardVector() + AsymVector * factor;
 	NewRotation = NewRotationVector.Rotation();
+
 }
 
 void APlayerCar::Pause(float value)
