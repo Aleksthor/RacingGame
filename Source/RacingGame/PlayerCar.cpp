@@ -28,7 +28,7 @@ APlayerCar::APlayerCar()
 	/** Player Mesh Default Values */
 	PlayerMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("PlayerMesh"));
 	PlayerMesh->SetupAttachment(Collider);
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> Mesh(TEXT("SkeletalMesh'/Game/StaticMesh/Ducky/ducky.ducky'"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> Mesh(TEXT("SkeletalMesh'/Game/Meshes/Ducky/ducky.ducky'"));
 	PlayerMesh->SetSkeletalMesh(Mesh.Object);
 	PlayerMesh->SetRelativeScale3D(FVector(50.f, 50.f, 50.f));
 	PlayerMesh->SetRelativeLocation(FVector(0.f, 0.f, -90.f));
