@@ -22,6 +22,7 @@ APlayerCar::APlayerCar()
 	SetRootComponent(Collider);
 	Collider->SetSimulatePhysics(true);
 	Collider->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	Collider->SetCollisionProfileName(FName(TEXT("Pawn")));
 	//Collider->OnComponentBeginOverlap.AddDynamic(this, &APlayerCar::OnOverlap);
 
 
@@ -67,7 +68,7 @@ APlayerCar::APlayerCar()
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
 
-
+	Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed = 2500.f;
 
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
@@ -141,11 +142,11 @@ void APlayerCar::Tick(float DeltaTime)
 		FRotator DriftAngle;
 		if (DriftValue > 0.f)
 		{
-			DriftAngle = FRotator(0.f, 160.f, 0.f);
+			DriftAngle = FRotator(0.f, -160.f, 0.f);
 		}
 		else
 		{
-			DriftAngle = FRotator(0.f, -160.f, 0.f);
+			DriftAngle = FRotator(0.f, 160.f, 0.f);
 		}
 
 		FRotator SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), DriftAngle, DeltaTime, 5.f);
@@ -195,14 +196,7 @@ void APlayerCar::Right(float value)
 	if (bDrifting)
 	{
 		DriftValue = value;
-		if (value > 0.f)
-		{
-			bRight = true;
-		}
-		else
-		{
-			bRight = false;
-		}
+	
 		factor = 0.4;
 
 	}

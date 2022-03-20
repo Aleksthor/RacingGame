@@ -71,6 +71,7 @@ public:
 
 	FRotator NewRotation;
 
+	
 
 	UFUNCTION()
 	void Forward(float value);
@@ -91,6 +92,6 @@ public:
 
 	bool bDrifting = false;
 
-	bool bRight = false;
+
 	float DriftValue;
 };

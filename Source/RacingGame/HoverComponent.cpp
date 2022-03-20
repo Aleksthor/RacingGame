@@ -15,7 +15,7 @@ UHoverComponent::UHoverComponent()
 
 	// ...
 	TraceLength = 200.f;
-	HoverForce = 50000.f;
+	HoverForce = 200000.f;
 	LinearDamping = LinearDampingDefault;
 	AngularDamping = AngularDampingDefault;
 }
