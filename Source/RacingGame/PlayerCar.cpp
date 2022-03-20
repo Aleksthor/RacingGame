@@ -40,7 +40,7 @@ APlayerCar::APlayerCar()
 	SpringArm->SetupAttachment(Collider);
 	SpringArm->bDoCollisionTest = false;
 	SpringArm->SetRelativeRotation(FRotator(-25.f, 0.f, 0.f));
-	SpringArm->bUsePawnControlRotation = true;
+	//SpringArm->bUsePawnControlRotation = true;
 
 	/** Movement Component Default Values*/
 	MovementComponent = CreateDefaultSubobject<UPawnMovementComponent, UFloatingPawnMovement>(TEXT("MovementComponent"));
@@ -92,9 +92,9 @@ void APlayerCar::Tick(float DeltaTime)
 	{
 		PawnRotation = GetActorRotation();
 
-		FRotator Yaw = FMath::RInterpTo(PawnRotation, ControlRotation, DeltaTime, 5.f);
+		FRotator Yaw = FMath::RInterpTo(PawnRotation, NewRotation, DeltaTime, 5.f);
 		FRotator UseRotator = PawnRotation;
-		UseRotator = FMath::RInterpTo(PawnRotation, FRotator::ZeroRotator, DeltaTime, 5.f);
+		UseRotator = FMath::RInterpTo(PawnRotation, FRotator(0.f,180.f,0.f), DeltaTime, 5.f);
 
 		// Function to make sure gravity works while in air - Only call when moving
 
@@ -136,6 +136,31 @@ void APlayerCar::Tick(float DeltaTime)
 
 	}
 
+	if (bDrifting)
+	{
+		FRotator DriftAngle;
+		if (DriftValue > 0.f)
+		{
+			DriftAngle = FRotator(0.f, 160.f, 0.f);
+		}
+		else
+		{
+			DriftAngle = FRotator(0.f, -160.f, 0.f);
+		}
+
+		FRotator SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), DriftAngle, DeltaTime, 5.f);
+
+		PlayerMesh->SetRelativeRotation(SetRotation);
+
+		//UE_LOG(LogTemp, Warning, TEXT("%f"), SetRotation.Yaw);
+	}
+	else
+	{
+		FRotator SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), FRotator(0.f, 180.f, 0.f), DeltaTime, 5.f);
+
+		PlayerMesh->SetRelativeRotation(SetRotation);
+	}
+
 }
 
 
@@ -148,13 +173,16 @@ void APlayerCar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAxis("Right", this, &APlayerCar::Right);
 
 	// Turn Camera with mouse
-	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+	//PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+	//PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+
+	PlayerInputComponent->BindAction("Drift", IE_Pressed, this, &APlayerCar::StartDrift);
+	PlayerInputComponent->BindAction("Drift", IE_Released, this, &APlayerCar::StopDrift);
 }
 
 void APlayerCar::Forward(float value)
 {
-	FVector RotationVector = FRotationMatrix(ControlRotation).GetUnitAxis(EAxis::X);
+	FVector RotationVector = FRotationMatrix(PawnRotation).GetUnitAxis(EAxis::X);
 	FVector ZRotation = PawnRotation.Vector();
 	FVector Direction = FVector(RotationVector.X, RotationVector.Y, ZRotation.Z);
 
@@ -163,9 +191,42 @@ void APlayerCar::Forward(float value)
 
 void APlayerCar::Right(float value)
 {
+	float factor;
+	if (bDrifting)
+	{
+		DriftValue = value;
+		if (value > 0.f)
+		{
+			bRight = true;
+		}
+		else
+		{
+			bRight = false;
+		}
+		factor = 0.4;
+
+	}
+	else
+	{
+		factor = 0.3;
+	}
+
+
+
+	FVector AsymVector = GetActorRightVector() * value;
+	FVector NewRotationVector = GetActorForwardVector() + AsymVector * factor;
+	NewRotation = NewRotationVector.Rotation();
 }
 
 void APlayerCar::Pause(float value)
 {
 }
+void APlayerCar::StartDrift()
+{
+	bDrifting = true;
+}
 
+void APlayerCar::StopDrift()
+{
+	bDrifting = false;
+}

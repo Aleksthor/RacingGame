@@ -69,6 +69,9 @@ public:
 	FRotator ControlRotation;
 
 
+	FRotator NewRotation;
+
+
 	UFUNCTION()
 	void Forward(float value);
 
@@ -77,4 +80,17 @@ public:
 
 	UFUNCTION()
 	void Pause(float value);
+
+	UFUNCTION()
+	void StartDrift();
+
+	UFUNCTION()
+	void StopDrift();
+
+
+
+	bool bDrifting = false;
+
+	bool bRight = false;
+	float DriftValue;
 };
