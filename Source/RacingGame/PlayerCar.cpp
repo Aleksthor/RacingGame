@@ -107,11 +107,11 @@ void APlayerCar::Tick(float DeltaTime)
 		FVector ImpactPoints2 = HoverComponent2->HitResult.ImpactPoint;
 		FVector ImpactPoints3 = HoverComponent3->HitResult.ImpactPoint;
 		FVector ImpactPoints4 = HoverComponent4->HitResult.ImpactPoint;
-	
+		
 		if (ImpactPoints1.IsNearlyZero() && ImpactPoints2.IsNearlyZero() && ImpactPoints3.IsNearlyZero() && ImpactPoints4.IsNearlyZero())
 		{
 			//UseRotator = FMath::RInterpTo(PawnRotation, FRotator(0.f, 180.f, 0.f), DeltaTime, 5.f);
-
+		
 			//UE_LOG(LogTemp, Warning, TEXT("HoverComponent In Air"));
 			HoverComponent1->LinearDamping = 1.f;
 			HoverComponent2->LinearDamping = 1.f;
