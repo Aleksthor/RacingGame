@@ -91,6 +91,7 @@ void APlayerCar::Tick(float DeltaTime)
 	if (FMath::IsNearlyEqual(DriftValue, 0.f))
 	{
 		SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(),FRotator(0.f, 180.f, 0.f),DeltaTime,5.f);
+		PlayerMesh->SetRelativeRotation(SetRotation);
 	}
 	
 	// Function for Interp Rotation
@@ -99,12 +100,6 @@ void APlayerCar::Tick(float DeltaTime)
 		PawnRotation = GetActorRotation();
 
 		FRotator Yaw = FMath::RInterpTo(PawnRotation, NewRotation, DeltaTime, 5.f);
-		FRotator UseRotator = PawnRotation;
-		UseRotator = FMath::RInterpTo(PawnRotation, FRotator(0.f,180.f,0.f), DeltaTime, 5.f);
-	
-		
-
-		
 		
 		// Function to make sure gravity works while in air - Only call when moving
 
@@ -115,7 +110,7 @@ void APlayerCar::Tick(float DeltaTime)
 	
 		if (ImpactPoints1.IsNearlyZero() && ImpactPoints2.IsNearlyZero() && ImpactPoints3.IsNearlyZero() && ImpactPoints4.IsNearlyZero())
 		{
-
+			//UseRotator = FMath::RInterpTo(PawnRotation, FRotator(0.f, 180.f, 0.f), DeltaTime, 5.f);
 
 			//UE_LOG(LogTemp, Warning, TEXT("HoverComponent In Air"));
 			HoverComponent1->LinearDamping = 1.f;
@@ -154,8 +149,8 @@ void APlayerCar::Tick(float DeltaTime)
 			SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), SteerAngle, DeltaTime, 5.f);
 		
 		}
-		SetActorRotation(FRotator(UseRotator.Pitch, Yaw.Yaw, UseRotator.Roll));
-
+		SetActorRotation(FRotator(PawnRotation.Pitch, Yaw.Yaw, PawnRotation.Roll));
+		PlayerMesh->SetRelativeRotation(SetRotation);
 	}
 
 	if (bDrifting)
@@ -173,11 +168,11 @@ void APlayerCar::Tick(float DeltaTime)
 		SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), DriftAngle, DeltaTime, 5.f);
 
 		
-
+		PlayerMesh->SetRelativeRotation(SetRotation);
 		//UE_LOG(LogTemp, Warning, TEXT("%f"), SetRotation.Yaw);
 	}
 
-	PlayerMesh->SetRelativeRotation(SetRotation);
+	
 }
 
 
