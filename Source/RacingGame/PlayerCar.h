@@ -18,7 +18,7 @@ public:
 	APlayerCar();
 
 	/** Component Body */
-	/** Static Mesh */
+	/** Skeletal Mesh */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
 	class USkeletalMeshComponent* PlayerMesh{ nullptr };
 
@@ -88,7 +88,10 @@ public:
 	UFUNCTION()
 	void StopDrift();
 
-
+	bool bSpeedBoost = false;
+	float SpeedBoostTimer = 2.f;
+	float SpeedBoostClock = 0.f;
+	float SpeedBoostSpeed = 3500.f;
 
 	bool bDrifting = false;
 

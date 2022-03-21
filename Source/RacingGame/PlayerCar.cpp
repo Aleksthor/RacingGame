@@ -172,7 +172,20 @@ void APlayerCar::Tick(float DeltaTime)
 		//UE_LOG(LogTemp, Warning, TEXT("%f"), SetRotation.Yaw);
 	}
 
-	
+	if (bSpeedBoost)
+	{
+		Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed = SpeedBoostSpeed;
+		SpeedBoostClock += DeltaTime;
+		if (SpeedBoostClock > SpeedBoostTimer)
+		{
+			SpeedBoostClock = 0.f;
+			bSpeedBoost = false;
+		}
+	}
+	else
+	{
+		Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed = 2500.f;
+	}
 }
 
 
