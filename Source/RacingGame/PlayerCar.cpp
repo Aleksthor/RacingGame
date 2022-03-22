@@ -198,8 +198,8 @@ void APlayerCar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAxis("Right", this, &APlayerCar::Right);
 
 	// Turn Camera with mouse
-	//PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-	//PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 
 	PlayerInputComponent->BindAction("Drift", IE_Pressed, this, &APlayerCar::StartDrift);
 	PlayerInputComponent->BindAction("Drift", IE_Released, this, &APlayerCar::StopDrift);
