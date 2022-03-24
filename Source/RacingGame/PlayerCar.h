@@ -18,7 +18,7 @@ public:
 	APlayerCar();
 
 	/** Component Body */
-	/** Static Mesh */
+	/** Skeletal Mesh */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
 	class USkeletalMeshComponent* PlayerMesh{ nullptr };
 
@@ -69,6 +69,10 @@ public:
 	FRotator ControlRotation;
 
 
+	FRotator NewRotation;
+
+	
+
 	UFUNCTION()
 	void Forward(float value);
 
@@ -77,4 +81,20 @@ public:
 
 	UFUNCTION()
 	void Pause(float value);
+
+	UFUNCTION()
+	void StartDrift();
+
+	UFUNCTION()
+	void StopDrift();
+
+	bool bSpeedBoost = false;
+	float SpeedBoostTimer = 2.f;
+	float SpeedBoostClock = 0.f;
+	float SpeedBoostSpeed = 3500.f;
+
+	bool bDrifting = false;
+
+
+	float DriftValue;
 };
