@@ -194,6 +194,7 @@ void APlayerCar::Tick(float DeltaTime)
 		{
 
 			bJustHitCheckPoint = false;
+			CheckpointClock = 0.f;
 		}
 
 
