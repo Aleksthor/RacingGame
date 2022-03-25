@@ -97,4 +97,11 @@ public:
 
 
 	float DriftValue;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
+	int Lives;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
+	bool bDead;
 };

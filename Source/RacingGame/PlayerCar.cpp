@@ -12,6 +12,8 @@
 #include "GameFramework/FloatingPawnMovement.h"
 #include "HoverComponent.h"
 
+#include "Kismet/KismetSystemLibrary.h"
+
 // Sets default values
 APlayerCar::APlayerCar()
 {
@@ -37,7 +39,7 @@ APlayerCar::APlayerCar()
 
 	/** Spring Arm Default Values */
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
-	SpringArm->TargetArmLength = 500.f;
+	SpringArm->TargetArmLength = 600.f;
 	SpringArm->SetupAttachment(Collider);
 	SpringArm->bDoCollisionTest = false;
 	SpringArm->SetRelativeRotation(FRotator(-15.f, 0.f, 0.f));
@@ -70,6 +72,10 @@ APlayerCar::APlayerCar()
 
 	Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed = 2500.f;
 
+	Lives = 3;
+	bDead = false;
+
+
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
 
@@ -78,12 +84,29 @@ void APlayerCar::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	
+
+	UKismetSystemLibrary::ExecuteConsoleCommand(GetWorld(), "DisableAllScreenMessages");
 }
 
 // Called every frame
 void APlayerCar::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+
+	if (Lives > 6)
+	{
+		Lives = 6;
+	}
+
+
+	if (Lives == 0)
+	{
+		bDead = true;
+	}
+
+
 
 	PawnRotation = GetActorRotation();
 	ControlRotation = GetControlRotation();
