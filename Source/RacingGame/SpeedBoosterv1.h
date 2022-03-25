@@ -24,7 +24,7 @@ public:
 	class UStaticMeshComponent* SpeedBoostMesh{ nullptr };
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpeedBoostVariables")
-	float Speed = 3500.f;
+	float SpeedGiven = 1000.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpeedBoostVariables")
 	float Timer = 2.f;

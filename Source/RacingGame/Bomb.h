@@ -41,7 +41,7 @@ public:
 			bool bFromSweep, const FHitResult& SweepResult);
 
 
-	/** If bullet hits something that destroys itself, also destroy bullet */
+	/** If bullet hits something that destroys itself, also destroy bomb */
 	UFUNCTION()
 	void DestroyBomb();
 
@@ -51,7 +51,6 @@ public:
 
 
 	float Force;
-	int preCollider;
 	bool bAddedForce = false;
 
 };

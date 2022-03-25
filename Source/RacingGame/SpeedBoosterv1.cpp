@@ -4,6 +4,7 @@
 #include "SpeedBoosterv1.h"
 #include "Components/BoxComponent.h"
 #include "PlayerCar.h"
+#include "GameFramework/FloatingPawnMovement.h"
 
 // Sets default values
 ASpeedBoosterv1::ASpeedBoosterv1()
@@ -40,7 +41,8 @@ void ASpeedBoosterv1::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	if (Player)
 	{
 		Player->bSpeedBoost = true;
-		Player->SpeedBoostSpeed = Speed;
+		UPawnMovementComponent * Movement = Player->GetMovementComponent();
+		Player->SpeedBoostSpeed = Cast<UFloatingPawnMovement>(Movement)->MaxSpeed + SpeedGiven;
 		Player->SpeedBoostTimer = Timer;
 	}
 }

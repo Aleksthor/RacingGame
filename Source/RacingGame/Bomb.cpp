@@ -50,15 +50,6 @@ void ABomb::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 
-	if (preCollider < 40)
-	{
-		preCollider++;
-	}
-	else
-	{
-		Collider->SetGenerateOverlapEvents(true);
-	}
-
 
 	if (Player && !bAddedForce)
 	{

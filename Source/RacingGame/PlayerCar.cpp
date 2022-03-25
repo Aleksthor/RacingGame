@@ -85,7 +85,7 @@ void APlayerCar::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	
+	Points = 0;
 
 	UKismetSystemLibrary::ExecuteConsoleCommand(GetWorld(), "DisableAllScreenMessages");
 }
@@ -210,6 +210,9 @@ void APlayerCar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAction("Drift", IE_Released, this, &APlayerCar::StopDrift);
 }
 
+
+
+
 void APlayerCar::Forward(float value)
 {
 	FVector RotationVector = FRotationMatrix(PawnRotation).GetUnitAxis(EAxis::X);
@@ -246,6 +249,7 @@ void APlayerCar::Right(float value)
 void APlayerCar::Pause(float value)
 {
 }
+
 void APlayerCar::StartDrift()
 {
 	bDrifting = true;
@@ -267,6 +271,9 @@ void APlayerCar::StopShooting()
 
 
 }
+
+
+
 
 void APlayerCar::CheckImpactPoints()
 {
@@ -308,9 +315,16 @@ void APlayerCar::CheckImpactPoints()
 
 }
 
+
+
 void APlayerCar::LoseHealth()
 {
 
 	Lives--;
 
+}
+
+void APlayerCar::GivePoints(int Value)
+{
+	Points += Value;
 }
