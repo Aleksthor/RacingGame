@@ -12,8 +12,10 @@
 #include "GameFramework/FloatingPawnMovement.h"
 #include "HoverComponent.h"
 #include "Bomb.h"
+#include "Engine/World.h"
 
 #include "Kismet/KismetSystemLibrary.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 APlayerCar::APlayerCar()
@@ -95,6 +97,9 @@ void APlayerCar::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	WorldTimer += UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
+	SectionTimer += UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
+
 
 	if (Lives > 6)
 	{
@@ -120,8 +125,6 @@ void APlayerCar::Tick(float DeltaTime)
 		PlayerMesh->SetRelativeRotation(SetRotation);
 	}
 	
-
-
 
 	// Function for Interp Rotation
 	if (!MovementComponent->Velocity.IsNearlyZero())
@@ -149,9 +152,6 @@ void APlayerCar::Tick(float DeltaTime)
 		PlayerMesh->SetRelativeRotation(SetRotation);
 	}
 
-
-
-
 	if (bDrifting)
 	{
 		FRotator DriftAngle;
@@ -171,9 +171,6 @@ void APlayerCar::Tick(float DeltaTime)
 		//UE_LOG(LogTemp, Warning, TEXT("%f"), SetRotation.Yaw);
 	}
 
-
-
-
 	if (bSpeedBoost)
 	{
 		Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed = SpeedBoostSpeed;
@@ -188,6 +185,21 @@ void APlayerCar::Tick(float DeltaTime)
 	{
 		Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed = 2500.f;
 	}
+
+	if (bJustHitCheckPoint)
+	{
+		CheckpointClock += DeltaTime;
+
+		if (CheckpointClock > CheckpointTimer)
+		{
+
+			bJustHitCheckPoint = false;
+		}
+
+
+	}
+
+
 }
 
 
@@ -312,6 +324,13 @@ void APlayerCar::CheckImpactPoints()
 		HoverComponent3->AngularDamping = HoverComponent3->AngularDampingDefault;
 		HoverComponent4->AngularDamping = HoverComponent4->AngularDampingDefault;
 	}
+
+}
+
+void APlayerCar::SetLastCheckPointTimer()
+{
+
+	LastCheckPointTimer = WorldTimer;
 
 }
 

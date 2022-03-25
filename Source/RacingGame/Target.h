@@ -22,6 +22,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TargetVariables")
 	class UStaticMeshComponent* TargetMesh;
 
+	class APlayerCar* Player{ nullptr };
 
 protected:
 	// Called when the game starts or when spawned
@@ -40,8 +41,6 @@ public:
 	/** If bullet hits something that destroys itself, also destroy bomb */
 	UFUNCTION()
 	void DestroyTarget();
-
-	class APlayerCar* Player{ nullptr };
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TargetVariables")
 	int PointsGiven;

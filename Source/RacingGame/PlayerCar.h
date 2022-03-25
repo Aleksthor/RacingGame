@@ -54,6 +54,18 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
 	TSubclassOf<ABomb> BombBP;
 
+
+	// Logic
+
+	bool bDrifting = false;
+	bool bSpeedBoost = false;
+	float SpeedBoostTimer = 2.f;
+	float SpeedBoostClock = 0.f;
+	float SpeedBoostSpeed = 3500.f;
+	float CheckpointTimer = 2.f;
+	float CheckpointClock = 0.f;
+	float DriftValue;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -102,6 +114,8 @@ public:
 
 	void CheckImpactPoints();
 
+	void SetLastCheckPointTimer();
+
 	UFUNCTION()
 	void LoseHealth();
 
@@ -109,18 +123,19 @@ public:
 	void GivePoints(int Value);
 
 
-	bool bDrifting = false;
-	bool bSpeedBoost = false;
-	float SpeedBoostTimer = 2.f;
-	float SpeedBoostClock = 0.f;
-	float SpeedBoostSpeed = 3500.f;
-	float DriftValue;
+	
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
 	float WorldTimer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
 	float SectionTimer;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
+	float LastCheckPointTimer;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
+	bool bJustHitCheckPoint = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
 	int Points;

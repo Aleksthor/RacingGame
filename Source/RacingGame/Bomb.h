@@ -24,6 +24,10 @@ public:
 	class UStaticMeshComponent* BombMesh;
 
 
+	class APlayerCar* Player{nullptr};
+
+	float Force;
+	bool bAddedForce = false;
 
 protected:
 	// Called when the game starts or when spawned
@@ -45,12 +49,6 @@ public:
 	UFUNCTION()
 	void DestroyBomb();
 
-	class APlayerCar* Player{nullptr};
 
-
-
-
-	float Force;
-	bool bAddedForce = false;
 
 };
