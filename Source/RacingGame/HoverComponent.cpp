@@ -14,7 +14,7 @@ UHoverComponent::UHoverComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 
 	// ...
-	TraceLength = 200.f;
+	TraceLength = 300.f;
 	HoverForce = 80000.f;
 	LinearDamping = LinearDampingDefault;
 	AngularDamping = AngularDampingDefault;

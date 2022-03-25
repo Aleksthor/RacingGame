@@ -37,10 +37,10 @@ APlayerCar::APlayerCar()
 
 	/** Spring Arm Default Values */
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
-	SpringArm->TargetArmLength = 800.f;
+	SpringArm->TargetArmLength = 500.f;
 	SpringArm->SetupAttachment(Collider);
 	SpringArm->bDoCollisionTest = false;
-	SpringArm->SetRelativeRotation(FRotator(-25.f, 0.f, 0.f));
+	SpringArm->SetRelativeRotation(FRotator(-15.f, 0.f, 0.f));
 	//SpringArm->bUsePawnControlRotation = true;
 
 	/** Movement Component Default Values*/
