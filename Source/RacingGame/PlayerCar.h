@@ -7,6 +7,7 @@
 #include "PlayerCar.generated.h"
 
 class UHoverComponent;
+class ABomb;
 
 UCLASS()
 class RACINGGAME_API APlayerCar : public APawn
@@ -50,6 +51,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
 	UHoverComponent* HoverComponent4;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
+	TSubclassOf<ABomb> BombBP;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -87,6 +91,20 @@ public:
 
 	UFUNCTION()
 	void StopDrift();
+
+	UFUNCTION()
+	void StartShooting();
+
+	UFUNCTION()
+	void StopShooting();
+
+
+
+
+	void CheckImpactPoints();
+
+	UFUNCTION()
+	void LoseHealth();
 
 	bool bSpeedBoost = false;
 	float SpeedBoostTimer = 2.f;

@@ -11,6 +11,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "HoverComponent.h"
+#include "Bomb.h"
 
 #include "Kismet/KismetSystemLibrary.h"
 
@@ -108,6 +109,8 @@ void APlayerCar::Tick(float DeltaTime)
 
 
 
+
+
 	PawnRotation = GetActorRotation();
 	ControlRotation = GetControlRotation();
 	FRotator SetRotation;
@@ -117,6 +120,9 @@ void APlayerCar::Tick(float DeltaTime)
 		PlayerMesh->SetRelativeRotation(SetRotation);
 	}
 	
+
+
+
 	// Function for Interp Rotation
 	if (!MovementComponent->Velocity.IsNearlyZero())
 	{
@@ -124,41 +130,8 @@ void APlayerCar::Tick(float DeltaTime)
 
 		FRotator Yaw = FMath::RInterpTo(PawnRotation, NewRotation, DeltaTime, 5.f);
 		
-		// Function to make sure gravity works while in air - Only call when moving
+		CheckImpactPoints();
 
-		FVector ImpactPoints1 = HoverComponent1->HitResult.ImpactPoint;
-		FVector ImpactPoints2 = HoverComponent2->HitResult.ImpactPoint;
-		FVector ImpactPoints3 = HoverComponent3->HitResult.ImpactPoint;
-		FVector ImpactPoints4 = HoverComponent4->HitResult.ImpactPoint;
-		
-		if (ImpactPoints1.IsNearlyZero() && ImpactPoints2.IsNearlyZero() && ImpactPoints3.IsNearlyZero() && ImpactPoints4.IsNearlyZero())
-		{
-			//UseRotator = FMath::RInterpTo(PawnRotation, FRotator(0.f, 180.f, 0.f), DeltaTime, 5.f);
-		
-			//UE_LOG(LogTemp, Warning, TEXT("HoverComponent In Air"));
-			HoverComponent1->LinearDamping = 1.f;
-			HoverComponent2->LinearDamping = 1.f;
-			HoverComponent3->LinearDamping = 1.f;
-			HoverComponent4->LinearDamping = 1.f;
-
-			HoverComponent1->AngularDamping = 1.f;
-			HoverComponent2->AngularDamping = 1.f;
-			HoverComponent3->AngularDamping = 1.f;
-			HoverComponent4->AngularDamping = 1.f;
-		}
-		else
-		{
-			//UE_LOG(LogTemp, Warning, TEXT("HoverComponent Default"));
-			HoverComponent1->LinearDamping = HoverComponent1->LinearDampingDefault;
-			HoverComponent2->LinearDamping = HoverComponent2->LinearDampingDefault;
-			HoverComponent3->LinearDamping = HoverComponent3->LinearDampingDefault;
-			HoverComponent4->LinearDamping = HoverComponent4->LinearDampingDefault;
-
-			HoverComponent1->AngularDamping = HoverComponent1->AngularDampingDefault;
-			HoverComponent2->AngularDamping = HoverComponent2->AngularDampingDefault;
-			HoverComponent3->AngularDamping = HoverComponent3->AngularDampingDefault;
-			HoverComponent4->AngularDamping = HoverComponent4->AngularDampingDefault;
-		}
 
 		if (DriftValue > 0.f)
 		{
@@ -175,6 +148,9 @@ void APlayerCar::Tick(float DeltaTime)
 		SetActorRotation(FRotator(PawnRotation.Pitch, Yaw.Yaw, PawnRotation.Roll));
 		PlayerMesh->SetRelativeRotation(SetRotation);
 	}
+
+
+
 
 	if (bDrifting)
 	{
@@ -194,6 +170,9 @@ void APlayerCar::Tick(float DeltaTime)
 		PlayerMesh->SetRelativeRotation(SetRotation);
 		//UE_LOG(LogTemp, Warning, TEXT("%f"), SetRotation.Yaw);
 	}
+
+
+
 
 	if (bSpeedBoost)
 	{
@@ -219,6 +198,9 @@ void APlayerCar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 	PlayerInputComponent->BindAxis("Forward", this, &APlayerCar::Forward);
 	PlayerInputComponent->BindAxis("Right", this, &APlayerCar::Right);
+
+	PlayerInputComponent->BindAction("Shoot", IE_Pressed, this, &APlayerCar::StartShooting);
+	PlayerInputComponent->BindAction("Shoot", IE_Released, this, &APlayerCar::StopShooting);
 
 	// Turn Camera with mouse
 	PlayerInputComponent->BindAxis("TurnCamera", this, &APawn::AddControllerYawInput);
@@ -272,4 +254,63 @@ void APlayerCar::StartDrift()
 void APlayerCar::StopDrift()
 {
 	bDrifting = false;
+}
+
+void APlayerCar::StartShooting()
+{
+	GetWorld()->SpawnActor<ABomb>(BombBP, GetActorLocation() + GetActorForwardVector() * 100.f + GetActorUpVector() * 50.f, FRotator(0.f, PlayerMesh->GetComponentRotation().Yaw, 0.f));
+
+}
+
+void APlayerCar::StopShooting()
+{
+
+
+}
+
+void APlayerCar::CheckImpactPoints()
+{
+	// Function to make sure gravity works while in air - Only call when moving
+
+	FVector ImpactPoints1 = HoverComponent1->HitResult.ImpactPoint;
+	FVector ImpactPoints2 = HoverComponent2->HitResult.ImpactPoint;
+	FVector ImpactPoints3 = HoverComponent3->HitResult.ImpactPoint;
+	FVector ImpactPoints4 = HoverComponent4->HitResult.ImpactPoint;
+
+	if (ImpactPoints1.IsNearlyZero() && ImpactPoints2.IsNearlyZero() && ImpactPoints3.IsNearlyZero() && ImpactPoints4.IsNearlyZero())
+	{
+		//UseRotator = FMath::RInterpTo(PawnRotation, FRotator(0.f, 180.f, 0.f), DeltaTime, 5.f);
+
+		//UE_LOG(LogTemp, Warning, TEXT("HoverComponent In Air"));
+		HoverComponent1->LinearDamping = 1.f;
+		HoverComponent2->LinearDamping = 1.f;
+		HoverComponent3->LinearDamping = 1.f;
+		HoverComponent4->LinearDamping = 1.f;
+
+		HoverComponent1->AngularDamping = 1.f;
+		HoverComponent2->AngularDamping = 1.f;
+		HoverComponent3->AngularDamping = 1.f;
+		HoverComponent4->AngularDamping = 1.f;
+	}
+	else
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("HoverComponent Default"));
+		HoverComponent1->LinearDamping = HoverComponent1->LinearDampingDefault;
+		HoverComponent2->LinearDamping = HoverComponent2->LinearDampingDefault;
+		HoverComponent3->LinearDamping = HoverComponent3->LinearDampingDefault;
+		HoverComponent4->LinearDamping = HoverComponent4->LinearDampingDefault;
+
+		HoverComponent1->AngularDamping = HoverComponent1->AngularDampingDefault;
+		HoverComponent2->AngularDamping = HoverComponent2->AngularDampingDefault;
+		HoverComponent3->AngularDamping = HoverComponent3->AngularDampingDefault;
+		HoverComponent4->AngularDamping = HoverComponent4->AngularDampingDefault;
+	}
+
+}
+
+void APlayerCar::LoseHealth()
+{
+
+	Lives--;
+
 }
