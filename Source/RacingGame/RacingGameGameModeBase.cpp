@@ -142,7 +142,8 @@ void ARacingGameGameModeBase::Tick(float DeltaSeconds)
 		case 3:
 			if (CurrentCheckpoint > 6) // Means Round is Over | Then reset colliders
 			{
-				Round3Time = Player->WorldTimer - Round1Time;
+				Round3Time = Player->WorldTimer - Round2Time;
+				TotalTime = Player->WorldTimer;
 				GameWon();
 			}
 

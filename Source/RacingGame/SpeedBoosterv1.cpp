@@ -41,7 +41,6 @@ void ASpeedBoosterv1::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	if (Player)
 	{
 		Player->bSpeedBoost = true;
-		Player->SpeedBoostClock = 0.f;
 		Player->SpeedBoostTimer += Timer;
 
 		UPawnMovementComponent* Movement = Player->GetMovementComponent();
