@@ -79,9 +79,7 @@ APlayerCar::APlayerCar()
 
 	Lives = 3;
 	bDead = false;
-	WorldMinutes = 0;
-	SectionMinutes = 0;
-	SectionAggregateSeconds = 0;
+	
 
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
@@ -92,9 +90,7 @@ void APlayerCar::BeginPlay()
 	Super::BeginPlay();
 	
 	Points = 0;
-	WorldMinutes = 0;
-	SectionMinutes = 0;
-	SectionAggregateSeconds = 0;
+
 
 	UKismetSystemLibrary::ExecuteConsoleCommand(GetWorld(), "DisableAllScreenMessages");
 }

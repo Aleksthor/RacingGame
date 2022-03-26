@@ -142,17 +142,6 @@ public:
 	UFUNCTION()
 	void UpdateCheckpointTimer(float Delta);
 
-	// Used in UpdateClocks()
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Tick")
-	int WorldMinutes;
-
-	// Used in UpdateClocks()
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Tick")
-	int SectionMinutes;
-
-	// Used in UpdateClocks()
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Tick")
-	int SectionAggregateSeconds;
 
 	// Save Pawn Rotation Every Tick
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Tick")
@@ -166,6 +155,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Tick")
 	FRotator NewRotation;
 	
+
+
 	/** Functions used by other classes */
 
 	void SetLastCheckPointTimer();
