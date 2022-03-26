@@ -69,6 +69,24 @@ void ARacingGameGameModeBase::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
+	if (!Player->bGameStarted)
+	{
+		PreGameClock += DeltaSeconds;
+
+		if (PreGameClock > OneSecond)
+		{
+			PreGameClock = 0.f;
+			SecondsUntilStart--;
+		}
+		if (SecondsUntilStart == 0)
+		{
+			Player->bGameStarted = true;
+		}
+	}
+
+	
+
+
 
 	if (UGameplayStatics::GetCurrentLevelName(GetWorld()) == "MOSSYMOOR")
 	{

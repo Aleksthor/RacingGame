@@ -304,7 +304,12 @@ void APlayerCar::Forward(float value)
 	FVector ZRotation = PawnRotation.Vector();
 	FVector Direction = FVector(RotationVector.X, RotationVector.Y, ZRotation.Z);
 
-	AddMovementInput(Direction, value);
+	if (bGameStarted)
+	{
+		AddMovementInput(Direction, value);
+	}
+
+	
 }
 
 void APlayerCar::Right(float value)

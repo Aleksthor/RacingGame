@@ -72,4 +72,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void LoadMap1();
 
+
+
+	float OneSecond = 1.f;
+	float PreGameClock = 0.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
+	int SecondsUntilStart = 3;
+	
+
 };
