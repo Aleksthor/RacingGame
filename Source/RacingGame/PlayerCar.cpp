@@ -15,6 +15,8 @@
 #include "Engine/World.h"
 
 #include "Kismet/KismetSystemLibrary.h"
+#include "Kismet/KismetTextLibrary.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values
@@ -77,7 +79,8 @@ APlayerCar::APlayerCar()
 
 	Lives = 3;
 	bDead = false;
-
+	WorldMinutes = 0;
+	SectionMinutes = 0;
 
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
@@ -97,9 +100,63 @@ void APlayerCar::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	// Track timers for the whole track and all sections
 	WorldTimer += UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
 	SectionTimer += UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
 
+
+	if (!bEnd)
+	{
+		
+		if (WorldTimer > 60.f)
+		{
+			WorldTimer -= 60.f;
+			WorldMinutes++;
+		}
+		HUDTimerWorld = FString::FromInt(WorldMinutes);
+		HUDTimerWorld += ":";
+		int WorldSeconds = UKismetMathLibrary::FFloor(WorldTimer);
+		if (WorldSeconds < 10)
+		{
+			HUDTimerWorld += "0";
+		}
+		HUDTimerWorld += FString::FromInt(WorldSeconds);
+		HUDTimerWorld += ":";
+		int WorldDecimals = WorldTimer * 100;
+		if (WorldDecimals < 1000 && WorldSeconds < 10)
+		{
+			HUDTimerWorld += "0";
+		}
+		HUDTimerWorld += FString::FromInt(WorldDecimals);
+		HUDTimerWorld.RemoveAt(5, 2);
+
+
+		if (SectionTimer > 60.f)
+		{
+			SectionTimer -= 60.f;
+			SectionMinutes++;
+		}
+		HUDTimerSection = FString::FromInt(SectionMinutes);
+		HUDTimerSection += ":";
+
+		int SectionSeconds	= UKismetMathLibrary::FFloor(SectionTimer);
+		if (SectionSeconds < 10)
+		{
+			HUDTimerSection += "0";
+		}
+		HUDTimerSection += FString::FromInt(SectionSeconds);
+		HUDTimerSection += ":";
+		int SectionDecimals = SectionTimer * 100;
+		if (SectionDecimals < 1000 && SectionSeconds < 10)
+		{
+			HUDTimerSection += "0";
+		}
+		HUDTimerSection += FString::FromInt(SectionDecimals);
+		HUDTimerSection.RemoveAt(5, 2);
+	}
+
+
+	
 
 	if (Lives > 6)
 	{
@@ -331,7 +388,7 @@ void APlayerCar::CheckImpactPoints()
 void APlayerCar::SetLastCheckPointTimer()
 {
 
-	LastCheckPointTimer = WorldTimer;
+	LastCheckPointTimer = HUDTimerWorld;
 
 }
 

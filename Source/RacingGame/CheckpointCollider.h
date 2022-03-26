@@ -27,6 +27,12 @@ public:
 
 	float BestTimer;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "CheckpointVariables")
+	bool isHit = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "CheckpointVariables")
+	bool isValid = false;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

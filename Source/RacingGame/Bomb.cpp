@@ -25,7 +25,7 @@ ABomb::ABomb()
 	BombMesh->SetupAttachment(Collider);
 	
 
-	Force = 50000.f;
+	Force = 200000.f;
 
 }
 
@@ -58,7 +58,7 @@ void ABomb::Tick(float DeltaTime)
 
 		FVector PlayerUpVector = Player->GetActorUpVector();
 
-		FVector OutputVector = PlayerForwardVector + PlayerUpVector * 0.3f;
+		FVector OutputVector = PlayerForwardVector + PlayerUpVector * 0.5f;
 
 		OutputVector.Normalize();
 

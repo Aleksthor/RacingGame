@@ -4,6 +4,7 @@
 #include "CheckpointCollider.h"
 #include "Components/BoxComponent.h"
 #include "PlayerCar.h"
+#include "RacingGameGameModeBase.h"
 
 // Sets default values
 ACheckpointCollider::ACheckpointCollider()
@@ -36,10 +37,23 @@ void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AA
 {
 
 
-	if (OtherActor->IsA<APlayerCar>())
+	if (OtherActor->IsA<APlayerCar>() && !isHit)
 	{
-		Cast<APlayerCar>(OtherActor)->SetLastCheckPointTimer();
-		Cast<APlayerCar>(OtherActor)->bJustHitCheckPoint = true;
+		if (isValid)
+		{
+			Cast<APlayerCar>(OtherActor)->SetLastCheckPointTimer();
+			Cast<APlayerCar>(OtherActor)->bJustHitCheckPoint = true;
+			Cast<APlayerCar>(OtherActor)->SectionTimer = 0.f;
+			isHit = true;
+
+			AGameModeBase* GameModeBase = GetWorld()->GetAuthGameMode();
+			Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentCheckpoint++;
+		}
+		else
+		{
+			AGameModeBase* GameModeBase = GetWorld()->GetAuthGameMode();
+			Cast<ARacingGameGameModeBase>(GameModeBase)->Reset();
+		}
 
 	}
 }

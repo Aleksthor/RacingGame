@@ -132,7 +132,13 @@ public:
 	float SectionTimer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
-	float LastCheckPointTimer;
+	FString HUDTimerWorld;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
+	FString HUDTimerSection;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
+	FString LastCheckPointTimer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
 	bool bJustHitCheckPoint = false;
@@ -146,5 +152,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
 	bool bDead;
 
+	bool bEnd = false;
+	int WorldMinutes;
+	int SectionMinutes;
 	
 };
