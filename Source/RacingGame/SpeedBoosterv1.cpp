@@ -44,5 +44,8 @@ void ASpeedBoosterv1::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 		UPawnMovementComponent * Movement = Player->GetMovementComponent();
 		Player->SpeedBoostSpeed = Cast<UFloatingPawnMovement>(Movement)->MaxSpeed + SpeedGiven;
 		Player->SpeedBoostTimer = Timer;
+		SetActorHiddenInGame(true);
+		SetActorEnableCollision(false);
+		this->Destroy();
 	}
 }
