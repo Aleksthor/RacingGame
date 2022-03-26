@@ -111,7 +111,7 @@ void ARacingGameGameModeBase::GameWon()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Game Won"));
 	FString FinalTimer = Player->LastCheckPointTimer;
-	Player->bEnd = true;
+	Player->bGameOver = true;
 	UE_LOG(LogTemp, Warning, TEXT("Time: %s"), *FinalTimer);
 }
 

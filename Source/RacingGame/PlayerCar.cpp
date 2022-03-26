@@ -100,12 +100,16 @@ void APlayerCar::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	// Track timers for the whole track and all sections
-	WorldTimer += UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
-	SectionTimer += UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
+	if (bGameStarted && !bGameOver)
+	{
+		// Track timers for the whole track and all sections
+		WorldTimer += UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
+		SectionTimer += UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
+	}
+	
 
 
-	if (!bEnd)
+	if (!bGameOver)
 	{
 		
 		if (WorldTimer > 60.f)
@@ -238,16 +242,19 @@ void APlayerCar::Tick(float DeltaTime)
 
 	if (bSpeedBoost)
 	{
-		Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed = SpeedBoostSpeed;
+		
 		SpeedBoostClock += DeltaTime;
 		if (SpeedBoostClock > SpeedBoostTimer)
 		{
 			SpeedBoostClock = 0.f;
 			bSpeedBoost = false;
 		}
+		Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed = SpeedBoostSpeed;
 	}
 	else
 	{
+		//float SetSpeed = FMath::FInterpTo()
+
 		Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed = 2500.f;
 	}
 

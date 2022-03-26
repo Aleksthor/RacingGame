@@ -154,7 +154,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
 	bool bDead;
 
-	bool bEnd = false;
+	bool bGameOver = false;
+	bool bGameStarted = false;
 	int WorldMinutes;
 	int SectionMinutes;
 	
