@@ -53,7 +53,7 @@ void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AA
 		{
 			AGameModeBase* GameModeBase = GetWorld()->GetAuthGameMode();
 			Cast<ARacingGameGameModeBase>(GameModeBase)->Reset();
-			Player->bGameOver = true;
+			//Player->bGameOver = true;
 		}
 
 	}

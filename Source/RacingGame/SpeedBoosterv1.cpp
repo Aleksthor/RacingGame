@@ -42,7 +42,7 @@ void ASpeedBoosterv1::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	{
 		Player->bSpeedBoost = true;
 		Player->SpeedBoostClock = 0.f;
-		Player->SpeedBoostTimer = Timer;
+		Player->SpeedBoostTimer += Timer;
 
 		UPawnMovementComponent* Movement = Player->GetMovementComponent();
 		Player->SpeedBoostSpeed = Cast<UFloatingPawnMovement>(Movement)->MaxSpeed + SpeedGiven;

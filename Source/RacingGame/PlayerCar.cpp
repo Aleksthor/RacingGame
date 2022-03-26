@@ -75,7 +75,7 @@ APlayerCar::APlayerCar()
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
 
-	Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed = 2500.f;
+	Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed = PlayerMaxSpeed;
 
 	Lives = 3;
 	bDead = false;
@@ -100,67 +100,19 @@ void APlayerCar::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (bGameStarted && !bGameOver)
-	{
-		// Track timers for the whole track and all sections
-		WorldTimer += UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
-		SectionTimer += UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
-	}
+	doTimerTick();
+
+	UpdateClocks();
+
+
+	PawnRotation = GetActorRotation();
+	ControlRotation = GetControlRotation();
+
+	UpdateRotation(DeltaTime);
+
+	UpdateMaxSpeed(DeltaTime);
 	
-
-
-	if (!bGameOver)
-	{
-		
-		if (WorldTimer > 60.f)
-		{
-			WorldTimer -= 60.f;
-			WorldMinutes++;
-		}
-		HUDTimerWorld = FString::FromInt(WorldMinutes);
-		HUDTimerWorld += ":";
-		int WorldSeconds = UKismetMathLibrary::FFloor(WorldTimer);
-		if (WorldSeconds < 10)
-		{
-			HUDTimerWorld += "0";
-		}
-		HUDTimerWorld += FString::FromInt(WorldSeconds);
-		HUDTimerWorld += ":";
-		int WorldDecimals = WorldTimer * 100;
-		if (WorldDecimals < 1000 && WorldSeconds < 10)
-		{
-			HUDTimerWorld += "0";
-		}
-		HUDTimerWorld += FString::FromInt(WorldDecimals);
-		HUDTimerWorld.RemoveAt(5, 2);
-
-
-		if (SectionTimer > 60.f)
-		{
-			SectionTimer -= 60.f;
-			SectionMinutes++;
-		}
-		HUDTimerSection = FString::FromInt(SectionMinutes);
-		HUDTimerSection += ":";
-
-		int SectionSeconds	= UKismetMathLibrary::FFloor(SectionTimer);
-		if (SectionSeconds < 10)
-		{
-			HUDTimerSection += "0";
-		}
-		HUDTimerSection += FString::FromInt(SectionSeconds);
-		HUDTimerSection += ":";
-		int SectionDecimals = SectionTimer * 100;
-		if (SectionDecimals < 1000 && SectionSeconds < 10)
-		{
-			HUDTimerSection += "0";
-		}
-		HUDTimerSection += FString::FromInt(SectionDecimals);
-		HUDTimerSection.RemoveAt(5, 2);
-	}
-
-
-	
+	UpdateCheckpointTimer(DeltaTime);
 
 	if (Lives > 6)
 	{
@@ -173,104 +125,6 @@ void APlayerCar::Tick(float DeltaTime)
 		bDead = true;
 	}
 
-
-
-
-
-	PawnRotation = GetActorRotation();
-	ControlRotation = GetControlRotation();
-	FRotator SetRotation;
-	if (FMath::IsNearlyEqual(DriftValue, 0.f))
-	{
-		SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(),FRotator(0.f, 180.f, 0.f),DeltaTime,5.f);
-		PlayerMesh->SetRelativeRotation(SetRotation);
-	}
-	
-
-	// Function for Interp Rotation
-	if (!MovementComponent->Velocity.IsNearlyZero())
-	{
-		PawnRotation = GetActorRotation();
-
-		FRotator Yaw = FMath::RInterpTo(PawnRotation, NewRotation, DeltaTime, 5.f);
-		
-		CheckImpactPoints();
-
-
-		if (DriftValue > 0.f)
-		{
-			FRotator SteerAngle  = FRotator(0.f, -170.f, -10.f);
-			SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), SteerAngle, DeltaTime, 5.f);
-			
-		}
-		else if (DriftValue < 0.f)
-		{
-			FRotator SteerAngle = FRotator(0.f, 170.f, 10.f);
-			SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), SteerAngle, DeltaTime, 5.f);
-		}
-		else if (FMath::IsNearlyZero(DriftValue))
-		{
-			FRotator SteerAngle = FRotator(0.f, 180.f, 0.f);
-			SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), SteerAngle, DeltaTime, 5.f);
-		}
-		SetActorRotation(FRotator(PawnRotation.Pitch, Yaw.Yaw, PawnRotation.Roll));
-		PlayerMesh->SetRelativeRotation(SetRotation);
-	}
-
-	if (bDrifting)
-	{
-		if (!FMath::IsNearlyZero(DriftValue))
-		{
-			FRotator DriftAngle;
-			if (DriftValue > 0.f)
-			{
-				DriftAngle = FRotator(0.f, -160.f, -15.f);
-			}
-			else
-			{
-				DriftAngle = FRotator(0.f, 160.f, 15.f);
-			}
-
-			SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), DriftAngle, DeltaTime, 5.f);
-
-		
-			PlayerMesh->SetRelativeRotation(SetRotation);
-			//UE_LOG(LogTemp, Warning, TEXT("%f"), SetRotation.Yaw);
-		}
-		
-	}
-
-	if (bSpeedBoost)
-	{
-		
-		SpeedBoostClock += DeltaTime;
-		if (SpeedBoostClock > SpeedBoostTimer)
-		{
-			SpeedBoostClock = 0.f;
-			bSpeedBoost = false;
-		}
-		Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed = SpeedBoostSpeed;
-	}
-	else
-	{
-		//float SetSpeed = FMath::FInterpTo()
-
-		Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed = 2500.f;
-	}
-
-	if (bJustHitCheckPoint)
-	{
-		CheckpointClock += DeltaTime;
-
-		if (CheckpointClock > CheckpointTimer)
-		{
-
-			bJustHitCheckPoint = false;
-			CheckpointClock = 0.f;
-		}
-
-
-	}
 
 
 }
@@ -296,7 +150,7 @@ void APlayerCar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 }
 
 
-
+/** Input Functions */
 
 void APlayerCar::Forward(float value)
 {
@@ -363,7 +217,178 @@ void APlayerCar::StopShooting()
 }
 
 
+/** Tick Functions */
 
+
+void APlayerCar::doTimerTick()
+{
+	if (bGameStarted && !bGameOver)
+	{
+		// Track timers for the whole track and all sections
+		WorldTimer += UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
+		SectionTimer += UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
+	}
+}
+
+void APlayerCar::UpdateClocks()
+{
+	if (!bGameOver)
+	{
+
+		if (WorldTimer > 60.f)
+		{
+			WorldTimer -= 60.f;
+			WorldMinutes++;
+		}
+		HUDTimerWorld = FString::FromInt(WorldMinutes);
+		HUDTimerWorld += ":";
+		int WorldSeconds = UKismetMathLibrary::FFloor(WorldTimer);
+		if (WorldSeconds < 10)
+		{
+			HUDTimerWorld += "0";
+		}
+		HUDTimerWorld += FString::FromInt(WorldSeconds);
+		HUDTimerWorld += ":";
+		int WorldDecimals = WorldTimer * 100;
+		if (WorldDecimals < 1000 && WorldSeconds < 10)
+		{
+			HUDTimerWorld += "0";
+		}
+		HUDTimerWorld += FString::FromInt(WorldDecimals);
+		HUDTimerWorld.RemoveAt(5, 2);
+
+
+		if (SectionTimer > 60.f)
+		{
+			SectionTimer -= 60.f;
+			SectionMinutes++;
+		}
+		HUDTimerSection = FString::FromInt(SectionMinutes);
+		HUDTimerSection += ":";
+
+		int SectionSeconds = UKismetMathLibrary::FFloor(SectionTimer);
+		if (SectionSeconds < 10)
+		{
+			HUDTimerSection += "0";
+		}
+		HUDTimerSection += FString::FromInt(SectionSeconds);
+		HUDTimerSection += ":";
+		int SectionDecimals = SectionTimer * 100;
+		if (SectionDecimals < 1000 && SectionSeconds < 10)
+		{
+			HUDTimerSection += "0";
+		}
+		HUDTimerSection += FString::FromInt(SectionDecimals);
+		HUDTimerSection.RemoveAt(5, 2);
+	}
+
+}
+
+void APlayerCar::UpdateRotation(float Delta)
+{
+	FRotator SetRotation;
+	if (FMath::IsNearlyEqual(DriftValue, 0.f))
+	{
+		SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), FRotator(0.f, 180.f, 0.f), Delta, 5.f);
+		PlayerMesh->SetRelativeRotation(SetRotation);
+	}
+
+
+	// Function for Interp Rotation
+	if (!MovementComponent->Velocity.IsNearlyZero())
+	{
+		PawnRotation = GetActorRotation();
+
+		FRotator Yaw = FMath::RInterpTo(PawnRotation, NewRotation, Delta, 5.f);
+
+		CheckImpactPoints();
+
+
+		if (DriftValue > 0.f)
+		{
+			FRotator SteerAngle = FRotator(0.f, -170.f, -10.f);
+			SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), SteerAngle, Delta, 5.f);
+
+		}
+		else if (DriftValue < 0.f)
+		{
+			FRotator SteerAngle = FRotator(0.f, 170.f, 10.f);
+			SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), SteerAngle, Delta, 5.f);
+		}
+		else if (FMath::IsNearlyZero(DriftValue))
+		{
+			FRotator SteerAngle = FRotator(0.f, 180.f, 0.f);
+			SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), SteerAngle, Delta, 5.f);
+		}
+		SetActorRotation(FRotator(PawnRotation.Pitch, Yaw.Yaw, PawnRotation.Roll));
+		PlayerMesh->SetRelativeRotation(SetRotation);
+	}
+
+	if (bDrifting)
+	{
+		if (!FMath::IsNearlyZero(DriftValue))
+		{
+			FRotator DriftAngle;
+			if (DriftValue > 0.f)
+			{
+				DriftAngle = FRotator(0.f, -160.f, -15.f);
+			}
+			else
+			{
+				DriftAngle = FRotator(0.f, 160.f, 15.f);
+			}
+
+			SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), DriftAngle, Delta, 5.f);
+
+
+			PlayerMesh->SetRelativeRotation(SetRotation);
+			//UE_LOG(LogTemp, Warning, TEXT("%f"), SetRotation.Yaw);
+		}
+
+	}
+}
+
+void APlayerCar::UpdateMaxSpeed(float Delta)
+{
+	if (bSpeedBoost)
+	{
+
+		SpeedBoostClock += Delta;
+		if (SpeedBoostClock > SpeedBoostTimer)
+		{
+			SpeedBoostClock = 0.f;
+			bSpeedBoost = false;
+			SpeedBoostTimer = 2.f;
+		}
+		float SetSpeed = FMath::FInterpTo(Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed, SpeedBoostSpeed, Delta, 10.f);
+		Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed = SetSpeed;
+	}
+	else
+	{
+		//float SetSpeed = FMath::FInterpTo()
+		float SetSpeed = FMath::FInterpTo(Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed, PlayerMaxSpeed, Delta, 10.f);
+		Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed = 2500.f;
+	}
+
+
+}
+
+void APlayerCar::UpdateCheckpointTimer(float Delta)
+{
+	if (bJustHitCheckPoint)
+	{
+		CheckpointClock += Delta;
+
+		if (CheckpointClock > CheckpointTimer)
+		{
+
+			bJustHitCheckPoint = false;
+			CheckpointClock = 0.f;
+		}
+
+
+	}
+}
 
 void APlayerCar::CheckImpactPoints()
 {
@@ -405,6 +430,9 @@ void APlayerCar::CheckImpactPoints()
 
 }
 
+/** Functions used by other classes */
+
+
 void APlayerCar::SetLastCheckPointTimer()
 {
 
@@ -425,3 +453,5 @@ void APlayerCar::GivePoints(int Value)
 {
 	Points += Value;
 }
+
+

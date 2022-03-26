@@ -39,6 +39,7 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	class UPawnMovementComponent* MovementComponent;
 
+	/** Hover Components | Line trace by channel and Add Force */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
 	UHoverComponent* HoverComponent1;
 
@@ -51,22 +52,37 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
 	UHoverComponent* HoverComponent4;
 
+
+	/** Classes that we set in blueprints */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
 	TSubclassOf<ABomb> BombBP;
 
 
-	// Logic
-
+	/** LOGIC */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	bool bDrifting = false;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	bool bSpeedBoost = false;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float SpeedBoostTimer = 2.f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float SpeedBoostClock = 0.f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float SpeedBoostSpeed = 3500.f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float CheckpointTimer = 2.f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float CheckpointClock = 0.f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float DriftValue;
-
 	
+
+
+	/** Constructor Values | Also used later for reference to default values */
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Defaults")
+	float PlayerMaxSpeed = 2500.f;
 
 protected:
 	// Called when the game starts or when spawned
@@ -80,15 +96,12 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 
-	// Save Pawn Rotation Every Tick
-	FRotator PawnRotation;
-
-	// Save Control Rotation Every Tick
-	FRotator ControlRotation;
+	
 
 
-	FRotator NewRotation;
+	
 
+	/** Input Functions */
 	
 
 	UFUNCTION()
@@ -112,9 +125,48 @@ public:
 	UFUNCTION()
 	void StopShooting();
 
+	/** Tick Functions */
 
+	UFUNCTION()
+	void doTimerTick();
 
+	UFUNCTION()
+	void UpdateClocks();
+
+	UFUNCTION()
+	void UpdateRotation(float Delta);
+
+	UFUNCTION()
 	void CheckImpactPoints();
+
+	UFUNCTION()
+	void UpdateMaxSpeed(float Delta);
+
+	UFUNCTION()
+	void UpdateCheckpointTimer(float Delta);
+
+	// Used in UpdateClocks()
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Tick")
+	int WorldMinutes;
+
+	// Used in UpdateClocks()
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Tick")
+	int SectionMinutes;
+
+
+	// Save Pawn Rotation Every Tick
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Tick")
+	FRotator PawnRotation;
+
+	// Save Control Rotation Every Tick
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Tick")
+	FRotator ControlRotation;
+
+	// The set rotator, altered in Right() | Input Function
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Tick")
+	FRotator NewRotation;
+	
+	/** Functions used by other classes */
 
 	void SetLastCheckPointTimer();
 
@@ -125,6 +177,8 @@ public:
 	void GivePoints(int Value);
 
 
+
+	/** Player Variables that HUD access */
 	
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
@@ -159,7 +213,6 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
 	bool bGameStarted = false;
-	int WorldMinutes;
-	int SectionMinutes;
+
 	
 };
