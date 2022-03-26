@@ -90,6 +90,46 @@ void ARacingGameGameModeBase::Tick(float DeltaSeconds)
 
 	if (UGameplayStatics::GetCurrentLevelName(GetWorld()) == "MOSSYMOOR")
 	{
+		switch (CurrentRound)
+		{
+		case 1:
+			if (CurrentCheckpoint > 6) // Means Round is Over | Then reset colliders
+			{
+				CurrentRound++;
+				CheckpointArray[0]->isValid = true;
+				CheckpointArray[1]->isValid = false;
+				CheckpointArray[2]->isValid = false;
+				CheckpointArray[3]->isValid = false;
+				CheckpointArray[4]->isValid = false;
+				CheckpointArray[5]->isValid = false;
+				CheckpointArray[6]->isValid = false;
+				CurrentCheckpoint = 0;
+				Round1Time = Player->WorldTimer;
+			}
+			break;
+		case 2:
+			if (CurrentCheckpoint > 6) // Means Round is Over | Then reset colliders
+			{
+				CurrentRound++;
+				CheckpointArray[0]->isValid = true;
+				CheckpointArray[1]->isValid = false;
+				CheckpointArray[2]->isValid = false;
+				CheckpointArray[3]->isValid = false;
+				CheckpointArray[4]->isValid = false;
+				CheckpointArray[5]->isValid = false;
+				CheckpointArray[6]->isValid = false;
+				CurrentCheckpoint = 0;
+				Round2Time = Player->WorldTimer - Round1Time;
+			}
+			break;
+		case 3:
+			
+			Round3Time = Player->WorldTimer - Round1Time;
+			GameWon();
+			break;
+		}
+
+
 
 		switch (CurrentCheckpoint)
 		{
@@ -114,12 +154,11 @@ void ARacingGameGameModeBase::Tick(float DeltaSeconds)
 		case 6:
 			CheckpointArray[6]->isValid = true;
 			break;
+		default:
+			break;
 		}
 
-		if (CurrentCheckpoint > 6)
-		{
-			GameWon();
-		}
+	
 	}
 
 	

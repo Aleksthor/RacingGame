@@ -226,6 +226,7 @@ void APlayerCar::doTimerTick()
 	{
 		// Track timers for the whole track and all sections
 		WorldTimer += UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
+		WorldTimer_Local += UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
 		SectionTimer += UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
 	}
 }
@@ -235,21 +236,21 @@ void APlayerCar::UpdateClocks()
 	if (!bGameOver)
 	{
 
-		if (WorldTimer > 60.f)
+		if (WorldTimer_Local > 60.f)
 		{
-			WorldTimer -= 60.f;
+			WorldTimer_Local -= 60.f;
 			WorldMinutes++;
 		}
 		HUDTimerWorld = FString::FromInt(WorldMinutes);
 		HUDTimerWorld += ":";
-		int WorldSeconds = UKismetMathLibrary::FFloor(WorldTimer);
+		int WorldSeconds = UKismetMathLibrary::FFloor(WorldTimer_Local);
 		if (WorldSeconds < 10)
 		{
 			HUDTimerWorld += "0";
 		}
 		HUDTimerWorld += FString::FromInt(WorldSeconds);
 		HUDTimerWorld += ":";
-		int WorldDecimals = WorldTimer * 100;
+		int WorldDecimals = WorldTimer_Local * 100;
 		if (WorldDecimals < 1000 && WorldSeconds < 10)
 		{
 			HUDTimerWorld += "0";

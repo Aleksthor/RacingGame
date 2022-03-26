@@ -43,10 +43,58 @@ void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AA
 		{
 			Cast<APlayerCar>(OtherActor)->SetLastCheckPointTimer();
 			Cast<APlayerCar>(OtherActor)->bJustHitCheckPoint = true;
-			Cast<APlayerCar>(OtherActor)->SectionTimer = 0.f;
+			
 			isHit = true;
 
 			AGameModeBase* GameModeBase = GetWorld()->GetAuthGameMode();
+			switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentCheckpoint)
+			{
+			case 0:
+				if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->Section1BestTime) || Cast<APlayerCar>(OtherActor)->SectionTimer < Cast<ARacingGameGameModeBase>(GameModeBase)->Section1BestTime)
+				{
+					Cast<ARacingGameGameModeBase>(GameModeBase)->Section1BestTime = Cast<APlayerCar>(OtherActor)->SectionTimer;
+				}
+				break;
+			case 1:
+				if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->Section2BestTime) || Cast<APlayerCar>(OtherActor)->SectionTimer < Cast<ARacingGameGameModeBase>(GameModeBase)->Section2BestTime)
+				{
+					Cast<ARacingGameGameModeBase>(GameModeBase)->Section2BestTime = Cast<APlayerCar>(OtherActor)->SectionTimer;
+				}
+				break;
+			case 2:
+				if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->Section3BestTime) || Cast<APlayerCar>(OtherActor)->SectionTimer < Cast<ARacingGameGameModeBase>(GameModeBase)->Section3BestTime)
+				{
+					Cast<ARacingGameGameModeBase>(GameModeBase)->Section3BestTime = Cast<APlayerCar>(OtherActor)->SectionTimer;
+				}
+				break;
+			case 3:
+				if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->Section4BestTime) || Cast<APlayerCar>(OtherActor)->SectionTimer < Cast<ARacingGameGameModeBase>(GameModeBase)->Section4BestTime)
+				{
+					Cast<ARacingGameGameModeBase>(GameModeBase)->Section4BestTime = Cast<APlayerCar>(OtherActor)->SectionTimer;
+				}
+				break;
+			case 4:
+				if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->Section5BestTime) || Cast<APlayerCar>(OtherActor)->SectionTimer < Cast<ARacingGameGameModeBase>(GameModeBase)->Section5BestTime)
+				{
+					Cast<ARacingGameGameModeBase>(GameModeBase)->Section5BestTime = Cast<APlayerCar>(OtherActor)->SectionTimer;
+				}
+				break;
+			case 5:
+				if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->Section6BestTime) || Cast<APlayerCar>(OtherActor)->SectionTimer < Cast<ARacingGameGameModeBase>(GameModeBase)->Section6BestTime)
+				{
+					Cast<ARacingGameGameModeBase>(GameModeBase)->Section6BestTime = Cast<APlayerCar>(OtherActor)->SectionTimer;
+				}
+				break;
+			case 6:
+				if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->Section7BestTime) || Cast<APlayerCar>(OtherActor)->SectionTimer < Cast<ARacingGameGameModeBase>(GameModeBase)->Section7BestTime)
+				{
+					Cast<ARacingGameGameModeBase>(GameModeBase)->Section7BestTime = Cast<APlayerCar>(OtherActor)->SectionTimer;
+				}
+				break;
+			default:
+				break;
+			}	
+			Cast<APlayerCar>(OtherActor)->SectionTimer = 0.f;
 			Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentCheckpoint++;
 		}
 		else

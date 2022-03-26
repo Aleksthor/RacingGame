@@ -180,9 +180,11 @@ public:
 
 	/** Player Variables that HUD access */
 	
-	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
 	float WorldTimer;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
+	float WorldTimer_Local;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
 	float SectionTimer;

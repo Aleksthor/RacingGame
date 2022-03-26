@@ -22,15 +22,29 @@ public:
 
 	virtual void Tick(float DeltaSeconds) override;
 
+	/** Class to Spawn */
 
 	UPROPERTY(EditAnywhere, Category = "GameModeVariable")
 	TSubclassOf<class ACheckpointCollider> CheckpointColliderBP;
 
+	TArray<class ACheckpointCollider*> CheckpointArray;
+	ACheckpointCollider* tempEnemy;
+
+	class APlayerCar* Player{ nullptr };
+
+	/** Default Values */
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	int CurrentRound = 1;
+
+	int CurrentCheckpoint = 0;
+
+	/** Checkpoint Variables*/
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 	int TotalCheckpoints = 7;
 
-	int CurrentCheckpoint = 0;
-	
+	// Positions and Rotations
 	FVector Checkpoint1Vector = FVector(27500.f, 3100.f, 23350.f);
 	FRotator Checkpoint1Rotator = FRotator(0.f,100.f,0.f);
 
@@ -52,16 +66,45 @@ public:
 	FVector Checkpoint7Vector = FVector(4800.f,6250.f,25000.f);
 	FRotator Checkpoint7Rotator = FRotator(0.f,-100.f,0.f);
 
+	/** Save Data */
 
-	TArray<class ACheckpointCollider*> CheckpointArray;
-	ACheckpointCollider* tempEnemy;
-
-	class APlayerCar* Player{ nullptr };
-
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
 	FString PlayerName;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	float Section1BestTime;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	float Section2BestTime;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	float Section3BestTime;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	float Section4BestTime;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	float Section5BestTime;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	float Section6BestTime;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	float Section7BestTime;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	float Round1Time;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	float Round2Time;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	float Round3Time;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	float TotalTime;
+
+	/** Functions */
 
 	UFUNCTION()
 	void GameWon();
@@ -74,11 +117,12 @@ public:
 
 
 
-	float OneSecond = 1.f;
-	float PreGameClock = 0.f;
+	/** Used for countdown before start */
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
 	int SecondsUntilStart = 3;
-	
+
+	float OneSecond = 1.f;
+	float PreGameClock = 0.f;
 
 };
