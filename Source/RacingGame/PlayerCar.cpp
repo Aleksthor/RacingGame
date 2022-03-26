@@ -81,6 +81,7 @@ APlayerCar::APlayerCar()
 	bDead = false;
 	WorldMinutes = 0;
 	SectionMinutes = 0;
+	SectionAggregateSeconds = 0;
 
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
@@ -91,6 +92,9 @@ void APlayerCar::BeginPlay()
 	Super::BeginPlay();
 	
 	Points = 0;
+	WorldMinutes = 0;
+	SectionMinutes = 0;
+	SectionAggregateSeconds = 0;
 
 	UKismetSystemLibrary::ExecuteConsoleCommand(GetWorld(), "DisableAllScreenMessages");
 }
@@ -235,6 +239,7 @@ void APlayerCar::UpdateClocks()
 {
 	if (!bGameOver)
 	{
+		// WorldTimer in HUD
 
 		if (WorldTimer_Local > 60.f)
 		{
@@ -256,8 +261,11 @@ void APlayerCar::UpdateClocks()
 			HUDTimerWorld += "0";
 		}
 		HUDTimerWorld += FString::FromInt(WorldDecimals);
-		HUDTimerWorld.RemoveAt(5, 2);
+		HUDTimerWorld.RemoveAt(5, 1);
+		HUDTimerWorld.RemoveAt(7, 1);
 
+
+		// SectionTimer in HUD
 
 		if (SectionTimer > 60.f)
 		{
@@ -278,9 +286,77 @@ void APlayerCar::UpdateClocks()
 		if (SectionDecimals < 1000 && SectionSeconds < 10)
 		{
 			HUDTimerSection += "0";
+			HUDTimerSection += FString::FromInt(SectionDecimals);
+			HUDTimerSection.RemoveAt(5, 1);
+			HUDTimerSection.RemoveAt(7, 1);
 		}
-		HUDTimerSection += FString::FromInt(SectionDecimals);
-		HUDTimerSection.RemoveAt(5, 2);
+		else
+		{
+			HUDTimerSection += FString::FromInt(SectionDecimals);
+			HUDTimerSection.RemoveAt(5, 1);
+			HUDTimerSection.RemoveAt(7, 1);
+		}
+	
+
+
+		// SectionAggregate in HUD
+
+		if (SectionAggregate > 0.f)
+		{
+			HUDSectionAggregateString = "+";
+			if (SectionAggregate < 10.f)
+			{
+				HUDSectionAggregateString += "0";
+			}
+			SectionAggregateSeconds = UKismetMathLibrary::FFloor(SectionAggregate);
+			HUDSectionAggregateString += FString::FromInt(SectionAggregateSeconds);
+			HUDSectionAggregateString += ":";
+			int SectionAggragateDecimals = SectionAggregate * 100;
+			if (SectionAggragateDecimals < 1000 )
+			{
+				HUDSectionAggregateString += FString::FromInt(SectionAggragateDecimals);
+				HUDSectionAggregateString.RemoveAt(5, 1);
+				HUDSectionAggregateString.RemoveAt(7, 1);
+			}
+			else
+			{
+				HUDSectionAggregateString += FString::FromInt(SectionAggragateDecimals);
+				HUDSectionAggregateString.RemoveAt(5, 2);
+				HUDSectionAggregateString.RemoveAt(8, 2);
+			}
+		}
+		else
+		{
+			
+			if (SectionAggregate > -10.f)
+			{
+				HUDSectionAggregateString = "-";
+				HUDSectionAggregateString += "0";	
+				
+				SectionAggregateSeconds = UKismetMathLibrary::FFloor(SectionAggregate);
+				HUDSectionAggregateString += FString::FromInt(SectionAggregateSeconds);
+				HUDSectionAggregateString.RemoveAt(2, 1);
+			}
+			else
+			{	
+				SectionAggregateSeconds = UKismetMathLibrary::FFloor(SectionAggregate);
+				HUDSectionAggregateString += FString::FromInt(SectionAggregateSeconds);
+			}
+		
+			HUDSectionAggregateString += ":";
+			int SectionAggragateDecimals = SectionAggregate * 100;
+			if (SectionAggragateDecimals < 1000)
+			{
+				HUDSectionAggregateString += "0";
+				HUDSectionAggregateString += FString::FromInt(SectionAggragateDecimals);
+				HUDSectionAggregateString.RemoveAt(5, 1);
+			}
+			else
+			{
+				HUDSectionAggregateString += FString::FromInt(SectionAggragateDecimals);
+				HUDSectionAggregateString.RemoveAt(5, 2);
+			}
+		}
 	}
 
 }
@@ -436,7 +512,7 @@ void APlayerCar::CheckImpactPoints()
 
 void APlayerCar::SetLastCheckPointTimer()
 {
-
+	LastCheckPointSectionTimer = HUDTimerSection;
 	LastCheckPointTimer = HUDTimerWorld;
 
 }
