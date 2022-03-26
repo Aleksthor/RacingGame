@@ -203,7 +203,11 @@ void APlayerCar::Tick(float DeltaTime)
 		{
 			FRotator SteerAngle = FRotator(0.f, 170.f, 10.f);
 			SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), SteerAngle, DeltaTime, 5.f);
-		
+		}
+		else if (FMath::IsNearlyZero(DriftValue))
+		{
+			FRotator SteerAngle = FRotator(0.f, 180.f, 0.f);
+			SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), SteerAngle, DeltaTime, 5.f);
 		}
 		SetActorRotation(FRotator(PawnRotation.Pitch, Yaw.Yaw, PawnRotation.Roll));
 		PlayerMesh->SetRelativeRotation(SetRotation);
@@ -211,21 +215,25 @@ void APlayerCar::Tick(float DeltaTime)
 
 	if (bDrifting)
 	{
-		FRotator DriftAngle;
-		if (DriftValue > 0.f)
+		if (!FMath::IsNearlyZero(DriftValue))
 		{
-			DriftAngle = FRotator(0.f, -160.f, -15.f);
-		}
-		else
-		{
-			DriftAngle = FRotator(0.f, 160.f, 15.f);
-		}
+			FRotator DriftAngle;
+			if (DriftValue > 0.f)
+			{
+				DriftAngle = FRotator(0.f, -160.f, -15.f);
+			}
+			else
+			{
+				DriftAngle = FRotator(0.f, 160.f, 15.f);
+			}
 
-		SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), DriftAngle, DeltaTime, 5.f);
+			SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), DriftAngle, DeltaTime, 5.f);
 
 		
-		PlayerMesh->SetRelativeRotation(SetRotation);
-		//UE_LOG(LogTemp, Warning, TEXT("%f"), SetRotation.Yaw);
+			PlayerMesh->SetRelativeRotation(SetRotation);
+			//UE_LOG(LogTemp, Warning, TEXT("%f"), SetRotation.Yaw);
+		}
+		
 	}
 
 	if (bSpeedBoost)

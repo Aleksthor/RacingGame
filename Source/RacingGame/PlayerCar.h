@@ -66,6 +66,8 @@ public:
 	float CheckpointClock = 0.f;
 	float DriftValue;
 
+	
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
