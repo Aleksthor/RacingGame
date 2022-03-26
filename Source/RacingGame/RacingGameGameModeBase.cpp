@@ -97,12 +97,20 @@ void ARacingGameGameModeBase::Tick(float DeltaSeconds)
 			{
 				CurrentRound++;
 				CheckpointArray[0]->isValid = true;
+				CheckpointArray[0]->isHit = false;
 				CheckpointArray[1]->isValid = false;
+				CheckpointArray[1]->isHit = false;
 				CheckpointArray[2]->isValid = false;
+				CheckpointArray[2]->isHit = false;
 				CheckpointArray[3]->isValid = false;
+				CheckpointArray[3]->isHit = false;
 				CheckpointArray[4]->isValid = false;
+				CheckpointArray[4]->isHit = false;
 				CheckpointArray[5]->isValid = false;
+				CheckpointArray[5]->isHit = false;
 				CheckpointArray[6]->isValid = false;
+				CheckpointArray[6]->isHit = false;
+
 				CurrentCheckpoint = 0;
 				Round1Time = Player->WorldTimer;
 			}
@@ -111,13 +119,22 @@ void ARacingGameGameModeBase::Tick(float DeltaSeconds)
 			if (CurrentCheckpoint > 6) // Means Round is Over | Then reset colliders
 			{
 				CurrentRound++;
+
 				CheckpointArray[0]->isValid = true;
+				CheckpointArray[0]->isHit = false;
 				CheckpointArray[1]->isValid = false;
+				CheckpointArray[1]->isHit = false;
 				CheckpointArray[2]->isValid = false;
+				CheckpointArray[2]->isHit = false;
 				CheckpointArray[3]->isValid = false;
+				CheckpointArray[3]->isHit = false;
 				CheckpointArray[4]->isValid = false;
+				CheckpointArray[4]->isHit = false;
 				CheckpointArray[5]->isValid = false;
+				CheckpointArray[5]->isHit = false;
 				CheckpointArray[6]->isValid = false;
+				CheckpointArray[6]->isHit = false;
+
 				CurrentCheckpoint = 0;
 				Round2Time = Player->WorldTimer - Round1Time;
 			}

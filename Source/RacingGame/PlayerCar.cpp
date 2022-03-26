@@ -405,10 +405,10 @@ void APlayerCar::CheckImpactPoints()
 		//UseRotator = FMath::RInterpTo(PawnRotation, FRotator(0.f, 180.f, 0.f), DeltaTime, 5.f);
 
 		//UE_LOG(LogTemp, Warning, TEXT("HoverComponent In Air"));
-		HoverComponent1->LinearDamping = 1.f;
-		HoverComponent2->LinearDamping = 1.f;
-		HoverComponent3->LinearDamping = 1.f;
-		HoverComponent4->LinearDamping = 1.f;
+		HoverComponent1->LinearDamping = 0.5f;
+		HoverComponent2->LinearDamping = 0.5f;
+		HoverComponent3->LinearDamping = 0.5f;
+		HoverComponent4->LinearDamping = 0.5f;
 
 		HoverComponent1->AngularDamping = 1.f;
 		HoverComponent2->AngularDamping = 1.f;

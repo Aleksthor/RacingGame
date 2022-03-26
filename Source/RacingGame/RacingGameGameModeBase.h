@@ -37,6 +37,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 	int CurrentRound = 1;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
 	int CurrentCheckpoint = 0;
 
 	/** Checkpoint Variables*/
