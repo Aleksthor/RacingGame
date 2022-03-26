@@ -106,7 +106,7 @@ void APlayerCar::Tick(float DeltaTime)
 
 	doTimerTick();
 
-	UpdateClocks();
+	//UpdateClocks();
 
 
 	PawnRotation = GetActorRotation();
@@ -235,131 +235,6 @@ void APlayerCar::doTimerTick()
 	}
 }
 
-void APlayerCar::UpdateClocks()
-{
-	if (!bGameOver)
-	{
-		// WorldTimer in HUD
-
-		if (WorldTimer_Local > 60.f)
-		{
-			WorldTimer_Local -= 60.f;
-			WorldMinutes++;
-		}
-		HUDTimerWorld = FString::FromInt(WorldMinutes);
-		HUDTimerWorld += ":";
-		int WorldSeconds = UKismetMathLibrary::FFloor(WorldTimer_Local);
-		if (WorldSeconds < 10)
-		{
-			HUDTimerWorld += "0";
-		}
-		HUDTimerWorld += FString::FromInt(WorldSeconds);
-		HUDTimerWorld += ":";
-		int WorldDecimals = WorldTimer_Local * 100;
-		if (WorldDecimals < 1000 && WorldSeconds < 10)
-		{
-			HUDTimerWorld += "0";
-		}
-		HUDTimerWorld += FString::FromInt(WorldDecimals);
-		HUDTimerWorld.RemoveAt(5, 1);
-		HUDTimerWorld.RemoveAt(7, 1);
-
-
-		// SectionTimer in HUD
-
-		if (SectionTimer > 60.f)
-		{
-			SectionTimer -= 60.f;
-			SectionMinutes++;
-		}
-		HUDTimerSection = FString::FromInt(SectionMinutes);
-		HUDTimerSection += ":";
-
-		int SectionSeconds = UKismetMathLibrary::FFloor(SectionTimer);
-		if (SectionSeconds < 10)
-		{
-			HUDTimerSection += "0";
-		}
-		HUDTimerSection += FString::FromInt(SectionSeconds);
-		HUDTimerSection += ":";
-		int SectionDecimals = SectionTimer * 100;
-		if (SectionDecimals < 1000 && SectionSeconds < 10)
-		{
-			HUDTimerSection += "0";
-			HUDTimerSection += FString::FromInt(SectionDecimals);
-			HUDTimerSection.RemoveAt(5, 1);
-			HUDTimerSection.RemoveAt(7, 1);
-		}
-		else
-		{
-			HUDTimerSection += FString::FromInt(SectionDecimals);
-			HUDTimerSection.RemoveAt(5, 1);
-			HUDTimerSection.RemoveAt(7, 1);
-		}
-	
-
-
-		// SectionAggregate in HUD
-
-		if (SectionAggregate > 0.f)
-		{
-			HUDSectionAggregateString = "+";
-			if (SectionAggregate < 10.f)
-			{
-				HUDSectionAggregateString += "0";
-			}
-			SectionAggregateSeconds = UKismetMathLibrary::FFloor(SectionAggregate);
-			HUDSectionAggregateString += FString::FromInt(SectionAggregateSeconds);
-			HUDSectionAggregateString += ":";
-			int SectionAggragateDecimals = SectionAggregate * 100;
-			if (SectionAggragateDecimals < 1000 )
-			{
-				HUDSectionAggregateString += FString::FromInt(SectionAggragateDecimals);
-				HUDSectionAggregateString.RemoveAt(5, 1);
-				HUDSectionAggregateString.RemoveAt(7, 1);
-			}
-			else
-			{
-				HUDSectionAggregateString += FString::FromInt(SectionAggragateDecimals);
-				HUDSectionAggregateString.RemoveAt(5, 2);
-				HUDSectionAggregateString.RemoveAt(8, 2);
-			}
-		}
-		else
-		{
-			
-			if (SectionAggregate > -10.f)
-			{
-				HUDSectionAggregateString = "-";
-				HUDSectionAggregateString += "0";	
-				
-				SectionAggregateSeconds = UKismetMathLibrary::FFloor(SectionAggregate);
-				HUDSectionAggregateString += FString::FromInt(SectionAggregateSeconds);
-				HUDSectionAggregateString.RemoveAt(2, 1);
-			}
-			else
-			{	
-				SectionAggregateSeconds = UKismetMathLibrary::FFloor(SectionAggregate);
-				HUDSectionAggregateString += FString::FromInt(SectionAggregateSeconds);
-			}
-		
-			HUDSectionAggregateString += ":";
-			int SectionAggragateDecimals = SectionAggregate * 100;
-			if (SectionAggragateDecimals < 1000)
-			{
-				HUDSectionAggregateString += "0";
-				HUDSectionAggregateString += FString::FromInt(SectionAggragateDecimals);
-				HUDSectionAggregateString.RemoveAt(5, 1);
-			}
-			else
-			{
-				HUDSectionAggregateString += FString::FromInt(SectionAggragateDecimals);
-				HUDSectionAggregateString.RemoveAt(5, 2);
-			}
-		}
-	}
-
-}
 
 void APlayerCar::UpdateRotation(float Delta)
 {
@@ -512,8 +387,9 @@ void APlayerCar::CheckImpactPoints()
 
 void APlayerCar::SetLastCheckPointTimer()
 {
-	LastCheckPointSectionTimer = HUDTimerSection;
-	LastCheckPointTimer = HUDTimerWorld;
+
+	LastCheckPointSectionTimer = SectionTimer;
+	LastCheckPointTimer = WorldTimer;
 
 }
 

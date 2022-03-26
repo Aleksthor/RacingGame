@@ -131,9 +131,6 @@ public:
 	void doTimerTick();
 
 	UFUNCTION()
-	void UpdateClocks();
-
-	UFUNCTION()
 	void UpdateRotation(float Delta);
 
 	UFUNCTION()
@@ -196,19 +193,13 @@ public:
 	float SectionAggregate;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
-	FString HUDSectionAggregateString;
+	float LastCheckPointTimer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
-	FString HUDTimerWorld;
+	float LastCheckPointSectionTimer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
-	FString HUDTimerSection;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
-	FString LastCheckPointTimer;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
-	FString LastCheckPointSectionTimer;
+	float LastCheckPointSectionTimerAggregate;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
 	bool bJustHitCheckPoint = false;

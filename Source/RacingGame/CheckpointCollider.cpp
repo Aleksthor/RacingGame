@@ -41,8 +41,6 @@ void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AA
 	{
 		if (isValid)
 		{
-			Cast<APlayerCar>(OtherActor)->SetLastCheckPointTimer();
-			Cast<APlayerCar>(OtherActor)->bJustHitCheckPoint = true;
 			
 			isHit = true;
 
@@ -122,8 +120,10 @@ void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AA
 			default:
 				break;
 			}	
-			Cast<APlayerCar>(OtherActor)->SectionTimer = 0.f;
 			Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentCheckpoint++;
+			Cast<APlayerCar>(OtherActor)->SetLastCheckPointTimer();
+			Cast<APlayerCar>(OtherActor)->SectionTimer = 0.f;
+			Cast<APlayerCar>(OtherActor)->bJustHitCheckPoint = true;
 		}
 		else
 		{
