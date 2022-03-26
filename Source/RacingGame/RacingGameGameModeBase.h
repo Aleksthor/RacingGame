@@ -40,6 +40,13 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
 	int CurrentCheckpoint = 0;
 
+
+	FString CurrentLevel;
+
+	FString Level1 = "MOSSYMOOR";
+
+	FName Level1Name = "MOSSYMOOR";
+
 	/** Checkpoint Variables*/
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
@@ -105,6 +112,13 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 	float TotalTime;
 
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	float RoundBestTime;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	float TotalBestTime;
+
 	/** Functions */
 
 	UFUNCTION()
@@ -116,6 +130,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void LoadMap1();
 
+	UFUNCTION(BlueprintCallable)
+	void SaveGame();
+
+	UFUNCTION(BlueprintCallable)
+	void LoadGame();
 
 
 	/** Used for countdown before start */
