@@ -17,6 +17,8 @@ ARacingGameGameModeBase::ARacingGameGameModeBase()
 void ARacingGameGameModeBase::BeginPlay()
 {
 
+
+	LoadGame();
 	CurrentLevel = UGameplayStatics::GetCurrentLevelName(GetWorld());
 
 	if (CurrentLevel == Level1)
@@ -188,6 +190,7 @@ void ARacingGameGameModeBase::Tick(float DeltaSeconds)
 
 void ARacingGameGameModeBase::GameWon()
 {
+	SaveGame();
 	UE_LOG(LogTemp, Warning, TEXT("Game Won"));
 	FString FinalTimer = Player->LastCheckPointTimer;
 	Player->bGameOver = true;
@@ -209,62 +212,69 @@ void ARacingGameGameModeBase::SaveGame()
 	// Getting a RacingSaveGame Instance
 	URacingSaveGame* SaveInstance = Cast<URacingSaveGame>(UGameplayStatics::CreateSaveGameObject(URacingSaveGame::StaticClass()));
 
-	SaveInstance->Level1Stats.LevelName = CurrentLevel;
+	if (SaveInstance)
+	{
+		SaveInstance->Level1Stats.LevelName = CurrentLevel;
+
 	
-	// Check all sections
-	if (SaveInstance->Level1Stats.Section1Best > Section1BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section1Best))
-	{
-		SaveInstance->Level1Stats.Section1Best = Section1BestTime;
-	}
-	if (SaveInstance->Level1Stats.Section2Best > Section2BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section2Best))
-	{
-		SaveInstance->Level1Stats.Section2Best = Section2BestTime;
-	}
-	if (SaveInstance->Level1Stats.Section3Best > Section3BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section3Best))
-	{
-		SaveInstance->Level1Stats.Section3Best = Section3BestTime;
-	}
-	if (SaveInstance->Level1Stats.Section4Best > Section4BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section4Best))
-	{	
-		SaveInstance->Level1Stats.Section4Best = Section4BestTime;
-	}
-	if (SaveInstance->Level1Stats.Section5Best > Section5BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section5Best))
-	{
-		SaveInstance->Level1Stats.Section5Best = Section5BestTime;
-	}
-	if (SaveInstance->Level1Stats.Section6Best > Section6BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section6Best))
-	{
-		SaveInstance->Level1Stats.Section6Best = Section6BestTime;
-	}
-	if (SaveInstance->Level1Stats.Section7Best > Section7BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section7Best))
-	{
-		SaveInstance->Level1Stats.Section7Best = Section7BestTime;
+	
+		// Check all sections
+		if (SaveInstance->Level1Stats.Section1Best > Section1BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section1Best))
+		{
+			SaveInstance->Level1Stats.Section1Best = Section1BestTime;
+		}
+		if (SaveInstance->Level1Stats.Section2Best > Section2BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section2Best))
+		{
+			SaveInstance->Level1Stats.Section2Best = Section2BestTime;
+		}
+		if (SaveInstance->Level1Stats.Section3Best > Section3BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section3Best))
+		{
+			SaveInstance->Level1Stats.Section3Best = Section3BestTime;
+		}
+		if (SaveInstance->Level1Stats.Section4Best > Section4BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section4Best))
+		{	
+			SaveInstance->Level1Stats.Section4Best = Section4BestTime;
+		}
+		if (SaveInstance->Level1Stats.Section5Best > Section5BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section5Best))
+		{
+			SaveInstance->Level1Stats.Section5Best = Section5BestTime;
+		}
+		if (SaveInstance->Level1Stats.Section6Best > Section6BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section6Best))
+		{
+			SaveInstance->Level1Stats.Section6Best = Section6BestTime;
+		}
+		if (SaveInstance->Level1Stats.Section7Best > Section7BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section7Best))
+		{
+			SaveInstance->Level1Stats.Section7Best = Section7BestTime;
+		}
+
+		// Check all 3 rounds
+
+		if (SaveInstance->Level1Stats.RoundBest > Round1Time || FMath::IsNearlyZero(SaveInstance->Level1Stats.RoundBest))
+		{
+			SaveInstance->Level1Stats.RoundBest = Round1Time;
+		}
+
+		if (SaveInstance->Level1Stats.RoundBest > Round2Time || FMath::IsNearlyZero(SaveInstance->Level1Stats.RoundBest))
+		{
+			SaveInstance->Level1Stats.RoundBest = Round2Time;
+		}
+
+		if (SaveInstance->Level1Stats.RoundBest > Round3Time || FMath::IsNearlyZero(SaveInstance->Level1Stats.RoundBest))
+		{
+			SaveInstance->Level1Stats.RoundBest = Round3Time;
+		}
+
+		// Check Total Time for all 3 rounds
+
+		if (SaveInstance->Level1Stats.TotalBest > TotalTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.TotalBest))
+		{
+			SaveInstance->Level1Stats.TotalBest = TotalTime;
+		}
+
 	}
 
-	// Check all 3 rounds
-
-	if (SaveInstance->Level1Stats.RoundBest > Round1Time || FMath::IsNearlyZero(SaveInstance->Level1Stats.RoundBest))
-	{
-		SaveInstance->Level1Stats.RoundBest = Round1Time;
-	}
-
-	if (SaveInstance->Level1Stats.RoundBest > Round2Time || FMath::IsNearlyZero(SaveInstance->Level1Stats.RoundBest))
-	{
-		SaveInstance->Level1Stats.RoundBest = Round2Time;
-	}
-
-	if (SaveInstance->Level1Stats.RoundBest > Round3Time || FMath::IsNearlyZero(SaveInstance->Level1Stats.RoundBest))
-	{
-		SaveInstance->Level1Stats.RoundBest = Round3Time;
-	}
-
-	// Check Total Time for all 3 rounds
-
-	if (SaveInstance->Level1Stats.TotalBest > TotalTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.TotalBest))
-	{
-		SaveInstance->Level1Stats.TotalBest = TotalTime;
-	}
-
+	
 	
 
 	
@@ -282,18 +292,22 @@ void ARacingGameGameModeBase::LoadGame()
 
 	LoadInstance = Cast<URacingSaveGame>(UGameplayStatics::LoadGameFromSlot(LoadInstance->PlayerName, LoadInstance->UserIndex));
 
-	Section1BestTime = LoadInstance->Level1Stats.Section1Best;
-	Section2BestTime = LoadInstance->Level1Stats.Section2Best;
-	Section3BestTime = LoadInstance->Level1Stats.Section3Best;
-	Section4BestTime = LoadInstance->Level1Stats.Section4Best;
-	Section5BestTime = LoadInstance->Level1Stats.Section5Best;
-	Section6BestTime = LoadInstance->Level1Stats.Section6Best;
-	Section7BestTime = LoadInstance->Level1Stats.Section7Best;
+	if (LoadInstance)
+	{
+		Section1BestTime = LoadInstance->Level1Stats.Section1Best;
+		Section2BestTime = LoadInstance->Level1Stats.Section2Best;
+		Section3BestTime = LoadInstance->Level1Stats.Section3Best;
+		Section4BestTime = LoadInstance->Level1Stats.Section4Best;
+		Section5BestTime = LoadInstance->Level1Stats.Section5Best;
+		Section6BestTime = LoadInstance->Level1Stats.Section6Best;
+		Section7BestTime = LoadInstance->Level1Stats.Section7Best;
 
-	RoundBestTime = LoadInstance->Level1Stats.RoundBest;
-	TotalBestTime = LoadInstance->Level1Stats.TotalBest;
+		RoundBestTime = LoadInstance->Level1Stats.RoundBest;
+		TotalBestTime = LoadInstance->Level1Stats.TotalBest;
 
-	CurrentLevel = LoadInstance->Level1Stats.LevelName;
+		CurrentLevel = LoadInstance->Level1Stats.LevelName;
+	}
+	
 	
 
 }
