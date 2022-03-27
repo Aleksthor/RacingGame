@@ -321,14 +321,24 @@ void APlayerCar::UpdateMaxSpeed(float Delta)
 			bSpeedBoost = false;
 			SpeedBoostTimer = 2.f;
 		}
+		if (MovementComponent)
+		{
+		
 		float SetSpeed = FMath::FInterpTo(Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed, SpeedBoostSpeed, Delta, 10.f);
 		Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed = SetSpeed;
+
+		}
+		
 	}
 	else
 	{
-		//float SetSpeed = FMath::FInterpTo()
-		float SetSpeed = FMath::FInterpTo(Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed, PlayerMaxSpeed, Delta, 10.f);
-		Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed = 2500.f;
+		if (MovementComponent)
+		{
+
+			float SetSpeed = FMath::FInterpTo(Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed, PlayerMaxSpeed, Delta, 10.f);
+			Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed = 2500.f;
+
+		}
 	}
 
 

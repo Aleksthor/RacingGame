@@ -39,7 +39,7 @@ void UHoverComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 
 	// ...
 
-	if (IsValid(PlayerCar))
+	if (PlayerCar)
 	{
 
 		FVector WorldLocation = GetComponentLocation();

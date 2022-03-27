@@ -28,7 +28,7 @@ public:
 	TSubclassOf<class ACheckpointCollider> CheckpointColliderBP;
 
 	TArray<class ACheckpointCollider*> CheckpointArray;
-	ACheckpointCollider* tempEnemy;
+	ACheckpointCollider* tempCheckpoint;
 
 	class APlayerCar* Player{ nullptr };
 

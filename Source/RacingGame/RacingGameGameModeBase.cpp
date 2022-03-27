@@ -38,26 +38,26 @@ void ARacingGameGameModeBase::BeginPlay()
 		{
 
 			//SpawnCheckpoints
-			tempEnemy = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint1Vector, Checkpoint1Rotator);
-			CheckpointArray.Add(tempEnemy);
+			tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint1Vector, Checkpoint1Rotator);
+			CheckpointArray.Add(tempCheckpoint);
 
-			tempEnemy = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint2Vector, Checkpoint2Rotator);
-			CheckpointArray.Add(tempEnemy);
+			tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint2Vector, Checkpoint2Rotator);
+			CheckpointArray.Add(tempCheckpoint);
 
-			tempEnemy = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint3Vector, Checkpoint3Rotator);
-			CheckpointArray.Add(tempEnemy);
+			tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint3Vector, Checkpoint3Rotator);
+			CheckpointArray.Add(tempCheckpoint);
 
-			tempEnemy = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint4Vector, Checkpoint4Rotator);
-			CheckpointArray.Add(tempEnemy);
+			tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint4Vector, Checkpoint4Rotator);
+			CheckpointArray.Add(tempCheckpoint);
 
-			tempEnemy = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint5Vector, Checkpoint5Rotator);
-			CheckpointArray.Add(tempEnemy);
+			tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint5Vector, Checkpoint5Rotator);
+			CheckpointArray.Add(tempCheckpoint);
 
-			tempEnemy = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint6Vector, Checkpoint6Rotator);
-			CheckpointArray.Add(tempEnemy);
+			tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint6Vector, Checkpoint6Rotator);
+			CheckpointArray.Add(tempCheckpoint);
 	
-			tempEnemy = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint7Vector, Checkpoint7Rotator);
-			CheckpointArray.Add(tempEnemy);
+			tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint7Vector, Checkpoint7Rotator);
+			CheckpointArray.Add(tempCheckpoint);
 
 		
 		
@@ -95,7 +95,7 @@ void ARacingGameGameModeBase::Tick(float DeltaSeconds)
 
 void ARacingGameGameModeBase::CurrentRoundFunction()
 {
-	if (CurrentLevel == Level1)
+	if (CurrentLevel == Level1 && Player)
 	{
 		switch (CurrentRound)
 		{
