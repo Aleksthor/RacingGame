@@ -13,6 +13,7 @@
 #include "HoverComponent.h"
 #include "Bomb.h"
 #include "Engine/World.h"
+#include "RacingGameGameModeBase.h"
 
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/KismetTextLibrary.h"
@@ -90,7 +91,11 @@ void APlayerCar::BeginPlay()
 	Super::BeginPlay();
 	
 	Points = 0;
-
+	AGameModeBase* GameModeBase = GetWorld()->GetAuthGameMode();
+	if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint1))
+	{
+		FirstRun = true;
+	}
 
 	UKismetSystemLibrary::ExecuteConsoleCommand(GetWorld(), "DisableAllScreenMessages");
 }
