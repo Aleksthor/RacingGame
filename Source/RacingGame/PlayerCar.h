@@ -142,7 +142,7 @@ public:
 	void UpdateRotation(float Delta);
 
 	UFUNCTION()
-	void CheckImpactPoints();
+	void CheckImpactPoints(float Delta);
 
 	UFUNCTION()
 	void UpdateMaxSpeed(float Delta);
