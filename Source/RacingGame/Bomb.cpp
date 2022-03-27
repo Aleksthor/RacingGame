@@ -64,7 +64,7 @@ void ABomb::Tick(float DeltaTime)
 		}
 		else
 		{
-			OutputVector = PlayerForwardVector + PlayerUpVector * 0.2f;
+			OutputVector = PlayerForwardVector + PlayerUpVector * 0.10f;
 		}
 	
 
