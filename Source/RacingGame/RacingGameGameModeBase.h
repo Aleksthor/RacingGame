@@ -47,6 +47,11 @@ public:
 
 	FName Level1Name = "MOSSYMOOR";
 
+	/** Tick Functions */
+
+	void CurrentRoundFunction();
+
+
 	/** Checkpoint Variables*/
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
@@ -181,6 +186,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void LoadGame();
+
+	UFUNCTION()
+	void RespawnItems();
 
 
 	/** Used for countdown before start */

@@ -87,10 +87,14 @@ void ARacingGameGameModeBase::Tick(float DeltaSeconds)
 		}
 	}
 
+
+	CurrentRoundFunction();
+
 	
+}
 
-
-
+void ARacingGameGameModeBase::CurrentRoundFunction()
+{
 	if (CurrentLevel == Level1)
 	{
 		switch (CurrentRound)
@@ -98,6 +102,7 @@ void ARacingGameGameModeBase::Tick(float DeltaSeconds)
 		case 1:
 			if (CurrentCheckpoint > 6) // Means Round is Over | Then reset colliders
 			{
+				RespawnItems();
 				CurrentRound++;
 				CheckpointArray[0]->isValid = true;
 				CheckpointArray[0]->isHit = false;
@@ -121,8 +126,8 @@ void ARacingGameGameModeBase::Tick(float DeltaSeconds)
 		case 2:
 			if (CurrentCheckpoint > 6) // Means Round is Over | Then reset colliders
 			{
+				RespawnItems();
 				CurrentRound++;
-
 				CheckpointArray[0]->isValid = true;
 				CheckpointArray[0]->isHit = false;
 				CheckpointArray[1]->isValid = false;
@@ -182,10 +187,9 @@ void ARacingGameGameModeBase::Tick(float DeltaSeconds)
 			break;
 		}
 
-	
+
 	}
 
-	
 }
 
 void ARacingGameGameModeBase::GameWon()
@@ -417,4 +421,8 @@ void ARacingGameGameModeBase::LoadGame()
 	
 	
 
+}
+
+void ARacingGameGameModeBase::RespawnItems()
+{
 }
