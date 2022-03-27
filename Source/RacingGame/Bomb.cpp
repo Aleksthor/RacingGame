@@ -25,7 +25,7 @@ ABomb::ABomb()
 	BombMesh->SetupAttachment(Collider);
 	
 
-	Force = 200000.f;
+	Force = 100000.f;
 
 }
 
@@ -49,7 +49,7 @@ void ABomb::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-
+	
 
 	if (Player && !bAddedForce)
 	{
@@ -57,16 +57,28 @@ void ABomb::Tick(float DeltaTime)
 		PlayerForwardVector *= 3.f;
 
 		FVector PlayerUpVector = Player->GetActorUpVector();
-
-		FVector OutputVector = PlayerForwardVector + PlayerUpVector * 0.5f;
+		FVector OutputVector;
+		if (Player->ShootHigh)
+		{
+			OutputVector = PlayerForwardVector + PlayerUpVector * 0.4f;
+		}
+		else
+		{
+			OutputVector = PlayerForwardVector + PlayerUpVector * 0.10f;
+		}
+	
 
 		OutputVector.Normalize();
 
 		OutputVector *= Force;
 
 		Collider->AddImpulse(OutputVector);
-
-		bAddedForce = true;
+		TimesAddedForce++;
+		if (TimesAddedForce > 2 )
+		{
+			bAddedForce = true;
+		}
+		
 
 	}
 

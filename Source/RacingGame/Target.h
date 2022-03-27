@@ -48,4 +48,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TargetVariables")
 	float SpeedGiven;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TargetVariables")
+	float SpeedboostTimer = 3.f;
+
 };

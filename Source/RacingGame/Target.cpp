@@ -56,13 +56,19 @@ void ATarget::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherA
 
 	if (OtherActor->IsA<ABomb>())
 	{
-		
+		if (Player)
+		{	
 		Player->GivePoints(PointsGiven);
+		Player->SpeedBoostClock = 0.f;
 		Player->bSpeedBoost = true;
+		Player->SpeedBoostTimer += SpeedboostTimer;
 
 		// Raise Movement Speed by 300
 		UPawnMovementComponent* Movement = Player->GetMovementComponent();
 		Player->SpeedBoostSpeed = Cast<UFloatingPawnMovement>(Movement)->MaxSpeed + SpeedGiven;
+
+		}
+	
 		
 		// Just a dafety mesure so both object gets destroyed
 		Cast<ABomb>(OtherActor)->DestroyBomb();
@@ -76,5 +82,9 @@ void ATarget::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherA
 
 void ATarget::DestroyTarget()
 {
+	SetActorHiddenInGame(true);
+	SetActorEnableCollision(false);
+	this->Destroy();
+
 }
 
