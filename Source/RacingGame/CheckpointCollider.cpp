@@ -54,16 +54,19 @@ void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AA
 				switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentRound)
 				{
 				case 1:
-					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint1 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					
 					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint1;
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint1 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					break;
 				case 2:
-					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint8 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint8;
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint8 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					
 					break;
 				case 3:
-					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint15 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint15;
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint15 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+				
 					break;
 				default:
 					break;
@@ -82,16 +85,19 @@ void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AA
 				switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentRound)
 				{
 				case 1:
-					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint2 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint2;
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint2 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+				
 					break;
-				case 2:
-					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint9 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+				case 2:	
 					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint9;
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint9 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+				
 					break;
 				case 3:
-					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint16 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint16;
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint16 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					
 					break;
 				default:
 					break;
@@ -110,16 +116,18 @@ void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AA
 				switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentRound)
 				{
 				case 1:
-					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint3 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint3;
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint3 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					break;
 				case 2:
-					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint10 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint10;
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint10 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					
 					break;
 				case 3:
-					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint17 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint17;
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint17 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					
 					break;
 				default:
 					break;
@@ -138,16 +146,19 @@ void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AA
 				switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentRound)
 				{
 				case 1:
-					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint4 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					
 					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint4;
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint4 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					break;
 				case 2:
-					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint11 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					
 					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint11;
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint11 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					break;
 				case 3:
-					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint18 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					
 					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint18;
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint18 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					break;
 				default:
 					break;
@@ -165,16 +176,19 @@ void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AA
 				switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentRound)
 				{
 				case 1:
+				
+					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint5;	
 					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint5 = Cast<APlayerCar>(OtherActor)->WorldTimer;
-					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint5;
 					break;
 				case 2:
-					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint12 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					
 					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint12;
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint12 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					break;
 				case 3:
-					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint19 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					
 					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint19;
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint19 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					break;
 				default:
 					break;
@@ -192,16 +206,18 @@ void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AA
 				switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentRound)
 				{
 				case 1:
-					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint6 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint6;
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint6 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					break;
 				case 2:
-					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint13 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+	
 					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint13;
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint13 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					break;
 				case 3:
-					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint20 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					
 					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint20;
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint20 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					break;
 				default:
 					break;
@@ -219,16 +235,17 @@ void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AA
 				switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentRound)
 				{
 				case 1:
-					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint7 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint7;
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint7 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					break;
 				case 2:
-					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint14 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint14;
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint14 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					break;
 				case 3:
-					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint21 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					
 					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint21;
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint21 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					break;
 				default:
 					break;
