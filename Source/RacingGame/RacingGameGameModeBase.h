@@ -53,14 +53,14 @@ public:
 	int TotalCheckpoints = 7;
 
 	// Positions and Rotations
-	FVector Checkpoint1Vector = FVector(27500.f, 3100.f, 23350.f);
-	FRotator Checkpoint1Rotator = FRotator(0.f,100.f,0.f);
+	FVector Checkpoint1Vector = FVector(36400.f, 2700.f, 20850.f);
+	FRotator Checkpoint1Rotator = FRotator(0.f,10.f,0.f);
 
-	FVector Checkpoint2Vector = FVector(20100.f,400.f,15250.f);
-	FRotator Checkpoint2Rotator = FRotator(0.f,90.f,0.f);
+	FVector Checkpoint2Vector = FVector(9700.f,-8500.f,12650.f);
+	FRotator Checkpoint2Rotator = FRotator(0.f,-80.f,0.f);
 
-	FVector Checkpoint3Vector = FVector(8400.f,-17000.f,8500.f);
-	FRotator Checkpoint3Rotator = FRotator(0.f,60.f,0.f);
+	FVector Checkpoint3Vector = FVector(15800.f,-27000.f,5450.f);
+	FRotator Checkpoint3Rotator = FRotator(0.f,10.f,0.f);
 
 	FVector Checkpoint4Vector = FVector(22700.f,-11500.f,10800.f);
 	FRotator Checkpoint4Rotator = FRotator(0.f,-100.f,0.f);
@@ -71,8 +71,8 @@ public:
 	FVector Checkpoint6Vector = FVector(9400.f,11700.f,20300.f);
 	FRotator Checkpoint6Rotator = FRotator(0.f,20.f,0.f);
 
-	FVector Checkpoint7Vector = FVector(4800.f,6250.f,25000.f);
-	FRotator Checkpoint7Rotator = FRotator(0.f,-100.f,0.f);
+	FVector Checkpoint7Vector = FVector(-15100.f,7850.f,22600.f);
+	FRotator Checkpoint7Rotator = FRotator(0.f,0.f,0.f);
 
 	/** Save Data */
 

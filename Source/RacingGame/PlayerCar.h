@@ -75,6 +75,8 @@ public:
 	float CheckpointClock = 0.f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float DriftValue;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
+	bool ShootHigh = true;
 	
 
 
@@ -124,6 +126,12 @@ public:
 
 	UFUNCTION()
 	void StopShooting();
+
+	UFUNCTION()
+	void StartShootingLow();
+
+	UFUNCTION()
+	void StopShootingLow();
 
 	/** Tick Functions */
 

@@ -138,8 +138,12 @@ void APlayerCar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAxis("Forward", this, &APlayerCar::Forward);
 	PlayerInputComponent->BindAxis("Right", this, &APlayerCar::Right);
 
-	PlayerInputComponent->BindAction("Shoot", IE_Pressed, this, &APlayerCar::StartShooting);
-	PlayerInputComponent->BindAction("Shoot", IE_Released, this, &APlayerCar::StopShooting);
+	PlayerInputComponent->BindAction("ShootHigh", IE_Pressed, this, &APlayerCar::StartShooting);
+	PlayerInputComponent->BindAction("ShootHigh", IE_Released, this, &APlayerCar::StopShooting);
+
+
+	PlayerInputComponent->BindAction("ShootLow", IE_Pressed, this, &APlayerCar::StartShootingLow);
+	PlayerInputComponent->BindAction("ShootLow", IE_Released, this, &APlayerCar::StopShootingLow);
 
 	// Turn Camera with mouse
 	PlayerInputComponent->BindAxis("TurnCamera", this, &APawn::AddControllerYawInput);
@@ -207,13 +211,23 @@ void APlayerCar::StopDrift()
 void APlayerCar::StartShooting()
 {
 	GetWorld()->SpawnActor<ABomb>(BombBP, GetActorLocation() + GetActorForwardVector() * 100.f + GetActorUpVector() * 50.f, FRotator(0.f, PlayerMesh->GetComponentRotation().Yaw, 0.f));
-
+	ShootHigh = true;
 }
 
 void APlayerCar::StopShooting()
 {
 
 
+}
+
+void APlayerCar::StartShootingLow()
+{
+	GetWorld()->SpawnActor<ABomb>(BombBP, GetActorLocation() + GetActorForwardVector() * 100.f + GetActorUpVector() * 50.f, FRotator(0.f, PlayerMesh->GetComponentRotation().Yaw, 0.f));
+	ShootHigh = false;
+}
+
+void APlayerCar::StopShootingLow()
+{
 }
 
 

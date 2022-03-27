@@ -28,6 +28,9 @@ public:
 
 	float Force;
 	bool bAddedForce = false;
+	int TimesAddedForce = 0;
+
+
 
 protected:
 	// Called when the game starts or when spawned
