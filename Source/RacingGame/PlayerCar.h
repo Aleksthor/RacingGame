@@ -77,7 +77,8 @@ public:
 	float DriftValue;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	bool ShootHigh = true;
-	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
+	bool FirstRun = false;
 
 
 	/** Constructor Values | Also used later for reference to default values */

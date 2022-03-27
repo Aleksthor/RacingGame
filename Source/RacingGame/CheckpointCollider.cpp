@@ -54,7 +54,13 @@ void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AA
 				switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentRound)
 				{
 				case 1:
-					
+					if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint1))
+					{
+						if (Player)
+						{
+							Player->FirstRun = true;
+						}
+					}
 					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint1;
 					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint1 = Cast<APlayerCar>(OtherActor)->WorldTimer;
 					break;
