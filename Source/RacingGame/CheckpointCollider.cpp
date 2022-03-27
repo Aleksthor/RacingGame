@@ -51,6 +51,24 @@ void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AA
 
 				Cast<APlayerCar>(OtherActor)->SectionAggregate = Cast<APlayerCar>(OtherActor)->SectionTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->Section1BestTime;
 
+				switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentRound)
+				{
+				case 1:
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint1 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint1;
+					break;
+				case 2:
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint8 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint8;
+					break;
+				case 3:
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint15 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint15;
+					break;
+				default:
+					break;
+				}
+
 				if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->Section1BestTime) || Cast<APlayerCar>(OtherActor)->SectionTimer < Cast<ARacingGameGameModeBase>(GameModeBase)->Section1BestTime)
 				{
 					Cast<ARacingGameGameModeBase>(GameModeBase)->Section1BestTime = Cast<APlayerCar>(OtherActor)->SectionTimer;
@@ -60,6 +78,24 @@ void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AA
 			case 1:
 
 				Cast<APlayerCar>(OtherActor)->SectionAggregate = Cast<APlayerCar>(OtherActor)->SectionTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->Section2BestTime;
+
+				switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentRound)
+				{
+				case 1:
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint2 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint2;
+					break;
+				case 2:
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint9 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint9;
+					break;
+				case 3:
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint16 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint16;
+					break;
+				default:
+					break;
+				}
 
 				if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->Section2BestTime) || Cast<APlayerCar>(OtherActor)->SectionTimer < Cast<ARacingGameGameModeBase>(GameModeBase)->Section2BestTime)
 				{
@@ -71,6 +107,24 @@ void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AA
 
 				Cast<APlayerCar>(OtherActor)->SectionAggregate = Cast<APlayerCar>(OtherActor)->SectionTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->Section3BestTime;
 
+				switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentRound)
+				{
+				case 1:
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint3 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint3;
+					break;
+				case 2:
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint10 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint10;
+					break;
+				case 3:
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint17 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint17;
+					break;
+				default:
+					break;
+				}
+
 				if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->Section3BestTime) || Cast<APlayerCar>(OtherActor)->SectionTimer < Cast<ARacingGameGameModeBase>(GameModeBase)->Section3BestTime)
 				{
 					Cast<ARacingGameGameModeBase>(GameModeBase)->Section3BestTime = Cast<APlayerCar>(OtherActor)->SectionTimer;
@@ -81,6 +135,23 @@ void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AA
 
 				Cast<APlayerCar>(OtherActor)->SectionAggregate = Cast<APlayerCar>(OtherActor)->SectionTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->Section4BestTime;
 
+				switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentRound)
+				{
+				case 1:
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint4 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint4;
+					break;
+				case 2:
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint11 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint11;
+					break;
+				case 3:
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint18 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint18;
+					break;
+				default:
+					break;
+				}
 				if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->Section4BestTime) || Cast<APlayerCar>(OtherActor)->SectionTimer < Cast<ARacingGameGameModeBase>(GameModeBase)->Section4BestTime)
 				{
 					Cast<ARacingGameGameModeBase>(GameModeBase)->Section4BestTime = Cast<APlayerCar>(OtherActor)->SectionTimer;
@@ -91,6 +162,23 @@ void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AA
 
 				Cast<APlayerCar>(OtherActor)->SectionAggregate = Cast<APlayerCar>(OtherActor)->SectionTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->Section5BestTime;
 
+				switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentRound)
+				{
+				case 1:
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint5 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint5;
+					break;
+				case 2:
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint12 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint12;
+					break;
+				case 3:
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint19 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint19;
+					break;
+				default:
+					break;
+				}
 				if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->Section5BestTime) || Cast<APlayerCar>(OtherActor)->SectionTimer < Cast<ARacingGameGameModeBase>(GameModeBase)->Section5BestTime)
 				{
 					Cast<ARacingGameGameModeBase>(GameModeBase)->Section5BestTime = Cast<APlayerCar>(OtherActor)->SectionTimer;
@@ -101,6 +189,23 @@ void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AA
 
 				Cast<APlayerCar>(OtherActor)->SectionAggregate = Cast<APlayerCar>(OtherActor)->SectionTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->Section6BestTime;
 
+				switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentRound)
+				{
+				case 1:
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint6 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint6;
+					break;
+				case 2:
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint13 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint13;
+					break;
+				case 3:
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint20 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint20;
+					break;
+				default:
+					break;
+				}
 				if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->Section6BestTime) || Cast<APlayerCar>(OtherActor)->SectionTimer < Cast<ARacingGameGameModeBase>(GameModeBase)->Section6BestTime)
 				{
 					Cast<ARacingGameGameModeBase>(GameModeBase)->Section6BestTime = Cast<APlayerCar>(OtherActor)->SectionTimer;
@@ -110,7 +215,24 @@ void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AA
 			case 6:
 
 				Cast<APlayerCar>(OtherActor)->SectionAggregate = Cast<APlayerCar>(OtherActor)->SectionTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->Section7BestTime;
-
+				
+				switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentRound)
+				{
+				case 1:
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint7 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint7;
+					break;
+				case 2:
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint14 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint14;
+					break;
+				case 3:
+					Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint21 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint21;
+					break;
+				default:
+					break;
+				}
 				if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->Section7BestTime) || Cast<APlayerCar>(OtherActor)->SectionTimer < Cast<ARacingGameGameModeBase>(GameModeBase)->Section7BestTime)
 				{
 					Cast<ARacingGameGameModeBase>(GameModeBase)->Section7BestTime = Cast<APlayerCar>(OtherActor)->SectionTimer;

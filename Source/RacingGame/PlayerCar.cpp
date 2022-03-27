@@ -226,7 +226,6 @@ void APlayerCar::doTimerTick()
 	{
 		// Track timers for the whole track and all sections
 		WorldTimer += UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
-		WorldTimer_Local += UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
 		SectionTimer += UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
 	}
 }

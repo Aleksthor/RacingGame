@@ -271,6 +271,92 @@ void ARacingGameGameModeBase::SaveGame()
 			SaveInstance->Level1Stats.TotalBest = TotalTime;
 		}
 
+
+
+		if (SaveInstance->Level1Stats.WorldCheckpoint1Best > WorldCheckpoint1 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint1Best))
+		{
+			SaveInstance->Level1Stats.WorldCheckpoint1Best = WorldCheckpoint1;
+		}
+		if (SaveInstance->Level1Stats.WorldCheckpoint2Best > WorldCheckpoint2 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint2Best))
+		{
+			SaveInstance->Level1Stats.WorldCheckpoint2Best = WorldCheckpoint2;
+		}
+		if (SaveInstance->Level1Stats.WorldCheckpoint3Best > WorldCheckpoint3 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint3Best))
+		{
+			SaveInstance->Level1Stats.WorldCheckpoint3Best = WorldCheckpoint3;
+		}
+		if (SaveInstance->Level1Stats.WorldCheckpoint4Best > WorldCheckpoint4 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint4Best))
+		{
+			SaveInstance->Level1Stats.WorldCheckpoint4Best = WorldCheckpoint4;
+		}
+		if (SaveInstance->Level1Stats.WorldCheckpoint5Best > WorldCheckpoint5 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint5Best))
+		{
+			SaveInstance->Level1Stats.WorldCheckpoint5Best = WorldCheckpoint5;
+		}
+		if (SaveInstance->Level1Stats.WorldCheckpoint6Best > WorldCheckpoint6 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint6Best))
+		{
+			SaveInstance->Level1Stats.WorldCheckpoint6Best = WorldCheckpoint6;
+		}
+		if (SaveInstance->Level1Stats.WorldCheckpoint7Best > WorldCheckpoint7 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint7Best))
+		{
+			SaveInstance->Level1Stats.WorldCheckpoint7Best = WorldCheckpoint7;
+		}
+		if (SaveInstance->Level1Stats.WorldCheckpoint8Best > WorldCheckpoint8 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint8Best))
+		{
+			SaveInstance->Level1Stats.WorldCheckpoint8Best = WorldCheckpoint8;
+		}
+		if (SaveInstance->Level1Stats.WorldCheckpoint9Best > WorldCheckpoint9 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint9Best))
+		{
+			SaveInstance->Level1Stats.WorldCheckpoint9Best = WorldCheckpoint9;
+		}
+		if (SaveInstance->Level1Stats.WorldCheckpoint10Best > WorldCheckpoint10 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint10Best))
+		{
+			SaveInstance->Level1Stats.WorldCheckpoint10Best = WorldCheckpoint10;
+		}
+		if (SaveInstance->Level1Stats.WorldCheckpoint11Best > WorldCheckpoint11 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint11Best))
+		{
+			SaveInstance->Level1Stats.WorldCheckpoint11Best = WorldCheckpoint11;
+		}
+		if (SaveInstance->Level1Stats.WorldCheckpoint12Best > WorldCheckpoint12 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint12Best))
+		{
+			SaveInstance->Level1Stats.WorldCheckpoint12Best = WorldCheckpoint12;
+		}
+		if (SaveInstance->Level1Stats.WorldCheckpoint13Best > WorldCheckpoint13 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint13Best))
+		{
+			SaveInstance->Level1Stats.WorldCheckpoint13Best = WorldCheckpoint13;
+		}
+		if (SaveInstance->Level1Stats.WorldCheckpoint14Best > WorldCheckpoint14 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint14Best))
+		{
+			SaveInstance->Level1Stats.WorldCheckpoint14Best = WorldCheckpoint14;
+		}
+		if (SaveInstance->Level1Stats.WorldCheckpoint15Best > WorldCheckpoint15 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint15Best))
+		{
+			SaveInstance->Level1Stats.WorldCheckpoint15Best = WorldCheckpoint15;
+		}
+		if (SaveInstance->Level1Stats.WorldCheckpoint16Best > WorldCheckpoint16 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint16Best))
+		{
+			SaveInstance->Level1Stats.WorldCheckpoint16Best = WorldCheckpoint16;
+		}
+		if (SaveInstance->Level1Stats.WorldCheckpoint17Best > WorldCheckpoint17 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint17Best))
+		{
+			SaveInstance->Level1Stats.WorldCheckpoint17Best = WorldCheckpoint17;
+		}
+		if (SaveInstance->Level1Stats.WorldCheckpoint18Best > WorldCheckpoint18 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint18Best))
+		{
+			SaveInstance->Level1Stats.WorldCheckpoint18Best = WorldCheckpoint18;
+		}
+		if (SaveInstance->Level1Stats.WorldCheckpoint19Best > WorldCheckpoint19 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint19Best))
+		{
+			SaveInstance->Level1Stats.WorldCheckpoint19Best = WorldCheckpoint19;
+		}
+		if (SaveInstance->Level1Stats.WorldCheckpoint20Best > WorldCheckpoint20 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint20Best))
+		{
+			SaveInstance->Level1Stats.WorldCheckpoint20Best = WorldCheckpoint20;
+		}
+		if (SaveInstance->Level1Stats.WorldCheckpoint21Best > WorldCheckpoint21 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint21Best))
+		{
+			SaveInstance->Level1Stats.WorldCheckpoint21Best = WorldCheckpoint21;
+		}
 	}
 
 	
@@ -300,6 +386,28 @@ void ARacingGameGameModeBase::LoadGame()
 		Section5BestTime = LoadInstance->Level1Stats.Section5Best;
 		Section6BestTime = LoadInstance->Level1Stats.Section6Best;
 		Section7BestTime = LoadInstance->Level1Stats.Section7Best;
+
+		WorldCheckpoint1 = LoadInstance->Level1Stats.WorldCheckpoint1Best;
+		WorldCheckpoint2 = LoadInstance->Level1Stats.WorldCheckpoint2Best;
+		WorldCheckpoint3 = LoadInstance->Level1Stats.WorldCheckpoint3Best;
+		WorldCheckpoint4 = LoadInstance->Level1Stats.WorldCheckpoint4Best;
+		WorldCheckpoint5 = LoadInstance->Level1Stats.WorldCheckpoint5Best;
+		WorldCheckpoint6 = LoadInstance->Level1Stats.WorldCheckpoint6Best;
+		WorldCheckpoint7 = LoadInstance->Level1Stats.WorldCheckpoint7Best;
+		WorldCheckpoint8 = LoadInstance->Level1Stats.WorldCheckpoint8Best;
+		WorldCheckpoint9 = LoadInstance->Level1Stats.WorldCheckpoint9Best;
+		WorldCheckpoint10 = LoadInstance->Level1Stats.WorldCheckpoint10Best;
+		WorldCheckpoint11= LoadInstance->Level1Stats.WorldCheckpoint11Best;
+		WorldCheckpoint12= LoadInstance->Level1Stats.WorldCheckpoint12Best;
+		WorldCheckpoint13= LoadInstance->Level1Stats.WorldCheckpoint13Best;
+		WorldCheckpoint14= LoadInstance->Level1Stats.WorldCheckpoint14Best;
+		WorldCheckpoint15= LoadInstance->Level1Stats.WorldCheckpoint15Best;
+		WorldCheckpoint16= LoadInstance->Level1Stats.WorldCheckpoint16Best;
+		WorldCheckpoint17= LoadInstance->Level1Stats.WorldCheckpoint17Best;
+		WorldCheckpoint18= LoadInstance->Level1Stats.WorldCheckpoint18Best;
+		WorldCheckpoint19= LoadInstance->Level1Stats.WorldCheckpoint19Best;
+		WorldCheckpoint20= LoadInstance->Level1Stats.WorldCheckpoint20Best;
+		WorldCheckpoint21= LoadInstance->Level1Stats.WorldCheckpoint21Best;
 
 		RoundBestTime = LoadInstance->Level1Stats.RoundBest;
 		TotalBestTime = LoadInstance->Level1Stats.TotalBest;

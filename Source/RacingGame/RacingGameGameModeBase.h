@@ -119,6 +119,52 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 	float TotalBestTime;
 
+
+
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+		float WorldCheckpoint1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+		float WorldCheckpoint2;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+		float WorldCheckpoint3;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+		float WorldCheckpoint4;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+		float WorldCheckpoint5;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+		float WorldCheckpoint6;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+		float WorldCheckpoint7;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+		float WorldCheckpoint8;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+		float WorldCheckpoint9;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+		float WorldCheckpoint10;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+		float WorldCheckpoint11;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+		float WorldCheckpoint12;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+		float WorldCheckpoint13;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+		float WorldCheckpoint14;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+		float WorldCheckpoint15;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+		float WorldCheckpoint16;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+		float WorldCheckpoint17;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+		float WorldCheckpoint18;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+		float WorldCheckpoint19;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+		float WorldCheckpoint20;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+		float WorldCheckpoint21;
+
 	/** Functions */
 
 	UFUNCTION()
