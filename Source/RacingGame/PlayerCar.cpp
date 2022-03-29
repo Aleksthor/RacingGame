@@ -37,10 +37,10 @@ APlayerCar::APlayerCar()
 	/** Player Mesh Default Values */
 	PlayerMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("PlayerMesh"));
 	PlayerMesh->SetupAttachment(Collider);
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> Mesh(TEXT("SkeletalMesh'/Game/Meshes/Ducky/ducky.ducky'"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> Mesh(TEXT("SkeletalMesh'/Game/Meshes/Ducky/ducky2.ducky2'"));
 	PlayerMesh->SetSkeletalMesh(Mesh.Object);
 	PlayerMesh->SetRelativeScale3D(FVector(50.f, 50.f, 50.f));
-	PlayerMesh->SetRelativeLocation(FVector(0.f, 0.f, -90.f));
+	PlayerMesh->SetRelativeLocation(FVector(0.f, 10.f, -40.f));
 	PlayerMesh->SetRelativeRotation(FRotator(0.f, 180.f, 0.f));
 
 	/** Spring Arm Default Values */
