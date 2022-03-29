@@ -3,6 +3,9 @@
 
 #include "Bomb.h"
 #include "PlayerCar.h"
+#include "Bees.h"
+#include "Target.h"
+#include "BeeHive.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Components/SphereComponent.h"
 
@@ -97,7 +100,23 @@ void ABomb::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherAct
 		SetActorEnableCollision(false);
 		this->Destroy();
 	}
-
+	if (OtherActor->IsA<ATarget>())
+	{
+		SetActorHiddenInGame(true);
+		SetActorEnableCollision(false);
+		this->Destroy();
+	}
+	
+	ABees* Bee = Cast<ABees>(OtherActor);
+	if (Bee)
+	{
+		if (OtherComponent == Bee->HealthCollider)
+		{
+			SetActorHiddenInGame(true);
+			SetActorEnableCollision(false);
+			this->Destroy();
+		}
+	}
 
 }
 

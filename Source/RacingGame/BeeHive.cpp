@@ -19,6 +19,12 @@ ABeeHive::ABeeHive()
 	SpawnLocationComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SpawnLocationComponent"));
 	SpawnLocationComponent->SetupAttachment(Collider);
 	SpawnLocationComponent->InitSphereRadius(100.f);
+
+	BeehiveMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BeehiveMesh"));
+	BeehiveMesh->SetupAttachment(GetRootComponent());
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> Mesh(TEXT("StaticMesh'/Game/Meshes/Beehive/Beehive.Beehive'"));
+	BeehiveMesh->SetStaticMesh(Mesh.Object);
+	BeehiveMesh->SetRelativeScale3D(FVector(10.f, 10.f, 10.f));
 }
 
 // Called when the game starts or when spawned

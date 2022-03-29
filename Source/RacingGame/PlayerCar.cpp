@@ -227,7 +227,7 @@ void APlayerCar::StopDrift()
 void APlayerCar::StartShooting()
 {
 	ShootHigh = true;
-	GetWorld()->SpawnActor<ABomb>(BombBP, GetActorLocation() + GetActorForwardVector() * 100.f + GetActorUpVector() * 50.f, FRotator(0.f, PlayerMesh->GetComponentRotation().Yaw, 0.f));
+	GetWorld()->SpawnActor<ABomb>(BombBP, GetActorLocation() + GetActorForwardVector() * 100.f , FRotator(0.f, PlayerMesh->GetComponentRotation().Yaw, 0.f));
 	
 }
 
@@ -240,7 +240,7 @@ void APlayerCar::StopShooting()
 void APlayerCar::StartShootingLow()
 {
 	ShootHigh = false;
-	GetWorld()->SpawnActor<ABomb>(BombBP, GetActorLocation() + GetActorForwardVector() * 100.f + GetActorUpVector() * 50.f, FRotator(0.f, PlayerMesh->GetComponentRotation().Yaw, 0.f));
+	GetWorld()->SpawnActor<ABomb>(BombBP, GetActorLocation() + GetActorForwardVector() * 100.f , FRotator(0.f, PlayerMesh->GetComponentRotation().Yaw, 0.f));
 	
 }
 
@@ -329,6 +329,8 @@ void APlayerCar::UpdateRotation(float Delta)
 
 void APlayerCar::UpdateMaxSpeed(float Delta)
 {
+	CurrentSpeed = Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed;
+
 	if (bSpeedBoost)
 	{
 
@@ -352,9 +354,9 @@ void APlayerCar::UpdateMaxSpeed(float Delta)
 	{
 		if (MovementComponent)
 		{
-
-			float SetSpeed = FMath::FInterpTo(Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed, PlayerMaxSpeed, Delta, 10.f);
-			Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed = 2500.f;
+			SpeedBoostSpeed = PlayerMaxSpeed;
+			float SetSpeed = FMath::FInterpTo(Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed, PlayerMaxSpeed, Delta, 1.f);
+			Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed = SetSpeed;
 
 		}
 	}

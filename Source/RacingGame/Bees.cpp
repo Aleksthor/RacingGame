@@ -2,6 +2,7 @@
 
 
 #include "Bees.h"
+#include "Target.h"
 #include "Components/SphereComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"

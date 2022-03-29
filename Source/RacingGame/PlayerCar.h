@@ -61,6 +61,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
 	TSubclassOf<AHealthPack> HealthPackBP;
 
+	/** Constructor Values | Also used later for reference to default values */
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Defaults")
+	float PlayerMaxSpeed = 3000.f;
 
 	/** LOGIC */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
@@ -68,11 +73,13 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	bool bSpeedBoost = false;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
+	float CurrentSpeed;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float SpeedBoostTimer = 2.f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float SpeedBoostClock = 0.f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
-	float SpeedBoostSpeed = 3500.f;
+	float SpeedBoostSpeed = PlayerMaxSpeed;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float CheckpointTimer = 2.f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
@@ -91,11 +98,7 @@ public:
 	bool CanSpawnHealthPack = true;
 
 
-	/** Constructor Values | Also used later for reference to default values */
 
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Defaults")
-	float PlayerMaxSpeed = 2500.f;
 
 protected:
 	// Called when the game starts or when spawned
