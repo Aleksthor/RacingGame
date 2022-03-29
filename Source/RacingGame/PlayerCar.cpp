@@ -14,6 +14,7 @@
 #include "Bomb.h"
 #include "Engine/World.h"
 #include "RacingGameGameModeBase.h"
+#include "HealthPack.h"
 
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/KismetTextLibrary.h"
@@ -130,6 +131,16 @@ void APlayerCar::Tick(float DeltaTime)
 		bDead = true;
 	}
 
+	if (!CanSpawnHealthPack)
+	{
+		SpawnHealthPackClock += DeltaTime;
+
+		if (SpawnHealthPackClock > SpawnHealthPackTimer)
+		{
+			SpawnHealthPackClock = 0.f;
+			CanSpawnHealthPack = true;
+		}
+	}
 
 
 }
@@ -215,8 +226,9 @@ void APlayerCar::StopDrift()
 
 void APlayerCar::StartShooting()
 {
-	GetWorld()->SpawnActor<ABomb>(BombBP, GetActorLocation() + GetActorForwardVector() * 100.f + GetActorUpVector() * 50.f, FRotator(0.f, PlayerMesh->GetComponentRotation().Yaw, 0.f));
 	ShootHigh = true;
+	GetWorld()->SpawnActor<ABomb>(BombBP, GetActorLocation() + GetActorForwardVector() * 100.f + GetActorUpVector() * 50.f, FRotator(0.f, PlayerMesh->GetComponentRotation().Yaw, 0.f));
+	
 }
 
 void APlayerCar::StopShooting()
@@ -227,8 +239,9 @@ void APlayerCar::StopShooting()
 
 void APlayerCar::StartShootingLow()
 {
-	GetWorld()->SpawnActor<ABomb>(BombBP, GetActorLocation() + GetActorForwardVector() * 100.f + GetActorUpVector() * 50.f, FRotator(0.f, PlayerMesh->GetComponentRotation().Yaw, 0.f));
 	ShootHigh = false;
+	GetWorld()->SpawnActor<ABomb>(BombBP, GetActorLocation() + GetActorForwardVector() * 100.f + GetActorUpVector() * 50.f, FRotator(0.f, PlayerMesh->GetComponentRotation().Yaw, 0.f));
+	
 }
 
 void APlayerCar::StopShootingLow()
@@ -423,8 +436,16 @@ void APlayerCar::SetLastCheckPointTimer()
 
 void APlayerCar::LoseHealth()
 {
-
-	Lives--;
+	if (CanSpawnHealthPack)
+	{
+		GetWorld()->SpawnActor<AHealthPack>(HealthPackBP, GetActorLocation() - GetActorForwardVector() * 200.f, FRotator(0.f, PlayerMesh->GetComponentRotation().Yaw, 0.f));
+		CanSpawnHealthPack = false;
+	}
+	if (Lives > 0)
+	{
+		Lives--;
+	}
+	
 
 }
 

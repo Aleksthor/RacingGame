@@ -8,6 +8,7 @@
 
 class UHoverComponent;
 class ABomb;
+class AHealthPack;
 
 UCLASS()
 class RACINGGAME_API APlayerCar : public APawn
@@ -57,6 +58,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
 	TSubclassOf<ABomb> BombBP;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
+	TSubclassOf<AHealthPack> HealthPackBP;
+
 
 	/** LOGIC */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
@@ -79,6 +83,12 @@ public:
 	bool ShootHigh = true;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	bool FirstRun = false;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
+	float SpawnHealthPackTimer = 2.f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
+	float SpawnHealthPackClock = 0.f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
+	bool CanSpawnHealthPack = true;
 
 
 	/** Constructor Values | Also used later for reference to default values */

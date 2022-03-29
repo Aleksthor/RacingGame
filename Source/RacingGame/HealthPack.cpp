@@ -14,7 +14,7 @@ AHealthPack::AHealthPack()
 
 	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
 	SetRootComponent(Collider);
-	Collider->OnComponentBeginOverlap.AddDynamic(this, &AHealthPack::OnOverlap);
+	
 
 	HealthPackMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SpeedBoostMesh"));
 	HealthPackMesh->SetupAttachment(Collider);
@@ -31,6 +31,20 @@ void AHealthPack::BeginPlay()
 void AHealthPack::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (!Init)
+	{
+		InitClock += DeltaTime;
+		if (InitClock > InitTimer)
+		{
+			Collider->OnComponentBeginOverlap.AddDynamic(this, &AHealthPack::OnOverlap);
+			Init = true;
+		}
+
+
+	}
+	
+
 
 }
 

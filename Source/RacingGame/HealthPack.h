@@ -22,6 +22,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HealthPackVariables")
 		class UStaticMeshComponent* HealthPackMesh{ nullptr };
 
+	float InitTimer = 4.f;
+	float InitClock = 0.f;
+	bool Init = false;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
