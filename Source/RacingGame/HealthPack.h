@@ -22,7 +22,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HealthPackVariables")
 		class UStaticMeshComponent* HealthPackMesh{ nullptr };
 
-	float InitTimer = 4.f;
+	float InitTimer = 30.f;
 	float InitClock = 0.f;
 	bool Init = false;
 

@@ -18,6 +18,7 @@ AHealthPack::AHealthPack()
 
 	HealthPackMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SpeedBoostMesh"));
 	HealthPackMesh->SetupAttachment(Collider);
+	HealthPackMesh->SetHiddenInGame(false);
 }
 
 // Called when the game starts or when spawned
@@ -38,6 +39,7 @@ void AHealthPack::Tick(float DeltaTime)
 		if (InitClock > InitTimer)
 		{
 			Collider->OnComponentBeginOverlap.AddDynamic(this, &AHealthPack::OnOverlap);
+			HealthPackMesh->SetHiddenInGame(true);
 			Init = true;
 		}
 
