@@ -61,19 +61,19 @@ public:
 	FVector Checkpoint1Vector = FVector(36400.f, 2700.f, 20850.f);
 	FRotator Checkpoint1Rotator = FRotator(0.f,10.f,0.f);
 
-	FVector Checkpoint2Vector = FVector(9700.f,-8500.f,12650.f);
+	FVector Checkpoint2Vector = FVector(-3400.f,-6400.f,12350.f);
 	FRotator Checkpoint2Rotator = FRotator(0.f,-80.f,0.f);
 
 	FVector Checkpoint3Vector = FVector(15800.f,-27000.f,5450.f);
 	FRotator Checkpoint3Rotator = FRotator(0.f,10.f,0.f);
 
-	FVector Checkpoint4Vector = FVector(22700.f,-11500.f,10800.f);
+	FVector Checkpoint4Vector = FVector(19500.f,-16600.f,9600.f);
 	FRotator Checkpoint4Rotator = FRotator(0.f,-100.f,0.f);
 
-	FVector Checkpoint5Vector = FVector(19800.f,13900.f,17000.f);
-	FRotator Checkpoint5Rotator = FRotator(0.f,100.f,0.f);
+	FVector Checkpoint5Vector = FVector(42200.f,4650.f,13700.f);
+	FRotator Checkpoint5Rotator = FRotator(0.f,0.f,0.f);
 
-	FVector Checkpoint6Vector = FVector(9400.f,11700.f,20300.f);
+	FVector Checkpoint6Vector = FVector(10000.f,7100.f,20450.f);
 	FRotator Checkpoint6Rotator = FRotator(0.f,20.f,0.f);
 
 	FVector Checkpoint7Vector = FVector(-15100.f,7850.f,22600.f);
