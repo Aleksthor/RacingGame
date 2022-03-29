@@ -33,7 +33,7 @@ public:
 	FHitResult HitResult;
 
 
-	float LinearDampingDefault = 25.f;
+	float LinearDampingDefault = 8.f;
 	float AngularDampingDefault = 8.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HoverVariables")
