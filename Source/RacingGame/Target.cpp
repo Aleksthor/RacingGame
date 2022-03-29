@@ -47,7 +47,9 @@ void ATarget::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-
+	FRotator ActorRotation = GetActorRotation();
+	ActorRotation.Yaw += RotationSpeed;
+	SetActorRotation(ActorRotation);
 
 }
 

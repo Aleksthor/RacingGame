@@ -51,4 +51,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TargetVariables")
 	float SpeedboostTimer = 3.f;
 
+	float RotationSpeed = 1.f;
+
 };
