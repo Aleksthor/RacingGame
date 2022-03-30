@@ -32,6 +32,7 @@ void ASpeedBoosterv1::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+
 }
 
 
