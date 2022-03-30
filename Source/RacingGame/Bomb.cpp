@@ -28,7 +28,7 @@ ABomb::ABomb()
 	BombMesh->SetupAttachment(Collider);
 	
 
-	Force = 100000.f;
+	Force = 40000.f;
 
 }
 

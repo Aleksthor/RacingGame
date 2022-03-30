@@ -73,7 +73,7 @@ public:
 	FVector Checkpoint5Vector = FVector(42200.f,4650.f,13700.f);
 	FRotator Checkpoint5Rotator = FRotator(0.f,0.f,0.f);
 
-	FVector Checkpoint6Vector = FVector(10000.f,7100.f,20450.f);
+	FVector Checkpoint6Vector = FVector(9650.f,5600.f,20900.f);
 	FRotator Checkpoint6Rotator = FRotator(0.f,20.f,0.f);
 
 	FVector Checkpoint7Vector = FVector(-15100.f,7850.f,22600.f);
