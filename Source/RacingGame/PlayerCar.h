@@ -103,7 +103,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float ControllerStillClock = 0.f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
-	float ControllerStillTimer = 0.01f;
+	float ControllerStillTimer = 0.1f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	bool bControllerStillTimer = false;
 

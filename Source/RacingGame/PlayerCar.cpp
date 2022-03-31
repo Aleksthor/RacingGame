@@ -157,7 +157,7 @@ void APlayerCar::Tick(float DeltaTime)
 			}
 		
 
-			FRotator SpringArmRotator = FMath::RInterpTo(SpringArm->GetRelativeRotation(), FRotator(-15.f, 0.f, 0.f), UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 1.5f);
+			FRotator SpringArmRotator = FMath::RInterpTo(SpringArm->GetRelativeRotation(), FRotator(-15.f, 0.f, 0.f), UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 2.f);
 			Controller->SetControlRotation(SpringArm->GetComponentRotation());
 			SpringArm->SetRelativeRotation(SpringArmRotator);
 		}
