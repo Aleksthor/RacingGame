@@ -7,6 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "RacingSaveGame.h"
 #include "SpeedBoosterv1.h"
+#include "Target.h"
 
 ARacingGameGameModeBase::ARacingGameGameModeBase()
 {
@@ -157,6 +158,7 @@ void ARacingGameGameModeBase::CurrentRoundFunction()
 			{
 				Round3Time = Player->WorldTimer - Round2Time;
 				TotalTime = Player->WorldTimer;
+				TotalPoints = Player->Points;
 				GameWon();
 			}
 
@@ -439,40 +441,140 @@ void ARacingGameGameModeBase::InitItems()
 	{
 		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost1Vector, SpeedBoost1Rotator);
 		SpeedBoostArray.Add(tempSpeedBoost);
+		SpeedBoostArray[0]->SetActorHiddenInGame(false);
+		SpeedBoostArray[0]->SetActorEnableCollision(true);
 
 		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost2Vector, SpeedBoost2Rotator);
 		SpeedBoostArray.Add(tempSpeedBoost);
+		SpeedBoostArray[1]->SetActorHiddenInGame(false);
+		SpeedBoostArray[1]->SetActorEnableCollision(true);
 
 		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost3Vector, SpeedBoost3Rotator);
 		SpeedBoostArray.Add(tempSpeedBoost);
+		SpeedBoostArray[2]->SetActorHiddenInGame(false);
+		SpeedBoostArray[2]->SetActorEnableCollision(true);
 
 		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost4Vector, SpeedBoost4Rotator);
 		SpeedBoostArray.Add(tempSpeedBoost);
+		SpeedBoostArray[3]->SetActorHiddenInGame(false);
+		SpeedBoostArray[3]->SetActorEnableCollision(true);
 
 		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost5Vector, SpeedBoost5Rotator);
 		SpeedBoostArray.Add(tempSpeedBoost);
+		SpeedBoostArray[4]->SetActorHiddenInGame(false);
+		SpeedBoostArray[4]->SetActorEnableCollision(true);
 
 		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost6Vector, SpeedBoost6Rotator);
 		SpeedBoostArray.Add(tempSpeedBoost);
+		SpeedBoostArray[5]->SetActorHiddenInGame(false);
+		SpeedBoostArray[5]->SetActorEnableCollision(true);
 
 		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost7Vector, SpeedBoost7Rotator);
 		SpeedBoostArray.Add(tempSpeedBoost);
+		SpeedBoostArray[6]->SetActorHiddenInGame(false);
+		SpeedBoostArray[6]->SetActorEnableCollision(true);
 
 		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost8Vector, SpeedBoost8Rotator);
 		SpeedBoostArray.Add(tempSpeedBoost);
+		SpeedBoostArray[7]->SetActorHiddenInGame(false);
+		SpeedBoostArray[7]->SetActorEnableCollision(true);
 
 		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost9Vector, SpeedBoost9Rotator);
 		SpeedBoostArray.Add(tempSpeedBoost);
+		SpeedBoostArray[8]->SetActorHiddenInGame(false);
+		SpeedBoostArray[8]->SetActorEnableCollision(true);
 
 		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost10Vector, SpeedBoost10Rotator);
 		SpeedBoostArray.Add(tempSpeedBoost);
+		SpeedBoostArray[9]->SetActorHiddenInGame(false);
+		SpeedBoostArray[9]->SetActorEnableCollision(true);
 
-		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost11Vector, SpeedBoost11Rotator);
-		SpeedBoostArray.Add(tempSpeedBoost);
 
 
 
 	}
+
+
+
+
+	// Targets
+
+
+	if (World)
+	{
+		
+		tempTarget = World->SpawnActor<ATarget>(TargetBP, Target1Vector, Target1Rotator);
+		TargetArray.Add(tempTarget);
+		TargetArray[0]->SetActorHiddenInGame(false);
+		TargetArray[0]->SetActorEnableCollision(true);
+
+		tempTarget = World->SpawnActor<ATarget>(TargetBP, Target2Vector, Target2Rotator);
+		TargetArray.Add(tempTarget);
+		TargetArray[1]->SetActorHiddenInGame(false);
+		TargetArray[1]->SetActorEnableCollision(true);
+
+		tempTarget = World->SpawnActor<ATarget>(TargetBP, Target3Vector, Target3Rotator);
+		TargetArray.Add(tempTarget);
+		TargetArray[2]->SetActorHiddenInGame(false);
+		TargetArray[2]->SetActorEnableCollision(true);
+
+		tempTarget = World->SpawnActor<ATarget>(TargetBP, Target4Vector, Target4Rotator);
+		TargetArray.Add(tempTarget);
+		TargetArray[3]->SetActorHiddenInGame(false);
+		TargetArray[3]->SetActorEnableCollision(true);
+
+		tempTarget = World->SpawnActor<ATarget>(TargetBP, Target5Vector, Target5Rotator);
+		TargetArray.Add(tempTarget);
+		TargetArray[4]->SetActorHiddenInGame(false);
+		TargetArray[4]->SetActorEnableCollision(true);
+
+		tempTarget = World->SpawnActor<ATarget>(TargetBP, Target6Vector, Target6Rotator);
+		TargetArray.Add(tempTarget);
+		TargetArray[5]->SetActorHiddenInGame(false);
+		TargetArray[5]->SetActorEnableCollision(true);
+
+		tempTarget = World->SpawnActor<ATarget>(TargetBP, Target7Vector, Target7Rotator);
+		TargetArray.Add(tempTarget);
+		TargetArray[6]->SetActorHiddenInGame(false);
+		TargetArray[6]->SetActorEnableCollision(true);
+
+		tempTarget = World->SpawnActor<ATarget>(TargetBP, Target8Vector, Target8Rotator);
+		TargetArray.Add(tempTarget);
+		TargetArray[7]->SetActorHiddenInGame(false);
+		TargetArray[7]->SetActorEnableCollision(true);
+
+		tempTarget = World->SpawnActor<ATarget>(TargetBP, Target9Vector, Target9Rotator);
+		TargetArray.Add(tempTarget);
+		TargetArray[8]->SetActorHiddenInGame(false);
+		TargetArray[8]->SetActorEnableCollision(true);
+
+		tempTarget = World->SpawnActor<ATarget>(TargetBP, Target10Vector, Target10Rotator);
+		TargetArray.Add(tempTarget);
+		TargetArray[9]->SetActorHiddenInGame(false);
+		TargetArray[9]->SetActorEnableCollision(true);
+
+		tempTarget = World->SpawnActor<ATarget>(TargetBP, Target11Vector, Target11Rotator);
+		TargetArray.Add(tempTarget);
+		TargetArray[10]->SetActorHiddenInGame(false);
+		TargetArray[10]->SetActorEnableCollision(true);
+
+		tempTarget = World->SpawnActor<ATarget>(TargetBP, Target12Vector, Target12Rotator);
+		TargetArray.Add(tempTarget);
+		TargetArray[11]->SetActorHiddenInGame(false);
+		TargetArray[11]->SetActorEnableCollision(true);
+
+		tempTarget = World->SpawnActor<ATarget>(TargetBP, Target13Vector, Target13Rotator);
+		TargetArray.Add(tempTarget);
+		TargetArray[12]->SetActorHiddenInGame(false);
+		TargetArray[12]->SetActorEnableCollision(true);
+
+		tempTarget = World->SpawnActor<ATarget>(TargetBP, Target14Vector, Target14Rotator);
+		TargetArray.Add(tempTarget);
+		TargetArray[13]->SetActorHiddenInGame(false);
+		TargetArray[13]->SetActorEnableCollision(true);
+		
+	}
+
 }
 
 void ARacingGameGameModeBase::RespawnItems()
@@ -487,7 +589,13 @@ void ARacingGameGameModeBase::RespawnItems()
 			SpeedBoostArray[i]->isHit = false;
 		}
 	}
-
-
-	
+	for (int i{}; i < TargetArray.Num(); i++)
+	{
+		if (TargetArray[i]->isHit)
+		{
+			TargetArray[i]->SetActorEnableCollision(true);
+			TargetArray[i]->SetActorHiddenInGame(false);
+			TargetArray[i]->isHit = false;
+		}
+	}
 }

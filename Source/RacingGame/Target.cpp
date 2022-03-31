@@ -71,7 +71,7 @@ void ATarget::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherA
 
 		}
 	
-		
+		isHit = true;
 		// Just a dafety mesure so both object gets destroyed
 		Cast<ABomb>(OtherActor)->DestroyBomb();
 		SetActorHiddenInGame(true);

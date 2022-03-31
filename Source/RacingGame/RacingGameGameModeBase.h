@@ -124,11 +124,53 @@ public:
 	FVector SpeedBoost9Vector = FVector(32940.f, -12470.f, 11220.f);
 	FRotator SpeedBoost9Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector SpeedBoost10Vector = FVector(39460.f, -10770.f, 13960.f);
-	FRotator SpeedBoost10Rotator = FRotator(0.f, -40.f, 0.f);
+	FVector SpeedBoost10Vector = FVector(10580.f, 9250.f, 20530.f);
+	FRotator SpeedBoost10Rotator = FRotator(0.f, 70.f, 0.f);
 
-	FVector SpeedBoost11Vector = FVector(10580.f, 9250.f, 20530.f);
-	FRotator SpeedBoost11Rotator = FRotator(0.f, 70.f, 0.f);
+
+	// Targets
+
+	FVector Target1Vector = FVector(30800.f, -5950.f, 17660.f);
+	FRotator Target1Rotator = FRotator(0.f, 50.f, 0.f);
+
+	FVector Target2Vector = FVector(37110.f, -530.f, 19910.f);
+	FRotator Target2Rotator = FRotator(0.f, 120.f, 0.f);
+
+	FVector Target3Vector = FVector(33280.f, 7770.f, 22190.f);
+	FRotator Target3Rotator = FRotator(0.f, -140.f, 0.f);
+
+	FVector Target4Vector = FVector(44690.f, -27970.f, 5940.f);
+	FRotator Target4Rotator = FRotator(0.f, 160.f, 0.f);
+
+	FVector Target5Vector = FVector(45840.f, -27500.f, 5970.f);
+	FRotator Target5Rotator = FRotator(0.f, 170.f, 0.f);
+
+	FVector Target6Vector = FVector(46660.f, -26830.f, 6060.f);
+	FRotator Target6Rotator = FRotator(0.f, 190.f, 0.f);
+
+	FVector Target7Vector = FVector(35550.f, -13600.f, 11850.f);
+	FRotator Target7Rotator = FRotator(0.f, 0.f, 0.f);
+
+	FVector Target8Vector = FVector(43250.f, 4420.f, 13950.f);
+	FRotator Target8Rotator = FRotator(0.f, -120.f, 0.f);
+
+	FVector Target9Vector = FVector(32070.f, 14190.f, 14960.f);
+	FRotator Target9Rotator = FRotator(0.f, -70.f, 0.f);
+
+	FVector Target10Vector = FVector(-15700.f, 14060.f, 22710.f);
+	FRotator Target10Rotator = FRotator(0.f, -70.f, 0.f);
+
+	FVector Target11Vector = FVector(-6950.f, 10310.f, 24510.f);
+	FRotator Target11Rotator = FRotator(0.f, 110.f, 0.f);
+
+	FVector Target12Vector = FVector(34950.f, -13050.f, 12070.f);
+	FRotator Target12Rotator = FRotator(0.f, 0.f, 0.f);
+
+	FVector Target13Vector = FVector(6220.f, 2660.f, 21680.f);
+	FRotator Target13Rotator = FRotator(0.f, 0.f, 0.f);
+
+	FVector Target14Vector = FVector(3090.f, 150.f, 21990.f);
+	FRotator Target14Rotator = FRotator(0.f, 0.f, 0.f);
 
 	/** Save Data */
 
@@ -174,6 +216,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 	float TotalBestTime;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	int TotalPoints;
 
 
 
