@@ -55,29 +55,29 @@ public:
 	/** Checkpoint Variables*/
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-	int TotalCheckpoints = 7;
+	int TotalCheckpoints = 6;
 
 	// Positions and Rotations
-	FVector Checkpoint1Vector = FVector(36400.f, 2700.f, 20850.f);
-	FRotator Checkpoint1Rotator = FRotator(0.f,10.f,0.f);
+	FVector Checkpoint1Vector = FVector(30700.f, 5700.f, 22750.f);
+	FRotator Checkpoint1Rotator = FRotator(0.f,-60.f,0.f);
 
-	FVector Checkpoint2Vector = FVector(-3400.f,-6400.f,12350.f);
-	FRotator Checkpoint2Rotator = FRotator(0.f,-80.f,0.f);
+	FVector Checkpoint2Vector = FVector(5900.f,-6600.f,13000.f);
+	FRotator Checkpoint2Rotator = FRotator(0.f,90.f,0.f);
 
-	FVector Checkpoint3Vector = FVector(15800.f,-27000.f,5450.f);
-	FRotator Checkpoint3Rotator = FRotator(0.f,10.f,0.f);
+	FVector Checkpoint3Vector = FVector(44800.f,-23500.f,5950.f);
+	FRotator Checkpoint3Rotator = FRotator(0.f,-20.f,0.f);
 
-	FVector Checkpoint4Vector = FVector(19500.f,-16600.f,9600.f);
-	FRotator Checkpoint4Rotator = FRotator(0.f,-100.f,0.f);
+	FVector Checkpoint4Vector = FVector(40340.f,-8440.f,13550.f);
+	FRotator Checkpoint4Rotator = FRotator(0.f,-30.f,0.f);
 
-	FVector Checkpoint5Vector = FVector(42200.f,4650.f,13700.f);
-	FRotator Checkpoint5Rotator = FRotator(0.f,0.f,0.f);
+	FVector Checkpoint5Vector = FVector(26100.f,12790.f,16100.f);
+	FRotator Checkpoint5Rotator = FRotator(0.f,-90.f,0.f);
 
-	FVector Checkpoint6Vector = FVector(9650.f,5600.f,20900.f);
+	FVector Checkpoint6Vector = FVector(-14850.f,7550.f,22500.f);
 	FRotator Checkpoint6Rotator = FRotator(0.f,20.f,0.f);
 
-	FVector Checkpoint7Vector = FVector(-15100.f,7850.f,22600.f);
-	FRotator Checkpoint7Rotator = FRotator(0.f,0.f,0.f);
+	/*FVector Checkpoint7Vector = FVector(-14850.f, 7550.f, 22500.f);
+	FRotator Checkpoint7Rotator = FRotator(0.f, 20.f, 0.f);*/
 
 	/** Save Data */
 
@@ -102,8 +102,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 	float Section6BestTime;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-	float Section7BestTime;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	//float Section7BestTime;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 	float Round1Time;
@@ -139,8 +139,8 @@ public:
 		float WorldCheckpoint5;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 		float WorldCheckpoint6;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-		float WorldCheckpoint7;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	//	float WorldCheckpoint7;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 		float WorldCheckpoint8;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
@@ -153,8 +153,8 @@ public:
 		float WorldCheckpoint12;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 		float WorldCheckpoint13;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-		float WorldCheckpoint14;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	//	float WorldCheckpoint14;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 		float WorldCheckpoint15;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
@@ -167,8 +167,8 @@ public:
 		float WorldCheckpoint19;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 		float WorldCheckpoint20;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-		float WorldCheckpoint21;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	//	float WorldCheckpoint21;
 
 	/** Functions */
 

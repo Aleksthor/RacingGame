@@ -4,12 +4,14 @@
 #include "Bees.h"
 #include "Target.h"
 #include "Components/SphereComponent.h"
-#include "Components/CapsuleComponent.h"
+
 #include "GameFramework/FloatingPawnMovement.h"
 #include "GameFramework/PawnMovementComponent.h"
 #include "PlayerCar.h"
 #include "Bomb.h"
 #include "AIController.h"
+
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
 ABees::ABees()
@@ -17,29 +19,28 @@ ABees::ABees()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	Root = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Root"));
-	SetRootComponent(Root);
-
+	HealthCollider = CreateDefaultSubobject<USphereComponent>(TEXT("HealthCollider"));
+	SetRootComponent(HealthCollider);
+	HealthCollider->InitSphereRadius(25.f);
 	
 	PlayerDetectionCollider = CreateDefaultSubobject<USphereComponent>(TEXT("PlayerDetectionCollider"));
-	PlayerDetectionCollider->SetupAttachment(RootComponent);
+	PlayerDetectionCollider->SetupAttachment(GetRootComponent());
 	PlayerDetectionCollider->InitSphereRadius(4000.f);
 
-	HealthCollider = CreateDefaultSubobject<USphereComponent>(TEXT("HealthCollider"));
-	HealthCollider->SetupAttachment(RootComponent);
-	HealthCollider->InitSphereRadius(25.f);
+	
 
 	AttackCollider = CreateDefaultSubobject<USphereComponent>(TEXT("AttackCollider"));
-	AttackCollider->SetupAttachment(RootComponent);
+	AttackCollider->SetupAttachment(GetRootComponent());
 	AttackCollider->InitSphereRadius(60.f);
 
 	/** Movement Component Default Values*/
 	MovementComponent = CreateDefaultSubobject<UPawnMovementComponent, UFloatingPawnMovement>(TEXT("MovementComponent"));
-	MovementComponent->UpdatedComponent = Root;
+	MovementComponent->UpdatedComponent = GetRootComponent();
 	Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed = 2000.f;
+	
 
 	BeeMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BeeMesh"));
-	BeeMesh->SetupAttachment(RootComponent);
+	BeeMesh->SetupAttachment(GetRootComponent());
 
 
 	
@@ -96,9 +97,10 @@ void ABees::Tick(float DeltaTime)
 		APlayerCar* Player = Cast<APlayerCar>(Pawn);
 
 		AIController->MoveToActor(Player, 10.f);
-		AIController->SetFocus(Player);
+		
 	}
-
+	BeeMesh->SetWorldRotation(GetActorRotation());
+	
 }
 
 // Called to bind functionality to input
@@ -114,7 +116,7 @@ void ABees::OnOverlapDetection(UPrimitiveComponent* OverlappedComponent, AActor*
 	if (Player && AIController)
 	{
 		bOverlapping = true;
-		
+		AIController->SetFocus(Player);
 	}
 }
 

@@ -56,8 +56,6 @@ void ARacingGameGameModeBase::BeginPlay()
 			tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint6Vector, Checkpoint6Rotator);
 			CheckpointArray.Add(tempCheckpoint);
 	
-			tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint7Vector, Checkpoint7Rotator);
-			CheckpointArray.Add(tempCheckpoint);
 
 		
 		
@@ -100,7 +98,7 @@ void ARacingGameGameModeBase::CurrentRoundFunction()
 		switch (CurrentRound)
 		{
 		case 1:
-			if (CurrentCheckpoint > 6) // Means Round is Over | Then reset colliders
+			if (CurrentCheckpoint > 5) // Means Round is Over | Then reset colliders
 			{
 				RespawnItems();
 				CurrentRound++;
@@ -116,15 +114,15 @@ void ARacingGameGameModeBase::CurrentRoundFunction()
 				CheckpointArray[4]->isHit = false;
 				CheckpointArray[5]->isValid = false;
 				CheckpointArray[5]->isHit = false;
-				CheckpointArray[6]->isValid = false;
-				CheckpointArray[6]->isHit = false;
+			/*	CheckpointArray[6]->isValid = false;
+				CheckpointArray[6]->isHit = false;*/
 
 				CurrentCheckpoint = 0;
 				Round1Time = Player->WorldTimer;
 			}
 			break;
 		case 2:
-			if (CurrentCheckpoint > 6) // Means Round is Over | Then reset colliders
+			if (CurrentCheckpoint > 5) // Means Round is Over | Then reset colliders
 			{
 				RespawnItems();
 				CurrentRound++;
@@ -140,15 +138,15 @@ void ARacingGameGameModeBase::CurrentRoundFunction()
 				CheckpointArray[4]->isHit = false;
 				CheckpointArray[5]->isValid = false;
 				CheckpointArray[5]->isHit = false;
-				CheckpointArray[6]->isValid = false;
-				CheckpointArray[6]->isHit = false;
+			/*	CheckpointArray[6]->isValid = false;
+				CheckpointArray[6]->isHit = false;*/
 
 				CurrentCheckpoint = 0;
 				Round2Time = Player->WorldTimer - Round1Time;
 			}
 			break;
 		case 3:
-			if (CurrentCheckpoint > 6) // Means Round is Over | Then reset colliders
+			if (CurrentCheckpoint > 5) // Means Round is Over | Then reset colliders
 			{
 				Round3Time = Player->WorldTimer - Round2Time;
 				TotalTime = Player->WorldTimer;
@@ -180,8 +178,8 @@ void ARacingGameGameModeBase::CurrentRoundFunction()
 		case 5:
 			CheckpointArray[5]->isValid = true;
 			break;
-		case 6:
-			CheckpointArray[6]->isValid = true;
+	/*	case 6:
+			CheckpointArray[6]->isValid = true;*/
 			break;
 		default:
 			break;
@@ -246,10 +244,10 @@ void ARacingGameGameModeBase::SaveGame()
 		{
 			SaveInstance->Level1Stats.Section6Best = Section6BestTime;
 		}
-		if (SaveInstance->Level1Stats.Section7Best > Section7BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section7Best))
+	/*	if (SaveInstance->Level1Stats.Section7Best > Section7BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section7Best))
 		{
 			SaveInstance->Level1Stats.Section7Best = Section7BestTime;
-		}
+		}*/
 
 		// Check all 3 rounds
 
@@ -301,10 +299,10 @@ void ARacingGameGameModeBase::SaveGame()
 		{
 			SaveInstance->Level1Stats.WorldCheckpoint6Best = WorldCheckpoint6;
 		}
-		if (SaveInstance->Level1Stats.WorldCheckpoint7Best > WorldCheckpoint7 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint7Best))
-		{
-			SaveInstance->Level1Stats.WorldCheckpoint7Best = WorldCheckpoint7;
-		}
+		//if (SaveInstance->Level1Stats.WorldCheckpoint7Best > WorldCheckpoint7 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint7Best))
+		//{
+		//	SaveInstance->Level1Stats.WorldCheckpoint7Best = WorldCheckpoint7;
+		//}
 		if (SaveInstance->Level1Stats.WorldCheckpoint8Best > WorldCheckpoint8 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint8Best))
 		{
 			SaveInstance->Level1Stats.WorldCheckpoint8Best = WorldCheckpoint8;
@@ -329,10 +327,10 @@ void ARacingGameGameModeBase::SaveGame()
 		{
 			SaveInstance->Level1Stats.WorldCheckpoint13Best = WorldCheckpoint13;
 		}
-		if (SaveInstance->Level1Stats.WorldCheckpoint14Best > WorldCheckpoint14 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint14Best))
-		{
-			SaveInstance->Level1Stats.WorldCheckpoint14Best = WorldCheckpoint14;
-		}
+		//if (SaveInstance->Level1Stats.WorldCheckpoint14Best > WorldCheckpoint14 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint14Best))
+		//{
+		//	SaveInstance->Level1Stats.WorldCheckpoint14Best = WorldCheckpoint14;
+		//}
 		if (SaveInstance->Level1Stats.WorldCheckpoint15Best > WorldCheckpoint15 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint15Best))
 		{
 			SaveInstance->Level1Stats.WorldCheckpoint15Best = WorldCheckpoint15;
@@ -357,10 +355,10 @@ void ARacingGameGameModeBase::SaveGame()
 		{
 			SaveInstance->Level1Stats.WorldCheckpoint20Best = WorldCheckpoint20;
 		}
-		if (SaveInstance->Level1Stats.WorldCheckpoint21Best > WorldCheckpoint21 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint21Best))
-		{
-			SaveInstance->Level1Stats.WorldCheckpoint21Best = WorldCheckpoint21;
-		}
+		//if (SaveInstance->Level1Stats.WorldCheckpoint21Best > WorldCheckpoint21 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint21Best))
+		//{
+		//	SaveInstance->Level1Stats.WorldCheckpoint21Best = WorldCheckpoint21;
+		//}
 	}
 
 	
@@ -389,7 +387,7 @@ void ARacingGameGameModeBase::LoadGame()
 		Section4BestTime = LoadInstance->Level1Stats.Section4Best;
 		Section5BestTime = LoadInstance->Level1Stats.Section5Best;
 		Section6BestTime = LoadInstance->Level1Stats.Section6Best;
-		Section7BestTime = LoadInstance->Level1Stats.Section7Best;
+	/*	Section7BestTime = LoadInstance->Level1Stats.Section7Best;*/
 
 		WorldCheckpoint1 = LoadInstance->Level1Stats.WorldCheckpoint1Best;
 		WorldCheckpoint2 = LoadInstance->Level1Stats.WorldCheckpoint2Best;
@@ -397,21 +395,21 @@ void ARacingGameGameModeBase::LoadGame()
 		WorldCheckpoint4 = LoadInstance->Level1Stats.WorldCheckpoint4Best;
 		WorldCheckpoint5 = LoadInstance->Level1Stats.WorldCheckpoint5Best;
 		WorldCheckpoint6 = LoadInstance->Level1Stats.WorldCheckpoint6Best;
-		WorldCheckpoint7 = LoadInstance->Level1Stats.WorldCheckpoint7Best;
+		/*WorldCheckpoint7 = LoadInstance->Level1Stats.WorldCheckpoint7Best;*/
 		WorldCheckpoint8 = LoadInstance->Level1Stats.WorldCheckpoint8Best;
 		WorldCheckpoint9 = LoadInstance->Level1Stats.WorldCheckpoint9Best;
 		WorldCheckpoint10 = LoadInstance->Level1Stats.WorldCheckpoint10Best;
 		WorldCheckpoint11= LoadInstance->Level1Stats.WorldCheckpoint11Best;
 		WorldCheckpoint12= LoadInstance->Level1Stats.WorldCheckpoint12Best;
 		WorldCheckpoint13= LoadInstance->Level1Stats.WorldCheckpoint13Best;
-		WorldCheckpoint14= LoadInstance->Level1Stats.WorldCheckpoint14Best;
+		/*WorldCheckpoint14= LoadInstance->Level1Stats.WorldCheckpoint14Best;*/
 		WorldCheckpoint15= LoadInstance->Level1Stats.WorldCheckpoint15Best;
 		WorldCheckpoint16= LoadInstance->Level1Stats.WorldCheckpoint16Best;
 		WorldCheckpoint17= LoadInstance->Level1Stats.WorldCheckpoint17Best;
 		WorldCheckpoint18= LoadInstance->Level1Stats.WorldCheckpoint18Best;
 		WorldCheckpoint19= LoadInstance->Level1Stats.WorldCheckpoint19Best;
 		WorldCheckpoint20= LoadInstance->Level1Stats.WorldCheckpoint20Best;
-		WorldCheckpoint21= LoadInstance->Level1Stats.WorldCheckpoint21Best;
+		/*WorldCheckpoint21= LoadInstance->Level1Stats.WorldCheckpoint21Best;*/
 
 		RoundBestTime = LoadInstance->Level1Stats.RoundBest;
 		TotalBestTime = LoadInstance->Level1Stats.TotalBest;

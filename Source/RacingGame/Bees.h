@@ -17,8 +17,7 @@ public:
 	// Sets default values for this pawn's properties
 	ABees();
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BeeVariables")
-	class UCapsuleComponent* Root;
+
 
 	// The Sphere Collider that initiates Pathfinding
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BeeVariables")

@@ -39,7 +39,6 @@ void AHealthPack::Tick(float DeltaTime)
 		if (InitClock > InitTimer)
 		{
 			Collider->OnComponentBeginOverlap.AddDynamic(this, &AHealthPack::OnOverlap);
-			HealthPackMesh->SetHiddenInGame(true);
 			Init = true;
 		}
 
