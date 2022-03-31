@@ -96,7 +96,10 @@ public:
 	float SpawnHealthPackClock = 0.f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	bool CanSpawnHealthPack = true;
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
+	bool ControllerYawStill = true;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
+	bool ControllerPitchStill = true;
 
 
 
@@ -126,8 +129,16 @@ public:
 	UFUNCTION()
 	void Right(float value);
 
+
 	UFUNCTION()
-	void Pause(float value);
+	void LookUpCamera(float value);
+
+
+	UFUNCTION()
+	void TurnCamera(float value);
+
+	UFUNCTION()
+	void Pause();
 
 	UFUNCTION()
 	void StartDrift();
@@ -177,7 +188,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Tick")
 	FRotator NewRotation;
 	
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Tick")
+	FRotator UseRotation;
 
 	/** Functions used by other classes */
 

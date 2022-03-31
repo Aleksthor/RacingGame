@@ -50,7 +50,7 @@ APlayerCar::APlayerCar()
 	SpringArm->SetupAttachment(Collider);
 	SpringArm->bDoCollisionTest = false;
 	SpringArm->SetRelativeRotation(FRotator(-15.f, 0.f, 0.f));
-	//SpringArm->bUsePawnControlRotation = true;
+	SpringArm->bUsePawnControlRotation = true;
 
 	/** Movement Component Default Values*/
 	MovementComponent = CreateDefaultSubobject<UPawnMovementComponent, UFloatingPawnMovement>(TEXT("MovementComponent"));
@@ -82,7 +82,7 @@ APlayerCar::APlayerCar()
 	Lives = 3;
 	bDead = false;
 	
-
+	
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
 
@@ -141,7 +141,21 @@ void APlayerCar::Tick(float DeltaTime)
 			CanSpawnHealthPack = true;
 		}
 	}
+	if (ControllerPitchStill && ControllerYawStill)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Debug"));
+		if (SpringArm->bUsePawnControlRotation)
+		{
+			SpringArm->SetWorldRotation(FRotator(ControlRotation.Pitch, ControlRotation.Yaw , ControlRotation.Roll));
+			SpringArm->bUsePawnControlRotation = false;
+			
+		}
+		
 
+		FRotator SpringArmRotator = FMath::RInterpTo(SpringArm->GetRelativeRotation(), FRotator(-15.f, 0.f, 0.f), UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 2.5f);
+		Controller->SetControlRotation(SpringArm->GetComponentRotation());
+		SpringArm->SetRelativeRotation(SpringArmRotator);
+	}
 
 }
 
@@ -162,8 +176,8 @@ void APlayerCar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAction("ShootLow", IE_Released, this, &APlayerCar::StopShootingLow);
 
 	// Turn Camera with mouse
-	PlayerInputComponent->BindAxis("TurnCamera", this, &APawn::AddControllerYawInput);
-	PlayerInputComponent->BindAxis("LookUpCamera", this, &APawn::AddControllerPitchInput);
+	PlayerInputComponent->BindAxis("TurnCamera", this, &APlayerCar::TurnCamera);
+	PlayerInputComponent->BindAxis("LookUpCamera", this, &APlayerCar::LookUpCamera);
 
 	PlayerInputComponent->BindAction("Drift", IE_Pressed, this, &APlayerCar::StartDrift);
 	PlayerInputComponent->BindAction("Drift", IE_Released, this, &APlayerCar::StopDrift);
@@ -210,7 +224,39 @@ void APlayerCar::Right(float value)
 
 }
 
-void APlayerCar::Pause(float value)
+void APlayerCar::LookUpCamera(float value)
+{
+	if (value == 0.f)
+	{
+		ControllerPitchStill = true;
+	}
+	else
+	{
+
+		SpringArm->bUsePawnControlRotation = true;
+		ControllerPitchStill = false;
+		AddControllerPitchInput(value);
+	}
+}
+
+void APlayerCar::TurnCamera(float value)
+{
+
+
+	if (value == 0.f)
+	{
+		ControllerYawStill = true;
+	}
+	else
+	{
+		SpringArm->bUsePawnControlRotation = true;
+		ControllerYawStill = false;
+		AddControllerYawInput(value);
+	}
+
+}
+
+void APlayerCar::Pause()
 {
 }
 
@@ -246,6 +292,7 @@ void APlayerCar::StartShootingLow()
 
 void APlayerCar::StopShootingLow()
 {
+
 }
 
 
@@ -299,7 +346,7 @@ void APlayerCar::UpdateRotation(float Delta)
 			FRotator SteerAngle = FRotator(0.f, 180.f, 0.f);
 			SetRotation = FMath::RInterpTo(PlayerMesh->GetRelativeRotation(), SteerAngle, Delta, 5.f);
 		}
-		SetActorRotation(FRotator(PawnRotation.Pitch, Yaw.Yaw, PawnRotation.Roll));
+		SetActorRotation(FRotator(UseRotation.Pitch, Yaw.Yaw, UseRotation.Roll));
 		PlayerMesh->SetRelativeRotation(SetRotation);
 	}
 
@@ -392,8 +439,8 @@ void APlayerCar::CheckImpactPoints(float Delta)
 
 	if (ImpactPoints1.IsNearlyZero() && ImpactPoints2.IsNearlyZero() && ImpactPoints3.IsNearlyZero() && ImpactPoints4.IsNearlyZero())
 	{
-		FRotator UseRotator = FMath::RInterpTo(PawnRotation, FRotator::ZeroRotator, Delta, 5.f);
-		UseRotator.Yaw = PawnRotation.Yaw;
+		UseRotation = FMath::RInterpTo(PawnRotation, FRotator::ZeroRotator, Delta, 1.5f);
+		
 		
 		HoverComponent1->LinearDamping = 0.f;
 		HoverComponent2->LinearDamping = 0.f;
@@ -405,11 +452,12 @@ void APlayerCar::CheckImpactPoints(float Delta)
 		HoverComponent3->AngularDamping = 1.f;
 		HoverComponent4->AngularDamping = 1.f;
 
-		SetActorRotation(UseRotator);
+		
 	}
 	else
 	{
-	
+		UseRotation.Pitch = PawnRotation.Pitch;
+		UseRotation.Roll = PawnRotation.Roll;
 		HoverComponent1->LinearDamping = HoverComponent1->LinearDampingDefault;
 		HoverComponent2->LinearDamping = HoverComponent2->LinearDampingDefault;
 		HoverComponent3->LinearDamping = HoverComponent3->LinearDampingDefault;
@@ -423,8 +471,8 @@ void APlayerCar::CheckImpactPoints(float Delta)
 
 }
 
-/** Functions used by other classes */
 
+/** Functions used by other classes */
 
 void APlayerCar::SetLastCheckPointTimer()
 {
@@ -433,8 +481,6 @@ void APlayerCar::SetLastCheckPointTimer()
 	LastCheckPointTimer = WorldTimer;
 
 }
-
-
 
 void APlayerCar::LoseHealth()
 {

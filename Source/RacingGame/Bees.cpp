@@ -98,8 +98,11 @@ void ABees::Tick(float DeltaTime)
 
 		AIController->MoveToActor(Player, 10.f);
 		
+
+
 	}
-	BeeMesh->SetWorldRotation(GetActorRotation());
+
+	
 	
 }
 
