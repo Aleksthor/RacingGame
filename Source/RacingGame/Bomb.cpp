@@ -28,7 +28,7 @@ ABomb::ABomb()
 	BombMesh->SetupAttachment(Collider);
 	
 
-	Force = 20000.f;
+	Force = 40000.f;
 
 }
 
@@ -62,7 +62,7 @@ void ABomb::Tick(float DeltaTime)
 		FVector PlayerUpVector = UKismetMathLibrary::GetUpVector(Player->GetControlRotation());
 		FVector OutputVector;
 	
-		OutputVector = PlayerForwardVector + PlayerUpVector * 0.05f;
+		OutputVector = PlayerForwardVector + PlayerUpVector * 0.1f;
 	
 	
 
