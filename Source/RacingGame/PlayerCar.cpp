@@ -152,7 +152,7 @@ void APlayerCar::Tick(float DeltaTime)
 		}
 		
 
-		FRotator SpringArmRotator = FMath::RInterpTo(SpringArm->GetRelativeRotation(), FRotator(-15.f, 0.f, 0.f), UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 2.5f);
+		FRotator SpringArmRotator = FMath::RInterpTo(SpringArm->GetRelativeRotation(), FRotator(-15.f, 0.f, 0.f), UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 1.5f);
 		Controller->SetControlRotation(SpringArm->GetComponentRotation());
 		SpringArm->SetRelativeRotation(SpringArmRotator);
 	}
@@ -285,8 +285,7 @@ void APlayerCar::StopShooting()
 
 void APlayerCar::StartShootingLow()
 {
-	ShootHigh = false;
-	GetWorld()->SpawnActor<ABomb>(BombBP, GetActorLocation() + GetActorForwardVector() * 100.f , FRotator(0.f, PlayerMesh->GetComponentRotation().Yaw, 0.f));
+
 	
 }
 
