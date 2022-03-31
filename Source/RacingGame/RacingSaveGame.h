@@ -85,6 +85,9 @@ struct FLevelStats
 	UPROPERTY(VisibleAnywhere, Category = "SaveGameData")
 	float WorldCheckpoint21Best;
 
+	UPROPERTY(VisibleAnywhere, Category = "SaveGameData")
+	int BestPoints;
+
 };
 
 /**

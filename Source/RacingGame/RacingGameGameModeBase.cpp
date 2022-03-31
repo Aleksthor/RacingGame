@@ -6,6 +6,7 @@
 #include "PlayerCar.h"
 #include "Kismet/GameplayStatics.h"
 #include "RacingSaveGame.h"
+#include "SpeedBoosterv1.h"
 
 ARacingGameGameModeBase::ARacingGameGameModeBase()
 {
@@ -60,6 +61,8 @@ void ARacingGameGameModeBase::BeginPlay()
 		
 		
 		}
+
+		InitItems();
 	}
 	
 	
@@ -100,7 +103,7 @@ void ARacingGameGameModeBase::CurrentRoundFunction()
 		case 1:
 			if (CurrentCheckpoint > 5) // Means Round is Over | Then reset colliders
 			{
-				RespawnItems();
+				
 				CurrentRound++;
 				CheckpointArray[0]->isValid = true;
 				CheckpointArray[0]->isHit = false;
@@ -117,6 +120,8 @@ void ARacingGameGameModeBase::CurrentRoundFunction()
 			/*	CheckpointArray[6]->isValid = false;
 				CheckpointArray[6]->isHit = false;*/
 
+				RespawnItems();
+
 				CurrentCheckpoint = 0;
 				Round1Time = Player->WorldTimer;
 			}
@@ -124,7 +129,7 @@ void ARacingGameGameModeBase::CurrentRoundFunction()
 		case 2:
 			if (CurrentCheckpoint > 5) // Means Round is Over | Then reset colliders
 			{
-				RespawnItems();
+				
 				CurrentRound++;
 				CheckpointArray[0]->isValid = true;
 				CheckpointArray[0]->isHit = false;
@@ -140,6 +145,8 @@ void ARacingGameGameModeBase::CurrentRoundFunction()
 				CheckpointArray[5]->isHit = false;
 			/*	CheckpointArray[6]->isValid = false;
 				CheckpointArray[6]->isHit = false;*/
+
+				RespawnItems();
 
 				CurrentCheckpoint = 0;
 				Round2Time = Player->WorldTimer - Round1Time;
@@ -421,6 +428,66 @@ void ARacingGameGameModeBase::LoadGame()
 
 }
 
+void ARacingGameGameModeBase::InitItems()
+{
+
+	// SpeedBoosters
+
+	UWorld* World = GetWorld();
+
+	if (World)
+	{
+		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost1Vector, SpeedBoost1Rotator);
+		SpeedBoostArray.Add(tempSpeedBoost);
+
+		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost2Vector, SpeedBoost2Rotator);
+		SpeedBoostArray.Add(tempSpeedBoost);
+
+		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost3Vector, SpeedBoost3Rotator);
+		SpeedBoostArray.Add(tempSpeedBoost);
+
+		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost4Vector, SpeedBoost4Rotator);
+		SpeedBoostArray.Add(tempSpeedBoost);
+
+		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost5Vector, SpeedBoost5Rotator);
+		SpeedBoostArray.Add(tempSpeedBoost);
+
+		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost6Vector, SpeedBoost6Rotator);
+		SpeedBoostArray.Add(tempSpeedBoost);
+
+		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost7Vector, SpeedBoost7Rotator);
+		SpeedBoostArray.Add(tempSpeedBoost);
+
+		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost8Vector, SpeedBoost8Rotator);
+		SpeedBoostArray.Add(tempSpeedBoost);
+
+		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost9Vector, SpeedBoost9Rotator);
+		SpeedBoostArray.Add(tempSpeedBoost);
+
+		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost10Vector, SpeedBoost10Rotator);
+		SpeedBoostArray.Add(tempSpeedBoost);
+
+		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost11Vector, SpeedBoost11Rotator);
+		SpeedBoostArray.Add(tempSpeedBoost);
+
+
+
+	}
+}
+
 void ARacingGameGameModeBase::RespawnItems()
 {
+
+	for (int i{}; i < SpeedBoostArray.Num(); i++)
+	{
+		if (SpeedBoostArray[i]->isHit)
+		{
+			SpeedBoostArray[i]->SetActorEnableCollision(true);
+			SpeedBoostArray[i]->SetActorHiddenInGame(false);
+			SpeedBoostArray[i]->isHit = false;
+		}
+	}
+
+
+	
 }

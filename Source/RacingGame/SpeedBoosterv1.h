@@ -28,6 +28,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpeedBoostVariables")
 	float Timer = 2.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpeedBoostVariables")
+	bool isHit = false;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

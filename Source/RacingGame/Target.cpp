@@ -76,7 +76,7 @@ void ATarget::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherA
 		Cast<ABomb>(OtherActor)->DestroyBomb();
 		SetActorHiddenInGame(true);
 		SetActorEnableCollision(false);
-		this->Destroy();
+		
 
 	}
 
@@ -86,7 +86,7 @@ void ATarget::DestroyTarget()
 {
 	SetActorHiddenInGame(true);
 	SetActorEnableCollision(false);
-	this->Destroy();
+	
 
 }
 
