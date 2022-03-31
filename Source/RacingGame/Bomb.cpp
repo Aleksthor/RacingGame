@@ -56,19 +56,14 @@ void ABomb::Tick(float DeltaTime)
 
 	if (Player && !bAddedForce)
 	{
-		FVector PlayerForwardVector = Player->GetActorForwardVector();
-		PlayerForwardVector *= 3.f;
+		FVector PlayerForwardVector = UKismetMathLibrary::GetForwardVector(Player->GetControlRotation());
+		
 
-		FVector PlayerUpVector = Player->GetActorUpVector();
+		FVector PlayerUpVector = UKismetMathLibrary::GetUpVector(Player->GetControlRotation());
 		FVector OutputVector;
-		if (Player->ShootHigh)
-		{
-			OutputVector = PlayerForwardVector + PlayerUpVector * 0.4f;
-		}
-		else
-		{
-			OutputVector = PlayerForwardVector + PlayerUpVector * 0.20f;
-		}
+	
+		OutputVector = PlayerForwardVector + PlayerUpVector * 0.1f;
+	
 	
 
 		OutputVector.Normalize();

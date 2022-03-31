@@ -143,18 +143,26 @@ void APlayerCar::Tick(float DeltaTime)
 	}
 	if (ControllerPitchStill && ControllerYawStill)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Debug"));
-		if (SpringArm->bUsePawnControlRotation)
+
+		ControllerStillClock += DeltaTime;
+
+		if (ControllerStillClock > ControllerStillTimer)
 		{
-			SpringArm->SetWorldRotation(FRotator(ControlRotation.Pitch, ControlRotation.Yaw , ControlRotation.Roll));
-			SpringArm->bUsePawnControlRotation = false;
+			UE_LOG(LogTemp, Warning, TEXT("Debug"));
+			if (SpringArm->bUsePawnControlRotation)
+			{
+				SpringArm->SetWorldRotation(FRotator(ControlRotation.Pitch, ControlRotation.Yaw , ControlRotation.Roll));
+				SpringArm->bUsePawnControlRotation = false;
 			
-		}
+			}
 		
 
-		FRotator SpringArmRotator = FMath::RInterpTo(SpringArm->GetRelativeRotation(), FRotator(-15.f, 0.f, 0.f), UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 2.5f);
-		Controller->SetControlRotation(SpringArm->GetComponentRotation());
-		SpringArm->SetRelativeRotation(SpringArmRotator);
+			FRotator SpringArmRotator = FMath::RInterpTo(SpringArm->GetRelativeRotation(), FRotator(-15.f, 0.f, 0.f), UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 2.f);
+			Controller->SetControlRotation(SpringArm->GetComponentRotation());
+			SpringArm->SetRelativeRotation(SpringArmRotator);
+		}
+
+	
 	}
 
 }
@@ -228,11 +236,12 @@ void APlayerCar::LookUpCamera(float value)
 {
 	if (value == 0.f)
 	{
+		
 		ControllerPitchStill = true;
 	}
 	else
 	{
-
+		ControllerStillClock = 0.f;
 		SpringArm->bUsePawnControlRotation = true;
 		ControllerPitchStill = false;
 		AddControllerPitchInput(value);
@@ -245,10 +254,12 @@ void APlayerCar::TurnCamera(float value)
 
 	if (value == 0.f)
 	{
+		
 		ControllerYawStill = true;
 	}
 	else
 	{
+		ControllerStillClock = 0.f;
 		SpringArm->bUsePawnControlRotation = true;
 		ControllerYawStill = false;
 		AddControllerYawInput(value);
@@ -285,8 +296,7 @@ void APlayerCar::StopShooting()
 
 void APlayerCar::StartShootingLow()
 {
-	ShootHigh = false;
-	GetWorld()->SpawnActor<ABomb>(BombBP, GetActorLocation() + GetActorForwardVector() * 100.f , FRotator(0.f, PlayerMesh->GetComponentRotation().Yaw, 0.f));
+
 	
 }
 

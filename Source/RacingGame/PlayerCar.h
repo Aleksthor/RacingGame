@@ -100,8 +100,12 @@ public:
 	bool ControllerYawStill = true;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	bool ControllerPitchStill = true;
-
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
+	float ControllerStillClock = 0.f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
+	float ControllerStillTimer = 0.1f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
+	bool bControllerStillTimer = false;
 
 protected:
 	// Called when the game starts or when spawned
