@@ -70,42 +70,71 @@ public:
 	/** LOGIC */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	bool bDrifting = false;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	bool bSpeedBoost = false;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float CurrentSpeed;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float SpeedBoostTimer = 0.f;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float SpeedBoostClock = 0.f;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float SpeedBoostSpeed = PlayerMaxSpeed;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float CheckpointTimer = 2.f;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float CheckpointClock = 0.f;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float DriftValue;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
-	bool ShootHigh = true;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	bool FirstRun = false;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float SpawnHealthPackTimer = 2.f;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float SpawnHealthPackClock = 0.f;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	bool CanSpawnHealthPack = true;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	bool ControllerYawStill = true;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	bool ControllerPitchStill = true;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float ControllerStillClock = 0.f;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float ControllerStillTimer = 0.1f;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	bool bControllerStillTimer = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
+	bool bCanShoot = true;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
+	bool TryToShoot = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
+	float CanShootClock = 0.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Logic")
+	float CanShootTimer = 0.5f;
+
+
 
 protected:
 	// Called when the game starts or when spawned
@@ -156,11 +185,7 @@ public:
 	UFUNCTION()
 	void StopShooting();
 
-	UFUNCTION()
-	void StartShootingLow();
 
-	UFUNCTION()
-	void StopShootingLow();
 
 	/** Tick Functions */
 

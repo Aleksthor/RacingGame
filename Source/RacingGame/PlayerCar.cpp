@@ -165,6 +165,19 @@ void APlayerCar::Tick(float DeltaTime)
 	
 	}
 
+
+	if (!bCanShoot)
+	{
+		CanShootClock += DeltaTime;
+
+		if (CanShootClock > CanShootTimer)
+		{
+			CanShootClock = 0.f;
+			bCanShoot = true;
+			TryToShoot = false;
+		}
+	}
+
 }
 
 
@@ -178,10 +191,6 @@ void APlayerCar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 	PlayerInputComponent->BindAction("ShootHigh", IE_Pressed, this, &APlayerCar::StartShooting);
 	PlayerInputComponent->BindAction("ShootHigh", IE_Released, this, &APlayerCar::StopShooting);
-
-
-	PlayerInputComponent->BindAction("ShootLow", IE_Pressed, this, &APlayerCar::StartShootingLow);
-	PlayerInputComponent->BindAction("ShootLow", IE_Released, this, &APlayerCar::StopShootingLow);
 
 	// Turn Camera with mouse
 	PlayerInputComponent->BindAxis("TurnCamera", this, &APlayerCar::TurnCamera);
@@ -283,8 +292,17 @@ void APlayerCar::StopDrift()
 
 void APlayerCar::StartShooting()
 {
-	ShootHigh = true;
-	GetWorld()->SpawnActor<ABomb>(BombBP, GetActorLocation() + GetActorForwardVector() * 100.f , FRotator(0.f, PlayerMesh->GetComponentRotation().Yaw, 0.f));
+	
+	if (bCanShoot)
+	{
+		GetWorld()->SpawnActor<ABomb>(BombBP, GetActorLocation() + GetActorForwardVector() * 100.f, FRotator(0.f, PlayerMesh->GetComponentRotation().Yaw, 0.f));
+		bCanShoot = false;
+	}
+	else
+	{
+		TryToShoot = true;
+	}
+	
 	
 }
 
@@ -294,16 +312,7 @@ void APlayerCar::StopShooting()
 
 }
 
-void APlayerCar::StartShootingLow()
-{
 
-	
-}
-
-void APlayerCar::StopShootingLow()
-{
-
-}
 
 
 /** Tick Functions */
