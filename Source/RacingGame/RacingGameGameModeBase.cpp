@@ -277,139 +277,139 @@ void ARacingGameGameModeBase::SwitchTimer()
 {
 
 	// calucluation done in Excel and here I set the values based on our sheet. // ( 1 / Time ) * 1000
-	if (TotalTime > 580.f)
+	if (TotalTime < 580.f)
 	{
 		TimeScore = 2075;
 	}
-	else if (TotalTime > 570.f)
+	if (TotalTime < 570.f)
 	{
 		TimeScore = 2125;
 	}
-	else if (TotalTime > 560.f)
+	if (TotalTime < 560.f)
 	{
 		TimeScore = 2175;
 	}
-	else if (TotalTime > 550.f)
+	if (TotalTime < 550.f)
 	{
 		TimeScore = 2225;
 	}
-	else if (TotalTime > 540.f)
+	if (TotalTime < 540.f)
 	{
 		TimeScore = 2275;
 	}
-	else if (TotalTime > 530.f)
+	 if (TotalTime < 530.f)
 	{
 		TimeScore = 2325;
 	}
-	else if (TotalTime > 520.f)
+	 if (TotalTime < 520.f)
 	{
 		TimeScore = 2400;
 	}
-	else if (TotalTime > 510.f)
+	 if (TotalTime < 510.f)
 	{
 		TimeScore = 2450;
 	}
-	else if (TotalTime > 500.f)
+	 if (TotalTime < 500.f)
 	{
 		TimeScore = 2500;
 	}
-	else if (TotalTime > 490.f)
+	 if (TotalTime < 490.f)
 	{
 		TimeScore = 2550;
 	}
-	else if (TotalTime > 480.f)
+	 if (TotalTime < 480.f)
 	{
 		TimeScore = 2600;
 	}
-	else if (TotalTime > 470.f)
+	 if (TotalTime < 470.f)
 	{
 		TimeScore = 2700;
 	}
-	else if (TotalTime > 460.f)
+	 if (TotalTime < 460.f)
 	{
 		TimeScore = 2750;
 	}
-	else if (TotalTime > 450.f)
+	 if (TotalTime < 450.f)
 	{
 		TimeScore = 2850;
 	}
-	else if (TotalTime > 440.f)
+	else if (TotalTime < 440.f)
 	{
 		TimeScore = 2950;
 	}
-	else if (TotalTime > 430.f)
+	 if (TotalTime < 430.f)
 	{
 		TimeScore = 3025;
 	}
-	else if (TotalTime > 420.f)
+	 if (TotalTime < 420.f)
 	{
 		TimeScore = 3125;
 	}
-	else if (TotalTime > 410.f)
+	 if (TotalTime < 410.f)
 	{
 		TimeScore = 3250;
 	}
-	else if (TotalTime > 400.f)
+	 if (TotalTime < 400.f)
 	{
 		TimeScore = 3350;
 	}
-	else if (TotalTime > 390.f)
+	 if (TotalTime < 390.f)
 	{
 		TimeScore = 3450;
 	}
-	else if (TotalTime > 380.f)
+	 if (TotalTime < 380.f)
 	{
 		TimeScore = 3550;
 	}
-	else if (TotalTime > 370.f)
+	 if (TotalTime < 370.f)
 	{
 		TimeScore = 3700;
 	}
-	else if (TotalTime > 360.f)
+	 if (TotalTime < 360.f)
 	{
 		TimeScore = 3850;
 	}
-	else if (TotalTime > 350.f)
+	 if (TotalTime < 350.f)
 	{
 		TimeScore = 4000;
 	}
-	else if (TotalTime > 340.f)
+	 if (TotalTime < 340.f)
 	{
 		TimeScore = 4150;
 	}
-	else if (TotalTime > 330.f)
+	 if (TotalTime < 330.f)
 	{
 		TimeScore = 4350;
 	}
-	else if (TotalTime > 320.f)
+	 if (TotalTime < 320.f)
 	{
 		TimeScore = 4550;
 	}
-	else if (TotalTime > 310.f)
+	 if (TotalTime < 310.f)
 	{
 		TimeScore = 4750;
 	}
-	else if (TotalTime > 300.f)
+	 if (TotalTime < 300.f)
 	{
 		TimeScore = 5000;
 	}
-	else if (TotalTime > 290.f)
+	 if (TotalTime < 290.f)
 	{
 		TimeScore = 5250;
 	}
-	else if (TotalTime > 280.f)
+	 if (TotalTime < 280.f)
 	{
 		TimeScore = 5550;
 	}
-	else if (TotalTime > 270.f)
+	 if (TotalTime < 270.f)
 	{
 		TimeScore = 5900;
 	}
-	else if (TotalTime > 260.f)
+	 if (TotalTime < 260.f)
 	{
 		TimeScore = 6250;
 	}
-	else if (TotalTime > 250.f)
+	 if (TotalTime < 250.f)
 	{
 		TimeScore = 6650;
 	}
