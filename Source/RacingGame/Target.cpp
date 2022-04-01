@@ -61,7 +61,6 @@ void ATarget::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherA
 		if (Player)
 		{	
 		Player->GivePoints(PointsGiven);
-		Player->SpeedBoostClock = 0.f;
 		Player->bSpeedBoost = true;
 		Player->SpeedBoostTimer += SpeedboostTimer;
 
