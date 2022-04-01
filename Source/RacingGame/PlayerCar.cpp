@@ -458,7 +458,16 @@ void APlayerCar::CheckImpactPoints(float Delta)
 
 	if (ImpactPoints1.IsNearlyZero() && ImpactPoints2.IsNearlyZero() && ImpactPoints3.IsNearlyZero() && ImpactPoints4.IsNearlyZero())
 	{
-		UseRotation = FMath::RInterpTo(PawnRotation, FRotator::ZeroRotator, Delta, 1.5f);
+
+		InAirClock += Delta;
+
+		if (InAirClock > InAirTimer)
+		{
+			UseRotation = FMath::RInterpTo(PawnRotation, FRotator::ZeroRotator, Delta, 1.5f);
+
+		}
+
+	
 		
 		
 		HoverComponent1->LinearDamping = 0.f;
@@ -475,6 +484,7 @@ void APlayerCar::CheckImpactPoints(float Delta)
 	}
 	else
 	{
+		InAirClock = 0.f;
 		UseRotation.Pitch = PawnRotation.Pitch;
 		UseRotation.Roll = PawnRotation.Roll;
 		HoverComponent1->LinearDamping = HoverComponent1->LinearDampingDefault;

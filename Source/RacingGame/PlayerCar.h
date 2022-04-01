@@ -134,6 +134,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Logic")
 	float CanShootTimer = 0.5f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Logic")
+	float InAirClock = 0.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Logic")
+	float InAirTimer = 2.f;
 
 
 protected:
