@@ -248,7 +248,7 @@ void ARacingGameGameModeBase::GameWon()
 {
 	bGameWon = true;
 	SwitchTimer();
-	TotalPlayerScore = TimeScore * TotalPoints;
+	TotalPlayerScore = (TimeScore * TotalPoints) / 1000;
 	
 	if (TotalPlayerScore > 16500)
 	{

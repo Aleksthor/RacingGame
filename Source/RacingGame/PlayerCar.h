@@ -75,13 +75,13 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float CurrentSpeed;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
-	float SpeedBoostTimer = 2.f;
+	float SpeedBoostTimer = 0.f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float SpeedBoostClock = 0.f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float SpeedBoostSpeed = PlayerMaxSpeed;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
-	float CheckpointTimer = 0.f;
+	float CheckpointTimer = 2.f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float CheckpointClock = 0.f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
