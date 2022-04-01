@@ -148,7 +148,7 @@ void APlayerCar::Tick(float DeltaTime)
 
 		if (ControllerStillClock > ControllerStillTimer)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Debug"));
+			
 			if (SpringArm->bUsePawnControlRotation)
 			{
 				SpringArm->SetWorldRotation(FRotator(ControlRotation.Pitch, ControlRotation.Yaw , ControlRotation.Roll));

@@ -112,4 +112,13 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = Basic)
 	FLevelStats Level1Stats;
 
+	UPROPERTY(VisibleAnywhere, Category = Basic)
+	FLevelStats Level1StatsRacing;
+
+	UPROPERTY(VisibleAnywhere, Category = Basic)
+	bool ShooterMode;
+
+	UPROPERTY(VisibleAnywhere, Category = Basic)
+	bool RacingMode;
+
 };

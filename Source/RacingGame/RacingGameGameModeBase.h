@@ -44,6 +44,10 @@ public:
 	TArray<class ASpeedBoosterv1*> SpeedBoostArray;
 	ASpeedBoosterv1* tempSpeedBoost;
 
+	
+
+	
+
 	class APlayerCar* Player{ nullptr };
 
 	/** Default Values */
@@ -300,7 +304,10 @@ public:
 	float OneSecond = 1.f;
 	float PreGameClock = 0.f;
 
-
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
+	bool RacingMode = false;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
+	bool ShooterMode = true;
 
 };
