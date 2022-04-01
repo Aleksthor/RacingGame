@@ -293,7 +293,8 @@ public:
 	UFUNCTION()
 	void RespawnItems();
 
-	
+	UFUNCTION()
+	void SwitchTimer();
 
 
 	/** Used for countdown before start */
@@ -310,4 +311,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
 	bool ShooterMode = true;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	int TotalPlayerScore;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	int TimeScore;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
+	bool bGameWon = false;
 };
