@@ -772,9 +772,13 @@ void ARacingGameGameModeBase::LoadGame()
 	URacingSaveGame* LoadInstance = Cast<URacingSaveGame>(UGameplayStatics::CreateSaveGameObject(URacingSaveGame::StaticClass()));
 
 	LoadInstance = Cast<URacingSaveGame>(UGameplayStatics::LoadGameFromSlot(LoadInstance->PlayerName, LoadInstance->UserIndex));
+	if (LoadInstance)
+	{
+		ShooterMode = LoadInstance->ShooterMode;
+		RacingMode = LoadInstance->RacingMode;
+	}
 
-	ShooterMode = LoadInstance->ShooterMode;
-	RacingMode = LoadInstance->RacingMode;
+
 
 	
 	if (ShooterMode)
