@@ -62,7 +62,7 @@ void ABomb::Tick(float DeltaTime)
 		FVector PlayerUpVector = UKismetMathLibrary::GetUpVector(Player->GetControlRotation());
 		FVector OutputVector;
 	
-		OutputVector = PlayerForwardVector + PlayerUpVector * 0.1f;
+		OutputVector = PlayerForwardVector + PlayerUpVector * 0.15f;
 	
 	
 
