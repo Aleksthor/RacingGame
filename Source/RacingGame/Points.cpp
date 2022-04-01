@@ -4,6 +4,7 @@
 #include "Points.h"
 #include "Components/BoxComponent.h"
 #include "PlayerCar.h"
+#include "RacingGameGameModeBase.h"
 
 // Sets default values
 APoints::APoints()
@@ -31,6 +32,23 @@ void APoints::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+
+	AGameModeBase* GameMode = GetWorld()->GetAuthGameMode();
+	if (GameMode)
+	{
+		if (Cast<ARacingGameGameModeBase>(GameMode)->CurrentRound == 2 && !Round2)
+		{
+			SetActorHiddenInGame(false);
+			SetActorEnableCollision(true);
+			Round2 = true;
+		}
+		if (Cast<ARacingGameGameModeBase>(GameMode)->CurrentRound == 3 && !Round3)
+		{
+			SetActorHiddenInGame(false);
+			SetActorEnableCollision(true);
+			Round3 = true;
+		}
+	}
 }
 
 void APoints::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

@@ -29,6 +29,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
 	bool isHit = false;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
+	bool Round2 = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
+	bool Round3 = false;
 
 protected:
 	// Called when the game starts or when spawned
