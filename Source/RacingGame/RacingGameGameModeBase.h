@@ -176,6 +176,18 @@ public:
 	FVector Target14Vector = FVector(3090.f, 150.f, 21990.f);
 	FRotator Target14Rotator = FRotator(0.f, 0.f, 0.f);
 
+	FVector Target15Vector = FVector(7980.f, 10260.f, 25100.f);
+	FRotator Target15Rotator = FRotator(0.f, 0.f, 0.f);
+
+	FVector Target16Vector = FVector(20310.f, 3490.f, 15870.f);
+	FRotator Target16Rotator = FRotator(0.f, 0.f, 0.f);
+
+	FVector Target17Vector = FVector(9860.f, -39660.f, 5720.f);
+	FRotator Target17Rotator = FRotator(0.f, 0.f, 0.f);
+
+	FVector Target18Vector = FVector(8000.f, -5380.f, 13470.f);
+	FRotator Target18Rotator = FRotator(0.f, 0.f, 0.f);
+
 	/** Save Data */
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")

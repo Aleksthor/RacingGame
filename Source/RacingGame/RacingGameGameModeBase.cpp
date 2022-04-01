@@ -1011,6 +1011,26 @@ void ARacingGameGameModeBase::InitItems()
 		TargetArray.Add(tempTarget);
 		TargetArray[13]->SetActorHiddenInGame(false);
 		TargetArray[13]->SetActorEnableCollision(true);
+
+		tempTarget = World->SpawnActor<ATarget>(TargetBP, Target15Vector, Target15Rotator);
+		TargetArray.Add(tempTarget);
+		TargetArray[14]->SetActorHiddenInGame(false);
+		TargetArray[14]->SetActorEnableCollision(true);
+
+		tempTarget = World->SpawnActor<ATarget>(TargetBP, Target16Vector, Target16Rotator);
+		TargetArray.Add(tempTarget);
+		TargetArray[15]->SetActorHiddenInGame(false);
+		TargetArray[15]->SetActorEnableCollision(true);
+
+		tempTarget = World->SpawnActor<ATarget>(TargetBP, Target17Vector, Target17Rotator);
+		TargetArray.Add(tempTarget);
+		TargetArray[16]->SetActorHiddenInGame(false);
+		TargetArray[16]->SetActorEnableCollision(true);
+
+		tempTarget = World->SpawnActor<ATarget>(TargetBP, Target18Vector, Target18Rotator);
+		TargetArray.Add(tempTarget);
+		TargetArray[17]->SetActorHiddenInGame(false);
+		TargetArray[17]->SetActorEnableCollision(true);
 		
 	}
 
