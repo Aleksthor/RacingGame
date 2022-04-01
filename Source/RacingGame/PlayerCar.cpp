@@ -405,7 +405,7 @@ void APlayerCar::UpdateMaxSpeed(float Delta)
 		{
 			SpeedBoostClock = 0.f;
 			bSpeedBoost = false;
-			SpeedBoostTimer = 2.f;
+			SpeedBoostTimer = 0.f;
 		}
 		if (MovementComponent)
 		{
