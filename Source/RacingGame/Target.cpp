@@ -6,6 +6,8 @@
 #include "Bomb.h"
 #include "PlayerCar.h"
 #include "GameFramework/FloatingPawnMovement.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 
 // Sets default values
 ATarget::ATarget()
@@ -23,6 +25,20 @@ ATarget::ATarget()
 	TargetMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BombMesh"));
 	TargetMesh->SetupAttachment(Collider);
 
+	RedMesh = CreateDefaultSubobject<UStaticMesh>(TEXT("RedMesh"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> Mesh1(TEXT("StaticMesh'/Game/Meshes/Baloons/BalloonBlue.BalloonBlue'"));
+	RedMesh = Mesh1.Object;
+
+	BlueMesh = CreateDefaultSubobject<UStaticMesh>(TEXT("BlueMesh"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> Mesh2(TEXT("StaticMesh'/Game/Meshes/Baloons/BalloonRed.BalloonRed'"));
+	BlueMesh = Mesh2.Object;
+
+	YellowMesh = CreateDefaultSubobject<UStaticMesh>(TEXT("YellowMesh"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> Mesh3(TEXT("StaticMesh'/Game/Meshes/Baloons/BalloonYellow.BalloonYellow'"));
+	YellowMesh = Mesh3.Object;
+
+
+
 	PointsGiven = 100;
 	SpeedGiven = 300.f;
 
@@ -32,7 +48,29 @@ ATarget::ATarget()
 void ATarget::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	int Random = FMath::RandRange(1, 3);
+	switch (Random)
+	{
+	case 1:
+		TargetMesh->SetStaticMesh(RedMesh);
+		break;
+	case 2:
+		TargetMesh->SetStaticMesh(BlueMesh);
+		break;
+	case 3:
+		TargetMesh->SetStaticMesh(YellowMesh);
+		break;
+	default:
+		break;
+	}
+
+
+	Top = GetActorLocation();
+	Top.Z += 60.f;
+
+	Bottom = GetActorLocation();
+	Bottom.Z -= 60.f;
 
 	APawn* Temp = GetWorld()->GetFirstPlayerController()->GetPawn();
 
@@ -51,6 +89,29 @@ void ATarget::Tick(float DeltaTime)
 	ActorRotation.Yaw += RotationSpeed;
 	SetActorRotation(ActorRotation);
 
+
+	if (GoingUp)
+	{
+		FVector SetVector = FMath::VInterpTo(GetActorLocation(), Top, DeltaTime, 1.5f);
+		SetActorLocation(SetVector);
+
+		if (FMath::IsNearlyEqual(SetVector.Z, Top.Z,5.f))
+		{
+			GoingUp = false;
+		}
+	}
+	if (!GoingUp)
+	{
+		FVector SetVector = FMath::VInterpTo(GetActorLocation(), Bottom, DeltaTime, 1.5f);
+		SetActorLocation(SetVector);
+
+		if (FMath::IsNearlyEqual(SetVector.Z, Bottom.Z, 5.f))
+		{
+			GoingUp = true;
+		}
+	}
+
+
 }
 
 void ATarget::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -58,6 +119,10 @@ void ATarget::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherA
 
 	if (OtherActor->IsA<ABomb>())
 	{
+		if (OnHitSound)
+		{
+			UGameplayStatics::PlaySound2D(this, OnHitSound);
+		}
 		if (Player)
 		{	
 		Player->GivePoints(PointsGiven);

@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "Target.generated.h"
 
+class UStaticMesh;
+
 UCLASS()
 class RACINGGAME_API ATarget : public AActor
 {
@@ -23,6 +25,18 @@ public:
 	class UStaticMeshComponent* TargetMesh;
 
 	class APlayerCar* Player{ nullptr };
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TargetVariables")
+	UStaticMesh* RedMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TargetVariables")
+	UStaticMesh* BlueMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TargetVariables")
+	UStaticMesh* YellowMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TargetVariables")
+	class USoundCue* OnHitSound{ nullptr };
 
 protected:
 	// Called when the game starts or when spawned
@@ -52,9 +66,18 @@ public:
 	float SpeedboostTimer = 3.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TargetVariables")
-	float RotationSpeed = 1.f;
+	float RotationSpeed = 0.5f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TargetVariables")
 	bool isHit = false;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TargetVariables")
+	FVector Top;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TargetVariables")
+	FVector Bottom;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TargetVariables")
+	bool GoingUp = true;
+	
 };

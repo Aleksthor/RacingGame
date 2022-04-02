@@ -188,6 +188,9 @@ public:
 	FVector Target18Vector = FVector(8000.f, -5380.f, 13470.f);
 	FRotator Target18Rotator = FRotator(0.f, 0.f, 0.f);
 
+	FVector Target19Vector = FVector(11600.f, -17580.f, 9010.f);
+	FRotator Target19Rotator = FRotator(0.f, 0.f, 0.f);
+
 	/** Save Data */
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
