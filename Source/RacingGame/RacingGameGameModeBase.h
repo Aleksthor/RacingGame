@@ -254,6 +254,12 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
 	bool EpicMedal = false;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	bool NewRoundBest = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	bool NewTotalBest = false;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
 	FString HUDMedalString{""};
 
@@ -343,6 +349,12 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 	int TotalPlayerScore;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	int TotalBestScore;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	bool NewBestScore = false;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 	int TimeScore;
