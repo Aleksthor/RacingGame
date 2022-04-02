@@ -218,6 +218,25 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 	float Section6BestTime;
 
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	bool Section1NewBestTime = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	bool Section2NewBestTime = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	bool Section3NewBestTime = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	bool Section4NewBestTime = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	bool Section5NewBestTime = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	bool Section6NewBestTime = false;
+
 	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 	//float Section7BestTime;
 
