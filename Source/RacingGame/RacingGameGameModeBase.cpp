@@ -260,18 +260,26 @@ void ARacingGameGameModeBase::GameWon()
 		if (TotalPlayerScore > 16500)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Bronze Tier Achieved"));
+			BronzeMedal = true;
+			HUDMedalString = "Bronze";
 		}
 		if (TotalPlayerScore > 18300)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Silver Tier Achieved"));
+			SilverMedal = true;
+			HUDMedalString = "Silver";
 		}
 		if (TotalPlayerScore > 20500)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Gold Tier Achieved"));
+			GoldMedal = true;
+			HUDMedalString = "Gold";
 		}
 		if (TotalPlayerScore > 26000)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Epic Tier Achieved"));
+			EpicMedal = true;
+			HUDMedalString = "Epic";
 		}
 
 		SaveGame();

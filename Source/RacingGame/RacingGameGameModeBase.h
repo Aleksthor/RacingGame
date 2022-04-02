@@ -242,8 +242,20 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 	int TotalPoints;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
+	bool BronzeMedal = false;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
+	bool SilverMedal = false;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
+	bool GoldMedal = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
+	bool EpicMedal = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
+	FString HUDMedalString{""};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 		float WorldCheckpoint1;
