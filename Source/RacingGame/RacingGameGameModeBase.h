@@ -191,6 +191,9 @@ public:
 	/** Save Data */
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
+	bool Saved = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
 	FString PlayerName;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")

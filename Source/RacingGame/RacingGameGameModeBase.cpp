@@ -19,7 +19,7 @@ ARacingGameGameModeBase::ARacingGameGameModeBase()
 
 void ARacingGameGameModeBase::BeginPlay()
 {
-
+	Saved = false;
 
 	LoadGame();
 	CurrentLevel = UGameplayStatics::GetCurrentLevelName(GetWorld());
@@ -201,8 +201,13 @@ void ARacingGameGameModeBase::CurrentRoundFunction()
 		case 3:
 			if (CurrentCheckpoint > 5) // Means Round is Over | Then reset colliders
 			{
+				
 				Round3Time = Player->WorldTimer - Round2Time;
-				TotalTime = Player->WorldTimer;
+				if (TotalTime < Player->WorldTimer)
+				{
+					TotalTime = Player->WorldTimer;
+				}
+				
 				TotalPoints = Player->Points;
 				GameWon();
 			}
@@ -246,30 +251,35 @@ void ARacingGameGameModeBase::CurrentRoundFunction()
 
 void ARacingGameGameModeBase::GameWon()
 {
-	bGameWon = true;
-	SwitchTimer();
-	TotalPlayerScore = (TimeScore * TotalPoints) / 1000;
+	if (!Saved)
+	{
+		bGameWon = true;
+		SwitchTimer();
+		TotalPlayerScore = (TimeScore * TotalPoints) / 1000;
 	
-	if (TotalPlayerScore > 16500)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Bronze Tier Achieved"));
-	}
-	if (TotalPlayerScore > 18300)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Silver Tier Achieved"));
-	}
-	if (TotalPlayerScore > 20500)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Gold Tier Achieved"));
-	}
-	if (TotalPlayerScore > 26000)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Epic Tier Achieved"));
+		if (TotalPlayerScore > 16500)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Bronze Tier Achieved"));
+		}
+		if (TotalPlayerScore > 18300)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Silver Tier Achieved"));
+		}
+		if (TotalPlayerScore > 20500)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Gold Tier Achieved"));
+		}
+		if (TotalPlayerScore > 26000)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Epic Tier Achieved"));
+		}
+
+		SaveGame();
+		UE_LOG(LogTemp, Warning, TEXT("Game Won"));
+		Player->bGameOver = true;
+		Saved = true;
 	}
 
-	SaveGame();
-	UE_LOG(LogTemp, Warning, TEXT("Game Won"));
-	Player->bGameOver = true;
 
 }
 
@@ -333,7 +343,7 @@ void ARacingGameGameModeBase::SwitchTimer()
 	{
 		TimeScore = 2850;
 	}
-	else if (TotalTime < 440.f)
+	if (TotalTime < 440.f)
 	{
 		TimeScore = 2950;
 	}
@@ -440,30 +450,20 @@ void ARacingGameGameModeBase::SaveGame()
 
 
 			// Check all sections
-			if (SaveInstance->Level1Stats.Section1Best > Section1BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section1Best))
-			{
-				SaveInstance->Level1Stats.Section1Best = Section1BestTime;
-			}
-			if (SaveInstance->Level1Stats.Section2Best > Section2BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section2Best))
-			{
-				SaveInstance->Level1Stats.Section2Best = Section2BestTime;
-			}
-			if (SaveInstance->Level1Stats.Section3Best > Section3BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section3Best))
-			{
-				SaveInstance->Level1Stats.Section3Best = Section3BestTime;
-			}
-			if (SaveInstance->Level1Stats.Section4Best > Section4BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section4Best))
-			{
-				SaveInstance->Level1Stats.Section4Best = Section4BestTime;
-			}
-			if (SaveInstance->Level1Stats.Section5Best > Section5BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section5Best))
-			{
-				SaveInstance->Level1Stats.Section5Best = Section5BestTime;
-			}
-			if (SaveInstance->Level1Stats.Section6Best > Section6BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section6Best))
-			{
-				SaveInstance->Level1Stats.Section6Best = Section6BestTime;
-			}
+		
+				
+			SaveInstance->Level1Stats.Section1Best = Section1BestTime;
+			
+			SaveInstance->Level1Stats.Section2Best = Section2BestTime;
+		
+			SaveInstance->Level1Stats.Section3Best = Section3BestTime;
+			
+			SaveInstance->Level1Stats.Section4Best = Section4BestTime;
+			
+			SaveInstance->Level1Stats.Section5Best = Section5BestTime;
+			
+			SaveInstance->Level1Stats.Section6Best = Section6BestTime;
+			
 			/*	if (SaveInstance->Level1Stats.Section7Best > Section7BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section7Best))
 				{
 					SaveInstance->Level1Stats.Section7Best = Section7BestTime;
@@ -471,119 +471,87 @@ void ARacingGameGameModeBase::SaveGame()
 
 				// Check all 3 rounds
 
-			if (SaveInstance->Level1Stats.RoundBest > Round1Time || FMath::IsNearlyZero(SaveInstance->Level1Stats.RoundBest))
+			if (Round1Time < Round2Time && Round1Time < Round3Time && Round1Time < RoundBestTime)
 			{
+				RoundBestTime = Round1Time;
 				SaveInstance->Level1Stats.RoundBest = Round1Time;
 			}
-
-			if (SaveInstance->Level1Stats.RoundBest > Round2Time || FMath::IsNearlyZero(SaveInstance->Level1Stats.RoundBest))
+			
+			
+			if (Round2Time < Round1Time && Round2Time < Round3Time && Round2Time < RoundBestTime)
 			{
+				RoundBestTime = Round2Time;
 				SaveInstance->Level1Stats.RoundBest = Round2Time;
 			}
-
-			if (SaveInstance->Level1Stats.RoundBest > Round3Time || FMath::IsNearlyZero(SaveInstance->Level1Stats.RoundBest))
+			
+			if (Round3Time < Round2Time && Round3Time < Round1Time && Round3Time < RoundBestTime)
 			{
+				RoundBestTime = Round2Time;
 				SaveInstance->Level1Stats.RoundBest = Round3Time;
 			}
+			
 
 			// Check Total Time for all 3 rounds
 
-			if (SaveInstance->Level1Stats.TotalBest > TotalTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.TotalBest))
-			{
-				SaveInstance->Level1Stats.TotalBest = TotalTime;
-			}
+			SaveInstance->Level1Stats.TotalBest = TotalTime;
+			
 
 
 
-			if (SaveInstance->Level1Stats.WorldCheckpoint1Best > WorldCheckpoint1 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint1Best))
-			{
-				SaveInstance->Level1Stats.WorldCheckpoint1Best = WorldCheckpoint1;
-			}
-			if (SaveInstance->Level1Stats.WorldCheckpoint2Best > WorldCheckpoint2 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint2Best))
-			{
-				SaveInstance->Level1Stats.WorldCheckpoint2Best = WorldCheckpoint2;
-			}
-			if (SaveInstance->Level1Stats.WorldCheckpoint3Best > WorldCheckpoint3 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint3Best))
-			{
-				SaveInstance->Level1Stats.WorldCheckpoint3Best = WorldCheckpoint3;
-			}
-			if (SaveInstance->Level1Stats.WorldCheckpoint4Best > WorldCheckpoint4 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint4Best))
-			{
-				SaveInstance->Level1Stats.WorldCheckpoint4Best = WorldCheckpoint4;
-			}
-			if (SaveInstance->Level1Stats.WorldCheckpoint5Best > WorldCheckpoint5 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint5Best))
-			{
-				SaveInstance->Level1Stats.WorldCheckpoint5Best = WorldCheckpoint5;
-			}
-			if (SaveInstance->Level1Stats.WorldCheckpoint6Best > WorldCheckpoint6 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint6Best))
-			{
-				SaveInstance->Level1Stats.WorldCheckpoint6Best = WorldCheckpoint6;
-			}
+			SaveInstance->Level1Stats.WorldCheckpoint1Best = WorldCheckpoint1;
+			
+			SaveInstance->Level1Stats.WorldCheckpoint2Best = WorldCheckpoint2;
+			
+			SaveInstance->Level1Stats.WorldCheckpoint3Best = WorldCheckpoint3;
+			
+			SaveInstance->Level1Stats.WorldCheckpoint4Best = WorldCheckpoint4;
+			
+			SaveInstance->Level1Stats.WorldCheckpoint5Best = WorldCheckpoint5;
+			
+			SaveInstance->Level1Stats.WorldCheckpoint6Best = WorldCheckpoint6;
+			
 			//if (SaveInstance->Level1Stats.WorldCheckpoint7Best > WorldCheckpoint7 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint7Best))
 			//{
 			//	SaveInstance->Level1Stats.WorldCheckpoint7Best = WorldCheckpoint7;
 			//}
-			if (SaveInstance->Level1Stats.WorldCheckpoint8Best > WorldCheckpoint8 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint8Best))
-			{
-				SaveInstance->Level1Stats.WorldCheckpoint8Best = WorldCheckpoint8;
-			}
-			if (SaveInstance->Level1Stats.WorldCheckpoint9Best > WorldCheckpoint9 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint9Best))
-			{
-				SaveInstance->Level1Stats.WorldCheckpoint9Best = WorldCheckpoint9;
-			}
-			if (SaveInstance->Level1Stats.WorldCheckpoint10Best > WorldCheckpoint10 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint10Best))
-			{
-				SaveInstance->Level1Stats.WorldCheckpoint10Best = WorldCheckpoint10;
-			}
-			if (SaveInstance->Level1Stats.WorldCheckpoint11Best > WorldCheckpoint11 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint11Best))
-			{
-				SaveInstance->Level1Stats.WorldCheckpoint11Best = WorldCheckpoint11;
-			}
-			if (SaveInstance->Level1Stats.WorldCheckpoint12Best > WorldCheckpoint12 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint12Best))
-			{
-				SaveInstance->Level1Stats.WorldCheckpoint12Best = WorldCheckpoint12;
-			}
-			if (SaveInstance->Level1Stats.WorldCheckpoint13Best > WorldCheckpoint13 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint13Best))
-			{
-				SaveInstance->Level1Stats.WorldCheckpoint13Best = WorldCheckpoint13;
-			}
+			
+			SaveInstance->Level1Stats.WorldCheckpoint8Best = WorldCheckpoint8;
+			
+			SaveInstance->Level1Stats.WorldCheckpoint9Best = WorldCheckpoint9;
+			
+			SaveInstance->Level1Stats.WorldCheckpoint10Best = WorldCheckpoint10;
+			
+			SaveInstance->Level1Stats.WorldCheckpoint11Best = WorldCheckpoint11;
+			
+			SaveInstance->Level1Stats.WorldCheckpoint12Best = WorldCheckpoint12;
+			
+			SaveInstance->Level1Stats.WorldCheckpoint13Best = WorldCheckpoint13;
+			
 			//if (SaveInstance->Level1Stats.WorldCheckpoint14Best > WorldCheckpoint14 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint14Best))
 			//{
 			//	SaveInstance->Level1Stats.WorldCheckpoint14Best = WorldCheckpoint14;
 			//}
-			if (SaveInstance->Level1Stats.WorldCheckpoint15Best > WorldCheckpoint15 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint15Best))
-			{
-				SaveInstance->Level1Stats.WorldCheckpoint15Best = WorldCheckpoint15;
-			}
-			if (SaveInstance->Level1Stats.WorldCheckpoint16Best > WorldCheckpoint16 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint16Best))
-			{
-				SaveInstance->Level1Stats.WorldCheckpoint16Best = WorldCheckpoint16;
-			}
-			if (SaveInstance->Level1Stats.WorldCheckpoint17Best > WorldCheckpoint17 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint17Best))
-			{
-				SaveInstance->Level1Stats.WorldCheckpoint17Best = WorldCheckpoint17;
-			}
-			if (SaveInstance->Level1Stats.WorldCheckpoint18Best > WorldCheckpoint18 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint18Best))
-			{
-				SaveInstance->Level1Stats.WorldCheckpoint18Best = WorldCheckpoint18;
-			}
-			if (SaveInstance->Level1Stats.WorldCheckpoint19Best > WorldCheckpoint19 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint19Best))
-			{
-				SaveInstance->Level1Stats.WorldCheckpoint19Best = WorldCheckpoint19;
-			}
-			if (SaveInstance->Level1Stats.WorldCheckpoint20Best > WorldCheckpoint20 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint20Best))
-			{
-				SaveInstance->Level1Stats.WorldCheckpoint20Best = WorldCheckpoint20;
-			}
+		
+			SaveInstance->Level1Stats.WorldCheckpoint15Best = WorldCheckpoint15;
+			
+			SaveInstance->Level1Stats.WorldCheckpoint16Best = WorldCheckpoint16;
+		
+			SaveInstance->Level1Stats.WorldCheckpoint17Best = WorldCheckpoint17;
+		
+			SaveInstance->Level1Stats.WorldCheckpoint18Best = WorldCheckpoint18;
+			
+			SaveInstance->Level1Stats.WorldCheckpoint19Best = WorldCheckpoint19;
+			
+			SaveInstance->Level1Stats.WorldCheckpoint20Best = WorldCheckpoint20;
+			
 			//if (SaveInstance->Level1Stats.WorldCheckpoint21Best > WorldCheckpoint21 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint21Best))
 			//{
 			//	SaveInstance->Level1Stats.WorldCheckpoint21Best = WorldCheckpoint21;
 			//}
 
-			if (SaveInstance->Level1Stats.BestPoints < TotalPlayerScore || SaveInstance->Level1Stats.BestPoints == 0)
-			{
-				SaveInstance->Level1Stats.BestPoints = TotalPlayerScore;
-			}
+			
+			SaveInstance->Level1Stats.BestPoints = TotalPlayerScore;
+			
 
 			SaveInstance->RacingMode = RacingMode;
 			SaveInstance->ShooterMode = ShooterMode;
@@ -600,159 +568,119 @@ void ARacingGameGameModeBase::SaveGame()
 	// Getting a RacingSaveGame Instance
 	URacingSaveGame* SaveInstance = Cast<URacingSaveGame>(UGameplayStatics::CreateSaveGameObject(URacingSaveGame::StaticClass()));
 
-	if (SaveInstance)
-	{
-		SaveInstance->Level1StatsRacing.LevelName = CurrentLevel;
+		if (SaveInstance)
+		{
+			SaveInstance->Level1StatsRacing.LevelName = CurrentLevel;
 
 
 
-		// Check all sections
-		if (SaveInstance->Level1StatsRacing.Section1Best > Section1BestTime || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.Section1Best))
-		{
-			SaveInstance->Level1StatsRacing.Section1Best = Section1BestTime;
-		}
-		if (SaveInstance->Level1StatsRacing.Section2Best > Section2BestTime || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.Section2Best))
-		{
-			SaveInstance->Level1StatsRacing.Section2Best = Section2BestTime;
-		}
-		if (SaveInstance->Level1StatsRacing.Section3Best > Section3BestTime || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.Section3Best))
-		{
-			SaveInstance->Level1StatsRacing.Section3Best = Section3BestTime;
-		}
-		if (SaveInstance->Level1StatsRacing.Section4Best > Section4BestTime || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.Section4Best))
-		{
-			SaveInstance->Level1StatsRacing.Section4Best = Section4BestTime;
-		}
-		if (SaveInstance->Level1StatsRacing.Section5Best > Section5BestTime || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.Section5Best))
-		{
-			SaveInstance->Level1StatsRacing.Section5Best = Section5BestTime;
-		}
-		if (SaveInstance->Level1StatsRacing.Section6Best > Section6BestTime || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.Section6Best))
-		{
-			SaveInstance->Level1StatsRacing.Section6Best = Section6BestTime;
-		}
-		/*	if (SaveInstance->Level1Stats.Section7Best > Section7BestTime || FMath::IsNearlyZero(SaveInstance->Level1Stats.Section7Best))
+			// Check all sections
+
+
+			SaveInstance->Level1Stats.Section1Best = Section1BestTime;
+
+			SaveInstance->Level1Stats.Section2Best = Section2BestTime;
+
+			SaveInstance->Level1Stats.Section3Best = Section3BestTime;
+
+			SaveInstance->Level1Stats.Section4Best = Section4BestTime;
+
+			SaveInstance->Level1Stats.Section5Best = Section5BestTime;
+
+			SaveInstance->Level1Stats.Section6Best = Section6BestTime;
+
+			//SaveInstance->Level1Stats.Section7Best = Section7BestTime;
+			
+
+				// Check all 3 rounds
+
+			if (Round1Time < Round2Time && Round1Time < Round3Time && Round1Time < RoundBestTime)
 			{
-				SaveInstance->Level1Stats.Section7Best = Section7BestTime;
-			}*/
+				RoundBestTime = Round1Time;
+				SaveInstance->Level1Stats.RoundBest = Round1Time;
+			}
 
-			// Check all 3 rounds
 
-		if (SaveInstance->Level1StatsRacing.RoundBest > Round1Time || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.RoundBest))
-		{
-			SaveInstance->Level1StatsRacing.RoundBest = Round1Time;
-		}
+			if (Round2Time < Round1Time && Round2Time < Round3Time && Round2Time < RoundBestTime)
+			{
+				RoundBestTime = Round2Time;
+				SaveInstance->Level1Stats.RoundBest = Round2Time;
+			}
 
-		if (SaveInstance->Level1StatsRacing.RoundBest > Round2Time || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.RoundBest))
-		{
-			SaveInstance->Level1StatsRacing.RoundBest = Round2Time;
-		}
+			if (Round3Time < Round2Time && Round3Time < Round1Time && Round3Time < RoundBestTime)
+			{
+				RoundBestTime = Round2Time;
+				SaveInstance->Level1Stats.RoundBest = Round3Time;
+			}
 
-		if (SaveInstance->Level1StatsRacing.RoundBest > Round3Time || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.RoundBest))
-		{
-			SaveInstance->Level1StatsRacing.RoundBest = Round3Time;
-		}
 
-		// Check Total Time for all 3 rounds
+			// Check Total Time for all 3 rounds
 
-		if (SaveInstance->Level1StatsRacing.TotalBest > TotalTime || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.TotalBest))
-		{
-			SaveInstance->Level1StatsRacing.TotalBest = TotalTime;
-		}
+			SaveInstance->Level1Stats.TotalBest = TotalTime;
 
 
 
-		if (SaveInstance->Level1StatsRacing.WorldCheckpoint1Best > WorldCheckpoint1 || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.WorldCheckpoint1Best))
-		{
-			SaveInstance->Level1StatsRacing.WorldCheckpoint1Best = WorldCheckpoint1;
-		}
-		if (SaveInstance->Level1StatsRacing.WorldCheckpoint2Best > WorldCheckpoint2 || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.WorldCheckpoint2Best))
-		{
-			SaveInstance->Level1StatsRacing.WorldCheckpoint2Best = WorldCheckpoint2;
-		}
-		if (SaveInstance->Level1StatsRacing.WorldCheckpoint3Best > WorldCheckpoint3 || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.WorldCheckpoint3Best))
-		{
-			SaveInstance->Level1StatsRacing.WorldCheckpoint3Best = WorldCheckpoint3;
-		}
-		if (SaveInstance->Level1StatsRacing.WorldCheckpoint4Best > WorldCheckpoint4 || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.WorldCheckpoint4Best))
-		{
-			SaveInstance->Level1StatsRacing.WorldCheckpoint4Best = WorldCheckpoint4;
-		}
-		if (SaveInstance->Level1StatsRacing.WorldCheckpoint5Best > WorldCheckpoint5 || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.WorldCheckpoint5Best))
-		{
-			SaveInstance->Level1StatsRacing.WorldCheckpoint5Best = WorldCheckpoint5;
-		}
-		if (SaveInstance->Level1StatsRacing.WorldCheckpoint6Best > WorldCheckpoint6 || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.WorldCheckpoint6Best))
-		{
-			SaveInstance->Level1StatsRacing.WorldCheckpoint6Best = WorldCheckpoint6;
-		}
-		//if (SaveInstance->Level1Stats.WorldCheckpoint7Best > WorldCheckpoint7 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint7Best))
-		//{
-		//	SaveInstance->Level1Stats.WorldCheckpoint7Best = WorldCheckpoint7;
-		//}
-		if (SaveInstance->Level1StatsRacing.WorldCheckpoint8Best > WorldCheckpoint8 || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.WorldCheckpoint8Best))
-		{
-			SaveInstance->Level1StatsRacing.WorldCheckpoint8Best = WorldCheckpoint8;
-		}
-		if (SaveInstance->Level1StatsRacing.WorldCheckpoint9Best > WorldCheckpoint9 || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.WorldCheckpoint9Best))
-		{
-			SaveInstance->Level1StatsRacing.WorldCheckpoint9Best = WorldCheckpoint9;
-		}
-		if (SaveInstance->Level1StatsRacing.WorldCheckpoint10Best > WorldCheckpoint10 || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.WorldCheckpoint10Best))
-		{
-			SaveInstance->Level1StatsRacing.WorldCheckpoint10Best = WorldCheckpoint10;
-		}
-		if (SaveInstance->Level1StatsRacing.WorldCheckpoint11Best > WorldCheckpoint11 || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.WorldCheckpoint11Best))
-		{
-			SaveInstance->Level1StatsRacing.WorldCheckpoint11Best = WorldCheckpoint11;
-		}
-		if (SaveInstance->Level1StatsRacing.WorldCheckpoint12Best > WorldCheckpoint12 || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.WorldCheckpoint12Best))
-		{
-			SaveInstance->Level1StatsRacing.WorldCheckpoint12Best = WorldCheckpoint12;
-		}
-		if (SaveInstance->Level1StatsRacing.WorldCheckpoint13Best > WorldCheckpoint13 || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.WorldCheckpoint13Best))
-		{
-			SaveInstance->Level1StatsRacing.WorldCheckpoint13Best = WorldCheckpoint13;
-		}
-		//if (SaveInstance->Level1Stats.WorldCheckpoint14Best > WorldCheckpoint14 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint14Best))
-		//{
-		//	SaveInstance->Level1Stats.WorldCheckpoint14Best = WorldCheckpoint14;
-		//}
-		if (SaveInstance->Level1StatsRacing.WorldCheckpoint15Best > WorldCheckpoint15 || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.WorldCheckpoint15Best))
-		{
-			SaveInstance->Level1StatsRacing.WorldCheckpoint15Best = WorldCheckpoint15;
-		}
-		if (SaveInstance->Level1StatsRacing.WorldCheckpoint16Best > WorldCheckpoint16 || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.WorldCheckpoint16Best))
-		{
-			SaveInstance->Level1StatsRacing.WorldCheckpoint16Best = WorldCheckpoint16;
-		}
-		if (SaveInstance->Level1StatsRacing.WorldCheckpoint17Best > WorldCheckpoint17 || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.WorldCheckpoint17Best))
-		{
-			SaveInstance->Level1StatsRacing.WorldCheckpoint17Best = WorldCheckpoint17;
-		}
-		if (SaveInstance->Level1StatsRacing.WorldCheckpoint18Best > WorldCheckpoint18 || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.WorldCheckpoint18Best))
-		{
-			SaveInstance->Level1StatsRacing.WorldCheckpoint18Best = WorldCheckpoint18;
-		}
-		if (SaveInstance->Level1StatsRacing.WorldCheckpoint19Best > WorldCheckpoint19 || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.WorldCheckpoint19Best))
-		{
-			SaveInstance->Level1StatsRacing.WorldCheckpoint19Best = WorldCheckpoint19;
-		}
-		if (SaveInstance->Level1StatsRacing.WorldCheckpoint20Best > WorldCheckpoint20 || FMath::IsNearlyZero(SaveInstance->Level1StatsRacing.WorldCheckpoint20Best))
-		{
-			SaveInstance->Level1StatsRacing.WorldCheckpoint20Best = WorldCheckpoint20;
-		}
-		//if (SaveInstance->Level1Stats.WorldCheckpoint21Best > WorldCheckpoint21 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint21Best))
-		//{
-		//	SaveInstance->Level1Stats.WorldCheckpoint21Best = WorldCheckpoint21;
-		//}
 
-		SaveInstance->RacingMode = RacingMode;
-		SaveInstance->ShooterMode = ShooterMode;
+			SaveInstance->Level1Stats.WorldCheckpoint1Best = WorldCheckpoint1;
 
-		// Save Game to slot
-		UGameplayStatics::SaveGameToSlot(SaveInstance, SaveInstance->PlayerName, SaveInstance->UserIndex);
-	}
+			SaveInstance->Level1Stats.WorldCheckpoint2Best = WorldCheckpoint2;
+
+			SaveInstance->Level1Stats.WorldCheckpoint3Best = WorldCheckpoint3;
+
+			SaveInstance->Level1Stats.WorldCheckpoint4Best = WorldCheckpoint4;
+
+			SaveInstance->Level1Stats.WorldCheckpoint5Best = WorldCheckpoint5;
+
+			SaveInstance->Level1Stats.WorldCheckpoint6Best = WorldCheckpoint6;
+
+			//if (SaveInstance->Level1Stats.WorldCheckpoint7Best > WorldCheckpoint7 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint7Best))
+			//{
+			//	SaveInstance->Level1Stats.WorldCheckpoint7Best = WorldCheckpoint7;
+			//}
+
+			SaveInstance->Level1Stats.WorldCheckpoint8Best = WorldCheckpoint8;
+
+			SaveInstance->Level1Stats.WorldCheckpoint9Best = WorldCheckpoint9;
+
+			SaveInstance->Level1Stats.WorldCheckpoint10Best = WorldCheckpoint10;
+
+			SaveInstance->Level1Stats.WorldCheckpoint11Best = WorldCheckpoint11;
+
+			SaveInstance->Level1Stats.WorldCheckpoint12Best = WorldCheckpoint12;
+
+			SaveInstance->Level1Stats.WorldCheckpoint13Best = WorldCheckpoint13;
+
+			//if (SaveInstance->Level1Stats.WorldCheckpoint14Best > WorldCheckpoint14 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint14Best))
+			//{
+			//	SaveInstance->Level1Stats.WorldCheckpoint14Best = WorldCheckpoint14;
+			//}
+
+			SaveInstance->Level1Stats.WorldCheckpoint15Best = WorldCheckpoint15;
+
+			SaveInstance->Level1Stats.WorldCheckpoint16Best = WorldCheckpoint16;
+
+			SaveInstance->Level1Stats.WorldCheckpoint17Best = WorldCheckpoint17;
+
+			SaveInstance->Level1Stats.WorldCheckpoint18Best = WorldCheckpoint18;
+
+			SaveInstance->Level1Stats.WorldCheckpoint19Best = WorldCheckpoint19;
+
+			SaveInstance->Level1Stats.WorldCheckpoint20Best = WorldCheckpoint20;
+
+			//if (SaveInstance->Level1Stats.WorldCheckpoint21Best > WorldCheckpoint21 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint21Best))
+			//{
+			//	SaveInstance->Level1Stats.WorldCheckpoint21Best = WorldCheckpoint21;
+			//}
+
+
+			SaveInstance->Level1Stats.BestPoints = TotalPlayerScore;
+
+
+			SaveInstance->RacingMode = RacingMode;
+			SaveInstance->ShooterMode = ShooterMode;
+			// Save Game to slot
+			UGameplayStatics::SaveGameToSlot(SaveInstance, SaveInstance->PlayerName, SaveInstance->UserIndex);
+		}
 
 
 	}
@@ -819,6 +747,8 @@ void ARacingGameGameModeBase::LoadGame()
 
 			RoundBestTime = LoadInstance->Level1Stats.RoundBest;
 			TotalBestTime = LoadInstance->Level1Stats.TotalBest;
+		
+			TotalPlayerScore = LoadInstance->Level1Stats.BestPoints;
 
 			CurrentLevel = LoadInstance->Level1Stats.LevelName;
 		}
@@ -862,6 +792,8 @@ void ARacingGameGameModeBase::LoadGame()
 
 			RoundBestTime = LoadInstance->Level1StatsRacing.RoundBest;
 			TotalBestTime = LoadInstance->Level1StatsRacing.TotalBest;
+
+			TotalPlayerScore = LoadInstance->Level1StatsRacing.BestPoints;
 
 			CurrentLevel = LoadInstance->Level1StatsRacing.LevelName;
 		}
