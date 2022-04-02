@@ -27,7 +27,7 @@ void ARacingGameGameModeBase::BeginPlay()
 	if (CurrentLevel == Level1)
 	{
 
-		UE_LOG(LogTemp, Warning, TEXT("PLayer Name: %s"), *PlayerName);
+		
 		APawn* Temp = GetWorld()->GetFirstPlayerController()->GetPawn();
 
 		if (Temp)
@@ -69,7 +69,7 @@ void ARacingGameGameModeBase::BeginPlay()
 			}
 			else if (RacingMode)
 			{
-				UE_LOG(LogTemp, Warning, TEXT("RacingMode"));
+				//UE_LOG(LogTemp, Warning, TEXT("RacingMode"));
 				Player->SetActorLocation(FVector(-15000.f, 7550.f, 22210.f));
 				Player->SetActorRotation(FRotator(0.f, 280.f, 0.f));
 
