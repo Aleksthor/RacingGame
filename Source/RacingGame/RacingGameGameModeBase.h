@@ -64,6 +64,8 @@ public:
 	FString Level1 = "MOSSYMOOR";
 
 	FName Level1Name = "MOSSYMOOR";
+	FName MainMenuLevelName = "MainMenuLevel";
+
 
 	/** Tick Functions */
 
@@ -196,8 +198,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
 	bool Saved = false;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
-	FString PlayerName;
+	
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 	float Section1BestTime;
@@ -228,6 +229,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 	float Round3Time;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	float BestRound;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 	float TotalTime;
@@ -316,6 +320,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void LoadMap1();
+
+
+	UFUNCTION(BlueprintCallable)
+	void LoadMainMenu();
 
 	UFUNCTION(BlueprintCallable)
 	void SaveGame();

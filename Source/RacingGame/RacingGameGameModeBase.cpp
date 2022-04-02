@@ -203,11 +203,19 @@ void ARacingGameGameModeBase::CurrentRoundFunction()
 			{
 				
 				Round3Time = Player->WorldTimer - Round2Time;
-				if (TotalTime < Player->WorldTimer)
+				BestRound = Round1Time;
+				if (BestRound > Round2Time)
 				{
-					TotalTime = Player->WorldTimer;
+					BestRound = Round2Time;
+				}
+				if (BestRound > Round3Time)
+				{
+					BestRound = Round3Time;
 				}
 				
+				TotalTime = Player->WorldTimer;
+				
+			
 				TotalPoints = Player->Points;
 				GameWon();
 			}
@@ -442,6 +450,11 @@ void ARacingGameGameModeBase::Reset()
 void ARacingGameGameModeBase::LoadMap1()
 {
 	UGameplayStatics::OpenLevel(GetWorld(), Level1Name);
+}
+
+void ARacingGameGameModeBase::LoadMainMenu()
+{
+	UGameplayStatics::OpenLevel(GetWorld(), MainMenuLevelName);
 }
 
 void ARacingGameGameModeBase::SaveGame()
