@@ -495,7 +495,7 @@ void ARacingGameGameModeBase::SaveGame()
 			if (Round1Time < Round2Time && Round1Time < Round3Time && (Round1Time < RoundBestTime || FMath::IsNearlyZero(RoundBestTime)))
 			{
 				NewRoundBest = true;
-				RoundBestTime = Round1Time;
+				
 				SaveInstance->Level1Stats.RoundBest = Round1Time;
 			}
 
@@ -503,14 +503,14 @@ void ARacingGameGameModeBase::SaveGame()
 			if (Round2Time < Round1Time && Round2Time < Round3Time && (Round2Time < RoundBestTime || FMath::IsNearlyZero(RoundBestTime)))
 			{
 				NewRoundBest = true;
-				RoundBestTime = Round2Time;
+				
 				SaveInstance->Level1Stats.RoundBest = Round2Time;
 			}
 
 			if (Round3Time < Round2Time && Round3Time < Round1Time && (Round3Time < RoundBestTime || FMath::IsNearlyZero(RoundBestTime)))
 			{
 				NewRoundBest = true;
-				RoundBestTime = Round2Time;
+				
 				SaveInstance->Level1Stats.RoundBest = Round3Time;
 			}
 
@@ -629,7 +629,7 @@ void ARacingGameGameModeBase::SaveGame()
 			if (Round1Time < Round2Time && Round1Time < Round3Time && (Round1Time < RoundBestTime || FMath::IsNearlyZero(RoundBestTime)))
 			{
 				NewRoundBest = true;
-				RoundBestTime = Round1Time;
+				
 				SaveInstance->Level1Stats.RoundBest = Round1Time;
 			}
 
@@ -637,14 +637,14 @@ void ARacingGameGameModeBase::SaveGame()
 			if (Round2Time < Round1Time && Round2Time < Round3Time && (Round2Time < RoundBestTime || FMath::IsNearlyZero(RoundBestTime)))
 			{
 				NewRoundBest = true;
-				RoundBestTime = Round2Time;
+				
 				SaveInstance->Level1Stats.RoundBest = Round2Time;
 			}
 
 			if (Round3Time < Round2Time && Round3Time < Round1Time && (Round3Time < RoundBestTime || FMath::IsNearlyZero(RoundBestTime)))
 			{
 				NewRoundBest = true;
-				RoundBestTime = Round2Time;
+				
 				SaveInstance->Level1Stats.RoundBest = Round3Time;
 			}
 
