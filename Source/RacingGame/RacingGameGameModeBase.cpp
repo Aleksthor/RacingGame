@@ -602,20 +602,20 @@ void ARacingGameGameModeBase::SaveGame()
 
 				// Check all 3 rounds
 
-			if (Round1Time < Round2Time && Round1Time < Round3Time && Round1Time < RoundBestTime)
+			if (Round1Time < Round2Time && Round1Time < Round3Time && (Round1Time < RoundBestTime || FMath::IsNearlyZero(RoundBestTime)))
 			{
 				RoundBestTime = Round1Time;
 				SaveInstance->Level1Stats.RoundBest = Round1Time;
 			}
 
 
-			if (Round2Time < Round1Time && Round2Time < Round3Time && Round2Time < RoundBestTime)
+			if (Round2Time < Round1Time && Round2Time < Round3Time && (Round2Time < RoundBestTime || FMath::IsNearlyZero(RoundBestTime)))
 			{
 				RoundBestTime = Round2Time;
 				SaveInstance->Level1Stats.RoundBest = Round2Time;
 			}
 
-			if (Round3Time < Round2Time && Round3Time < Round1Time && Round3Time < RoundBestTime)
+			if (Round3Time < Round2Time && Round3Time < Round1Time && (Round3Time < RoundBestTime || FMath::IsNearlyZero(RoundBestTime)))
 			{
 				RoundBestTime = Round2Time;
 				SaveInstance->Level1Stats.RoundBest = Round3Time;
