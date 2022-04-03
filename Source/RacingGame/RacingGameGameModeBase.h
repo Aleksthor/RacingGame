@@ -341,7 +341,7 @@ public:
 	UFUNCTION()
 	void GameWon();
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void Reset();
 
 	UFUNCTION(BlueprintCallable)

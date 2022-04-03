@@ -463,6 +463,62 @@ void ARacingGameGameModeBase::SwitchTimer()
 
 void ARacingGameGameModeBase::Reset()
 {
+	WorldCheckpoint1 = 0.f;
+	WorldCheckpoint2 = 0.f;
+	WorldCheckpoint3 = 0.f;
+	WorldCheckpoint4 = 0.f;
+	WorldCheckpoint5 = 0.f;
+	WorldCheckpoint6 = 0.f;
+	WorldCheckpoint8 = 0.f;
+	WorldCheckpoint9 = 0.f;
+	WorldCheckpoint10 = 0.f;
+	WorldCheckpoint11 = 0.f;
+	WorldCheckpoint12 = 0.f;
+	WorldCheckpoint13 = 0.f;
+	WorldCheckpoint15 = 0.f;
+	WorldCheckpoint16 = 0.f;
+	WorldCheckpoint17 = 0.f;
+	WorldCheckpoint18 = 0.f;
+	WorldCheckpoint19 = 0.f;
+	WorldCheckpoint20 = 0.f;
+
+	Section1BestTime = 0.f;
+	Section2BestTime = 0.f;
+	Section3BestTime = 0.f;
+	Section4BestTime = 0.f;
+	Section5BestTime = 0.f;
+	Section6BestTime = 0.f;
+
+	CurrentRound = 1;
+	CurrentCheckpoint = 0;
+
+	Section1NewBestTime = false;
+	Section2NewBestTime = false;
+	Section3NewBestTime = false;
+	Section4NewBestTime = false;
+	Section5NewBestTime = false;
+	Section6NewBestTime = false;
+	
+	Round1Time = 0.f;
+	Round2Time = 0.f;
+	Round3Time = 0.f;
+	BestRound = 0.f;
+	TotalTime = 0.f;
+	
+	RoundBestTime = 0.f;
+	TotalBestTime = 0.f;
+	TotalPoints = 0.f;
+
+	BronzeMedal = false;
+	SilverMedal = false;
+	GoldMedal = false;
+	EpicMedal = false;
+
+	TotalPlayerScore = 0;
+	TotalBestScore = 0;
+	NewBestScore = false;
+	TimeScore = 0;
+	bGameWon = false;
 
 }
 
