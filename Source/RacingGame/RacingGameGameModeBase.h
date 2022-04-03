@@ -9,6 +9,7 @@
 /**
  * 
  */
+class USoundCue;
 
 // Code that is commented out is there to be able to implement again if we want it
 UCLASS()
@@ -44,7 +45,13 @@ public:
 	TArray<class ASpeedBoosterv1*> SpeedBoostArray;
 	ASpeedBoosterv1* tempSpeedBoost;
 
-	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
+	USoundCue* GameWonSound{ nullptr };
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
+	USoundCue* GameWonGoldSound{ nullptr };
 
 	
 

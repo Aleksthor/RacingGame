@@ -61,6 +61,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
 	TSubclassOf<AHealthPack> HealthPackBP;
 
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
+	class USoundCue* ShootSound{ nullptr };
+
 	/** Constructor Values | Also used later for reference to default values */
 
 

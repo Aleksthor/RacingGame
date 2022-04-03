@@ -20,6 +20,7 @@
 #include "Kismet/KismetTextLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 
 // Sets default values
 APlayerCar::APlayerCar()
@@ -295,6 +296,10 @@ void APlayerCar::StartShooting()
 	
 	if (bCanShoot)
 	{
+		if (ShootSound)
+		{
+			UGameplayStatics::PlaySound2D(this, ShootSound);
+		}
 		GetWorld()->SpawnActor<ABomb>(BombBP, GetActorLocation() + GetActorForwardVector() * 100.f, FRotator(0.f, PlayerMesh->GetComponentRotation().Yaw, 0.f));
 		bCanShoot = false;
 	}
