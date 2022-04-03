@@ -31,6 +31,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpeedBoostVariables")
 	bool isHit = false;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpeedBoostVariables")
+	class USoundCue* OnHitSound{ nullptr };
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

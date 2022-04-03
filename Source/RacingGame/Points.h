@@ -35,6 +35,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
 	bool Round3 = false;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
+	class USoundCue* OnHitSound1{ nullptr };
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
+	class USoundCue* OnHitSound2{ nullptr };
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

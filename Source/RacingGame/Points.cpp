@@ -5,6 +5,8 @@
 #include "Components/BoxComponent.h"
 #include "PlayerCar.h"
 #include "RacingGameGameModeBase.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 
 // Sets default values
 APoints::APoints()
@@ -56,6 +58,21 @@ void APoints::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherA
 	APlayerCar* Player = Cast<APlayerCar>(OtherActor);
 	if (Player)
 	{
+		int Random = FMath::RandRange(1, 2);
+		if (Random == 1)
+		{
+			if (OnHitSound1)
+			{
+				UGameplayStatics::PlaySound2D(this, OnHitSound1);
+			}
+		}
+		else
+		{
+			if (OnHitSound2)
+			{
+				UGameplayStatics::PlaySound2D(this, OnHitSound2);
+			}
+		}
 		Player->GivePoints(PointsGiven);
 		isHit = true;
 		SetActorHiddenInGame(true);

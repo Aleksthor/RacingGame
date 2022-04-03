@@ -6,6 +6,8 @@
 #include "PlayerCar.h"
 
 #include "GameFramework/FloatingPawnMovement.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 
 // Sets default values
 ASpeedBoosterv1::ASpeedBoosterv1()
@@ -42,6 +44,10 @@ void ASpeedBoosterv1::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	APlayerCar* Player = Cast<APlayerCar>(OtherActor);
 	if (Player)
 	{
+		if (OnHitSound)
+		{
+			UGameplayStatics::PlaySound2D(this, OnHitSound);
+		}
 		Player->bSpeedBoost = true;
 		Player->SpeedBoostTimer += Timer;
 
