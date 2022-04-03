@@ -202,7 +202,9 @@ void ARacingGameGameModeBase::CurrentRoundFunction()
 			if (CurrentCheckpoint > 5) // Means Round is Over | Then reset colliders
 			{
 				
-				Round3Time = Player->WorldTimer - Round2Time;
+				Round3Time = Player->WorldTimer - Round2Time - Round1Time;
+
+
 				BestRound = Round1Time;
 				if (BestRound > Round2Time)
 				{
@@ -491,39 +493,32 @@ void ARacingGameGameModeBase::SaveGame()
 				}*/
 
 			// Check all 3 rounds
-
-			if (Round1Time < Round2Time && Round1Time < Round3Time && (Round1Time < RoundBestTime || FMath::IsNearlyZero(RoundBestTime)))
+			float SetBestRound;
+			if (BestRound < RoundBestTime || FMath::IsNearlyZero(RoundBestTime))
 			{
 				NewRoundBest = true;
-				
-				SaveInstance->Level1Stats.RoundBest = Round1Time;
+				SetBestRound = BestRound;
 			}
-
-
-			if (Round2Time < Round1Time && Round2Time < Round3Time && (Round2Time < RoundBestTime || FMath::IsNearlyZero(RoundBestTime)))
+			else
 			{
-				NewRoundBest = true;
-				
-				SaveInstance->Level1Stats.RoundBest = Round2Time;
+				SetBestRound = RoundBestTime;
 			}
+			SaveInstance->Level1Stats.RoundBest = SetBestRound;
 
-			if (Round3Time < Round2Time && Round3Time < Round1Time && (Round3Time < RoundBestTime || FMath::IsNearlyZero(RoundBestTime)))
-			{
-				NewRoundBest = true;
-				
-				SaveInstance->Level1Stats.RoundBest = Round3Time;
-			}
 
 
 			// Check Total Time for all 3 rounds
+			float SetTotalTime;
 			if (TotalTime < TotalBestTime || TotalBestTime == 0.f)
 			{
 				NewTotalBest = true;
-				SaveInstance->Level1Stats.TotalBest = TotalTime;
-
+				SetTotalTime = TotalTime;
 			}
-			
-
+			else
+			{
+				SetTotalTime = TotalBestTime;
+			}
+			SaveInstance->Level1Stats.TotalBest = SetTotalTime;
 
 
 			SaveInstance->Level1Stats.WorldCheckpoint1Best = WorldCheckpoint1;
@@ -577,13 +572,17 @@ void ARacingGameGameModeBase::SaveGame()
 			//	SaveInstance->Level1Stats.WorldCheckpoint21Best = WorldCheckpoint21;
 			//}
 
-			
+			float SetBestScore;
 			if (TotalBestScore < TotalPlayerScore)
 			{
 				NewBestScore = true;
-				SaveInstance->Level1Stats.BestPoints = TotalPlayerScore;
+				SetBestScore = TotalBestScore;
 			}
-			
+			else
+			{
+				SetBestScore = TotalPlayerScore;
+			}
+			SaveInstance->Level1Stats.BestPoints = SetBestScore;
 
 			SaveInstance->RacingMode = RacingMode;
 			SaveInstance->ShooterMode = ShooterMode;
@@ -626,39 +625,34 @@ void ARacingGameGameModeBase::SaveGame()
 
 				// Check all 3 rounds
 
-			if (Round1Time < Round2Time && Round1Time < Round3Time && (Round1Time < RoundBestTime || FMath::IsNearlyZero(RoundBestTime)))
+
+			// Check all 3 rounds
+			float SetBestRound;
+			if (BestRound < RoundBestTime || FMath::IsNearlyZero(RoundBestTime))
 			{
 				NewRoundBest = true;
-				
-				SaveInstance->Level1Stats.RoundBest = Round1Time;
+				SetBestRound = BestRound;
 			}
-
-
-			if (Round2Time < Round1Time && Round2Time < Round3Time && (Round2Time < RoundBestTime || FMath::IsNearlyZero(RoundBestTime)))
+			else
 			{
-				NewRoundBest = true;
-				
-				SaveInstance->Level1Stats.RoundBest = Round2Time;
+				SetBestRound = RoundBestTime;
 			}
+			SaveInstance->Level1Stats.RoundBest = SetBestRound;
 
-			if (Round3Time < Round2Time && Round3Time < Round1Time && (Round3Time < RoundBestTime || FMath::IsNearlyZero(RoundBestTime)))
-			{
-				NewRoundBest = true;
-				
-				SaveInstance->Level1Stats.RoundBest = Round3Time;
-			}
 
 
 			// Check Total Time for all 3 rounds
+			float SetTotalTime;
 			if (TotalTime < TotalBestTime || TotalBestTime == 0.f)
 			{
 				NewTotalBest = true;
-				SaveInstance->Level1Stats.TotalBest = TotalTime;
-
+				SetTotalTime = TotalTime;
 			}
-			
-
-
+			else
+			{
+				SetTotalTime = TotalBestTime;
+			}
+			SaveInstance->Level1Stats.TotalBest = SetTotalTime;
 
 
 			SaveInstance->Level1Stats.WorldCheckpoint1Best = WorldCheckpoint1;
@@ -712,16 +706,21 @@ void ARacingGameGameModeBase::SaveGame()
 			//	SaveInstance->Level1Stats.WorldCheckpoint21Best = WorldCheckpoint21;
 			//}
 
-			if (TotalBestScore < TotalPlayerScore)
+			float SetBestScore;
+			if (TotalPlayerScore < TotalBestScore)
 			{
 				NewBestScore = true;
-				SaveInstance->Level1Stats.BestPoints = TotalPlayerScore;
+				SetBestScore = TotalPlayerScore;
 			}
-		
-
+			else
+			{
+				SetBestScore = TotalBestScore;
+			}
+			SaveInstance->Level1Stats.BestPoints = SetBestScore;
 
 			SaveInstance->RacingMode = RacingMode;
 			SaveInstance->ShooterMode = ShooterMode;
+
 			// Save Game to slot
 			UGameplayStatics::SaveGameToSlot(SaveInstance, SaveInstance->PlayerName, SaveInstance->UserIndex);
 		}
