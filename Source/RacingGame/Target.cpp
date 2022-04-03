@@ -26,15 +26,15 @@ ATarget::ATarget()
 	TargetMesh->SetupAttachment(Collider);
 
 	RedMesh = CreateDefaultSubobject<UStaticMesh>(TEXT("RedMesh"));
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> Mesh1(TEXT("StaticMesh'/Game/Meshes/Baloons/BalloonBlue.BalloonBlue'"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> Mesh1(TEXT("StaticMesh'/Game/Meshes/Items/Baloons/BalloonBlue.BalloonBlue'"));
 	RedMesh = Mesh1.Object;
 
 	BlueMesh = CreateDefaultSubobject<UStaticMesh>(TEXT("BlueMesh"));
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> Mesh2(TEXT("StaticMesh'/Game/Meshes/Baloons/BalloonRed.BalloonRed'"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> Mesh2(TEXT("StaticMesh'/Game/Meshes/Items/Baloons/BalloonRed.BalloonRed'"));
 	BlueMesh = Mesh2.Object;
 
 	YellowMesh = CreateDefaultSubobject<UStaticMesh>(TEXT("YellowMesh"));
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> Mesh3(TEXT("StaticMesh'/Game/Meshes/Baloons/BalloonYellow.BalloonYellow'"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> Mesh3(TEXT("StaticMesh'/Game/Meshes/Items/Baloons/BalloonYellow.BalloonYellow'"));
 	YellowMesh = Mesh3.Object;
 
 
