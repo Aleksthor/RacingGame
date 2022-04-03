@@ -32,6 +32,9 @@ public:
 	TArray<class ABees*> BeeArray;
 	ABees* tempBee;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BeeHiveVariables")
+	class USoundCue* OnHitSound{ nullptr };
+
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BeeHiveVariables")
 	FVector SpawnLocation;

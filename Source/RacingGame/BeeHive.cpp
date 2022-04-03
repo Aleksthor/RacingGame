@@ -6,6 +6,8 @@
 #include "Bomb.h"
 #include "Components/BoxComponent.h"
 #include "Components/SphereComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 
 // Sets default values
 ABeeHive::ABeeHive()
@@ -72,6 +74,10 @@ void ABeeHive::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Other
 	ABomb* Bomb = Cast<ABomb>(OtherActor);
 	if (Bomb)
 	{
+		if (OnHitSound)
+		{
+			UGameplayStatics::PlaySound2D(this, OnHitSound);
+		}
 		bIsHit = true;
 
 	}
