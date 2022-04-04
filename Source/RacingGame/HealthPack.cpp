@@ -44,6 +44,10 @@ void AHealthPack::Tick(float DeltaTime)
 
 
 	}
+
+	FRotator ActorRotation = GetActorRotation();
+	ActorRotation.Yaw += 1.f;
+	SetActorRotation(ActorRotation);
 	
 
 
