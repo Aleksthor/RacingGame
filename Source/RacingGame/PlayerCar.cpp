@@ -142,7 +142,10 @@ void APlayerCar::Tick(float DeltaTime)
 			CanSpawnHealthPack = true;
 		}
 	}
-	if (ControllerPitchStill && ControllerYawStill)
+
+
+
+	if (ControllerPitchStill && ControllerYawStill && !ResettingCamera)
 	{
 
 		ControllerStillClock += DeltaTime;
@@ -158,12 +161,49 @@ void APlayerCar::Tick(float DeltaTime)
 			}
 		
 
-			FRotator SpringArmRotator = FMath::RInterpTo(SpringArm->GetRelativeRotation(), FRotator(-15.f, 0.f, 0.f), UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 2.f);
+			FRotator SpringArmRotator = FMath::RInterpTo(SpringArm->GetRelativeRotation(), FRotator(-15.f, 0.f, 0.f), DeltaTime, 2.f);
 			Controller->SetControlRotation(SpringArm->GetComponentRotation());
 			SpringArm->SetRelativeRotation(SpringArmRotator);
 		}
 
 	
+	}
+
+	if (ResettingCamera && !LookingBehind)
+	{
+		if (SpringArm->bUsePawnControlRotation)
+		{
+			SpringArm->SetWorldRotation(FRotator(ControlRotation.Pitch, ControlRotation.Yaw, ControlRotation.Roll));
+			SpringArm->bUsePawnControlRotation = false;
+
+		}
+
+
+		FRotator SpringArmRotator = FMath::RInterpTo(SpringArm->GetRelativeRotation(), FRotator(-15.f, 0.f, 0.f), DeltaTime, 5.f);
+		Controller->SetControlRotation(SpringArm->GetComponentRotation());
+		SpringArm->SetRelativeRotation(SpringArmRotator);
+
+		if (FMath::IsNearlyEqual(SpringArm->GetRelativeRotation().Pitch, -15.f, 2.f) 
+			&& FMath::IsNearlyEqual(SpringArm->GetRelativeRotation().Yaw, 0.f, 2.f) 
+			&& FMath::IsNearlyEqual(SpringArm->GetRelativeRotation().Roll, 0.f, 2.f))
+		{
+			ResettingCamera = false;
+		}
+	}
+
+	if (LookingBehind && !ResettingCamera)
+	{
+		if (SpringArm->bUsePawnControlRotation)
+		{
+			SpringArm->SetWorldRotation(FRotator(ControlRotation.Pitch, ControlRotation.Yaw, ControlRotation.Roll));
+			SpringArm->bUsePawnControlRotation = false;
+
+		}
+
+
+		FRotator SpringArmRotator = FMath::RInterpTo(SpringArm->GetRelativeRotation(), FRotator(-15.f, 180.f, 0.f), DeltaTime, 5.f);
+		Controller->SetControlRotation(SpringArm->GetComponentRotation());
+		SpringArm->SetRelativeRotation(SpringArmRotator);
 	}
 
 
@@ -190,8 +230,8 @@ void APlayerCar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAxis("Forward", this, &APlayerCar::Forward);
 	PlayerInputComponent->BindAxis("Right", this, &APlayerCar::Right);
 
-	PlayerInputComponent->BindAction("ShootHigh", IE_Pressed, this, &APlayerCar::StartShooting);
-	PlayerInputComponent->BindAction("ShootHigh", IE_Released, this, &APlayerCar::StopShooting);
+	PlayerInputComponent->BindAction("Shoot", IE_Pressed, this, &APlayerCar::StartShooting);
+	PlayerInputComponent->BindAction("Shoot", IE_Released, this, &APlayerCar::StopShooting);
 
 	// Turn Camera with mouse
 	PlayerInputComponent->BindAxis("TurnCamera", this, &APlayerCar::TurnCamera);
@@ -199,6 +239,12 @@ void APlayerCar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 	PlayerInputComponent->BindAction("Drift", IE_Pressed, this, &APlayerCar::StartDrift);
 	PlayerInputComponent->BindAction("Drift", IE_Released, this, &APlayerCar::StopDrift);
+
+	PlayerInputComponent->BindAction("ResetCamera", IE_Pressed, this, &APlayerCar::ResetCamera);
+
+
+	PlayerInputComponent->BindAction("LookBehind", IE_Pressed, this, &APlayerCar::LookBehind);
+	PlayerInputComponent->BindAction("LookBehind", IE_Released, this, &APlayerCar::ReleaseLookBehind);
 }
 
 
@@ -315,6 +361,37 @@ void APlayerCar::StopShooting()
 {
 
 
+}
+
+void APlayerCar::ResetCamera()
+{
+
+	if (!ResettingCamera && !LookingBehind)
+	{
+		ResettingCamera = true;
+	}
+	else
+	{
+		ResettingCamera = false;
+	}
+}
+
+void APlayerCar::LookBehind()
+{
+	if (!LookingBehind && !ResettingCamera)
+	{
+		LookingBehind = true;
+	}
+	else
+	{
+		LookingBehind = false;
+	}
+	
+}
+
+void APlayerCar::ReleaseLookBehind()
+{
+	LookingBehind = false;
 }
 
 

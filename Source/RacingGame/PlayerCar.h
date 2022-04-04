@@ -139,8 +139,13 @@ public:
 	float InAirClock = 0.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Logic")
-	float InAirTimer = 2.f;
+	float InAirTimer = 1.f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Logic")
+	bool ResettingCamera = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Logic")
+	bool LookingBehind = false;
 
 protected:
 	// Called when the game starts or when spawned
@@ -191,7 +196,14 @@ public:
 	UFUNCTION()
 	void StopShooting();
 
+	UFUNCTION()
+	void ResetCamera();
 
+	UFUNCTION()
+	void LookBehind();
+
+	UFUNCTION()
+	void ReleaseLookBehind();
 
 	/** Tick Functions */
 
