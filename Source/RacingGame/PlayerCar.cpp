@@ -51,7 +51,7 @@ APlayerCar::APlayerCar()
 	SpringArm->SetupAttachment(Collider);
 	SpringArm->bDoCollisionTest = false;
 	SpringArm->SetRelativeRotation(FRotator(-15.f, 0.f, 0.f));
-	SpringArm->bUsePawnControlRotation = true;
+	
 
 	/** Movement Component Default Values*/
 	MovementComponent = CreateDefaultSubobject<UPawnMovementComponent, UFloatingPawnMovement>(TEXT("MovementComponent"));
@@ -145,12 +145,12 @@ void APlayerCar::Tick(float DeltaTime)
 
 
 
-	if (ControllerPitchStill && ControllerYawStill && !ResettingCamera)
+	if (ControllerPitchStill && ControllerYawStill )
 	{
 
 		ControllerStillClock += DeltaTime;
 
-		if (ControllerStillClock > ControllerStillTimer)
+		if (ControllerStillClock > ControllerStillTimer && !ResettingCamera && !LookingBehind)
 		{
 			
 			if (SpringArm->bUsePawnControlRotation)
@@ -179,7 +179,7 @@ void APlayerCar::Tick(float DeltaTime)
 		}
 
 
-		FRotator SpringArmRotator = FMath::RInterpTo(SpringArm->GetRelativeRotation(), FRotator(-15.f, 0.f, 0.f), DeltaTime, 5.f);
+		FRotator SpringArmRotator = FMath::RInterpTo(SpringArm->GetRelativeRotation(), FRotator(-15.f, 0.f, 0.f), DeltaTime, 10.f);
 		Controller->SetControlRotation(SpringArm->GetComponentRotation());
 		SpringArm->SetRelativeRotation(SpringArmRotator);
 
@@ -201,9 +201,9 @@ void APlayerCar::Tick(float DeltaTime)
 		}
 
 
-		FRotator SpringArmRotator = FMath::RInterpTo(SpringArm->GetRelativeRotation(), FRotator(-15.f, 180.f, 0.f), DeltaTime, 5.f);
-		Controller->SetControlRotation(SpringArm->GetComponentRotation());
+		FRotator SpringArmRotator = FMath::RInterpTo(SpringArm->GetRelativeRotation(), FRotator(-15.f, 180.f, 0.f), DeltaTime, 10.f);
 		SpringArm->SetRelativeRotation(SpringArmRotator);
+		Controller->SetControlRotation(SpringArm->GetComponentRotation());
 	}
 
 
@@ -392,6 +392,7 @@ void APlayerCar::LookBehind()
 void APlayerCar::ReleaseLookBehind()
 {
 	LookingBehind = false;
+	ResettingCamera = true;
 }
 
 
