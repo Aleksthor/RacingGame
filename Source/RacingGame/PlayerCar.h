@@ -147,6 +147,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Logic")
 	bool LookingBehind = false;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Logic")
+	bool bFreelook = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Logic")
+	float factor;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -204,6 +210,12 @@ public:
 
 	UFUNCTION()
 	void ReleaseLookBehind();
+
+	UFUNCTION()
+	void Freelook();
+
+	UFUNCTION()
+	void ReleaseFreeLook();
 
 	/** Tick Functions */
 
