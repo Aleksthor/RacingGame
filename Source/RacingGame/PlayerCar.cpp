@@ -267,17 +267,14 @@ void APlayerCar::Forward(float value)
 void APlayerCar::Right(float value)
 {
 	DriftValue = value;
-	float factor;
+	
 	if (bDrifting)
 	{
-		
-	
-		factor = 0.3;
-
+		factor = FMath::FInterpTo(factor, 0.325, UGameplayStatics::GetWorldDeltaSeconds(GetWorld()),5.f);
 	}
 	else
 	{
-		factor = 0.2;
+		factor = FMath::FInterpTo(factor, 0.25, UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 5.f);
 	}
 
 
