@@ -36,6 +36,12 @@ void ARacingGameGameModeBase::BeginPlay()
 			Player = Cast<APlayerCar>(Temp);
 		}
 	
+
+
+		if (!GameLoaded)
+		{
+			Player->FirstRun = true;
+		}
 		UWorld* World = GetWorld();
 		
 		if (World )
@@ -661,7 +667,7 @@ void ARacingGameGameModeBase::SaveGame()
 			SaveInstance->ShooterMode = ShooterMode;
 
 			// Save Game to slot
-			UGameplayStatics::SaveGameToSlot(SaveInstance, SaveInstance->PlayerName, SaveInstance->UserIndex);
+			UGameplayStatics::SaveGameToSlot(SaveInstance, TEXT("Player1"), 1);
 		}
 
 		
@@ -795,7 +801,7 @@ void ARacingGameGameModeBase::SaveGame()
 			SaveInstance->ShooterMode = ShooterMode;
 
 			// Save Game to slot
-			UGameplayStatics::SaveGameToSlot(SaveInstance, SaveInstance->PlayerName, SaveInstance->UserIndex);
+			UGameplayStatics::SaveGameToSlot(SaveInstance, TEXT("Player1"), 1);
 		}
 
 
@@ -815,9 +821,12 @@ void ARacingGameGameModeBase::LoadGame()
 	// Getting a RacingSaveGame Instance
 	URacingSaveGame* LoadInstance = Cast<URacingSaveGame>(UGameplayStatics::CreateSaveGameObject(URacingSaveGame::StaticClass()));
 
-	LoadInstance = Cast<URacingSaveGame>(UGameplayStatics::LoadGameFromSlot(LoadInstance->PlayerName, LoadInstance->UserIndex));
+	LoadInstance = Cast<URacingSaveGame>(UGameplayStatics::LoadGameFromSlot(TEXT("Player1"),1));
+
+	
 	if (LoadInstance)
 	{
+		GameLoaded = true;
 		ShooterMode = LoadInstance->ShooterMode;
 		RacingMode = LoadInstance->RacingMode;
 	}

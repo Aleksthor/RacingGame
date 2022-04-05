@@ -93,11 +93,7 @@ void APlayerCar::BeginPlay()
 	Super::BeginPlay();
 	
 	Points = 0;
-	AGameModeBase* GameModeBase = GetWorld()->GetAuthGameMode();
-	if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint1))
-	{
-		FirstRun = true;
-	}
+
 
 	UKismetSystemLibrary::ExecuteConsoleCommand(GetWorld(), "DisableAllScreenMessages");
 }

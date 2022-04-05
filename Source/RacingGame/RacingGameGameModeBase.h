@@ -205,6 +205,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
 	bool Saved = false;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	bool GameLoaded = false;
 	
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
