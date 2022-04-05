@@ -146,7 +146,7 @@ void APlayerCar::Tick(float DeltaTime)
 
 		ControllerStillClock += DeltaTime;
 
-		if (ControllerStillClock > ControllerStillTimer && !ResettingCamera && !LookingBehind && !bFreelook)
+		if (ControllerStillClock > ControllerStillTimer && !ResettingCamera && !LookingBehind)
 		{
 			
 			if (SpringArm->bUsePawnControlRotation)
@@ -165,7 +165,7 @@ void APlayerCar::Tick(float DeltaTime)
 	
 	}
 
-	if (ResettingCamera && !LookingBehind && !bFreelook)
+	if (ResettingCamera && !LookingBehind)
 	{
 		if (SpringArm->bUsePawnControlRotation)
 		{
@@ -187,7 +187,7 @@ void APlayerCar::Tick(float DeltaTime)
 		}
 	}
 
-	if (LookingBehind && !ResettingCamera && !bFreelook)
+	if (LookingBehind && !ResettingCamera)
 	{
 		if (SpringArm->bUsePawnControlRotation)
 		{
@@ -241,10 +241,6 @@ void APlayerCar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 	PlayerInputComponent->BindAction("LookBehind", IE_Pressed, this, &APlayerCar::LookBehind);
 	PlayerInputComponent->BindAction("LookBehind", IE_Released, this, &APlayerCar::ReleaseLookBehind);
-
-
-	PlayerInputComponent->BindAction("FreeLook", IE_Pressed, this, &APlayerCar::Freelook);
-	PlayerInputComponent->BindAction("FreeLook", IE_Released, this, &APlayerCar::ReleaseFreeLook);
 }
 
 
@@ -267,14 +263,17 @@ void APlayerCar::Forward(float value)
 void APlayerCar::Right(float value)
 {
 	DriftValue = value;
-	
+	float factor;
 	if (bDrifting)
 	{
-		factor = FMath::FInterpTo(factor, 0.325, UGameplayStatics::GetWorldDeltaSeconds(GetWorld()),5.f);
+		
+	
+		factor = 0.3;
+
 	}
 	else
 	{
-		factor = FMath::FInterpTo(factor, 0.25, UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 5.f);
+		factor = 0.2;
 	}
 
 
@@ -392,15 +391,6 @@ void APlayerCar::ReleaseLookBehind()
 	ResettingCamera = true;
 }
 
-void APlayerCar::Freelook()
-{
-	bFreelook = true;
-}
-
-void APlayerCar::ReleaseFreeLook()
-{
-	bFreelook = false;
-}
 
 
 
