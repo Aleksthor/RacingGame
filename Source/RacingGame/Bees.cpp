@@ -90,6 +90,22 @@ void ABees::Tick(float DeltaTime)
 			bGivenDamage = true;
 		}
 	}
+	// Some Random Movement if enemy is not targeting player
+	FVector CurrentLocation = GetActorLocation();
+	if (!bOverlapping)
+	{
+		RoamClock += DeltaTime;
+
+		if (RoamClock > RoamTimer)
+		{
+			FVector Rand = FVector(0.f, 0.f, CurrentLocation.Z);
+			Rand.X = FMath::FRandRange(CurrentLocation.X - 500.f, CurrentLocation.X + 500.f);
+			Rand.Y = FMath::FRandRange(CurrentLocation.Y - 500.f, CurrentLocation.Y + 500.f);
+
+			AIController->MoveTo(Rand);
+			RoamClock = 0.f;
+		}
+	}
 
 	if (bOverlapping)
 	{

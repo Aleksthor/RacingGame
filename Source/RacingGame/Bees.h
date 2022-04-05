@@ -83,6 +83,12 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BeeVariables | Logic")
 	float DamageTimer = 1.f;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BeeVariables | Logic")
+	float RoamClock = 0.f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BeeVariables | Logic")
+	float RoamTimer = 2.f;
+
 	/** Functions */
 
 	UFUNCTION()
