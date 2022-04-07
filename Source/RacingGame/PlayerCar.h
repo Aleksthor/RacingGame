@@ -159,7 +159,11 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 
-	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Logic")
+	bool bFreelook = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Logic")
+	float factor;
 
 
 	
@@ -205,6 +209,13 @@ public:
 	UFUNCTION()
 	void ReleaseLookBehind();
 
+	UFUNCTION()
+	void Freelook();
+
+	UFUNCTION()
+	void ReleaseFreeLook();
+
+
 	/** Tick Functions */
 
 	UFUNCTION()
@@ -221,6 +232,9 @@ public:
 
 	UFUNCTION()
 	void UpdateCheckpointTimer(float Delta);
+
+	UFUNCTION()
+	void UpdateCameraRotation(float Delta);
 
 
 	// Save Pawn Rotation Every Tick

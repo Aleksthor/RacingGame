@@ -107,6 +107,11 @@ void ABees::Tick(float DeltaTime)
 		}
 	}
 
+	// There is no bOrientRotationToMovement in FloatingPawnMovement
+	FVector ForwardVector = UKismetMathLibrary::GetForwardVector(GetControlRotation());
+	ForwardVector *= -1.f;
+	BeeMesh->SetWorldRotation(ForwardVector.Rotation());
+
 	if (bOverlapping)
 	{
 		APawn* Pawn = GetWorld()->GetFirstPlayerController()->GetPawn();
@@ -114,6 +119,7 @@ void ABees::Tick(float DeltaTime)
 
 		AIController->MoveToActor(Player, 10.f);
 		
+
 
 
 	}
@@ -135,7 +141,7 @@ void ABees::OnOverlapDetection(UPrimitiveComponent* OverlappedComponent, AActor*
 	if (Player && AIController)
 	{
 		bOverlapping = true;
-		AIController->SetFocus(Player);
+
 	}
 }
 
