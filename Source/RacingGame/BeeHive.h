@@ -42,7 +42,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BeeHiveVariables")
 	int NumberOfBees = 2;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BeeHiveVariables")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BeeHiveVariables")
 	bool bIsHit = false;
 
 protected:

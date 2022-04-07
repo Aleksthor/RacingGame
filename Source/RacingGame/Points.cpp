@@ -50,7 +50,14 @@ void APoints::Tick(float DeltaTime)
 			SetActorEnableCollision(true);
 			Round3 = true;
 		}
+
+
+
 	}
+
+	FRotator ActorRotation = GetActorRotation();
+	ActorRotation.Yaw += 1.f;
+	SetActorRotation(ActorRotation);
 }
 
 void APoints::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

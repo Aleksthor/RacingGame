@@ -980,11 +980,6 @@ void ARacingGameGameModeBase::InitItems()
 		SpeedBoostArray[8]->SetActorHiddenInGame(false);
 		SpeedBoostArray[8]->SetActorEnableCollision(true);
 
-		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost10Vector, SpeedBoost10Rotator);
-		SpeedBoostArray.Add(tempSpeedBoost);
-		SpeedBoostArray[9]->SetActorHiddenInGame(false);
-		SpeedBoostArray[9]->SetActorEnableCollision(true);
-
 
 
 

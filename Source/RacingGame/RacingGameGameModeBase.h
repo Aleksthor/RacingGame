@@ -30,17 +30,17 @@ public:
 	UPROPERTY(EditAnywhere, Category = "GameModeVariable")
 	TSubclassOf<class ACheckpointCollider> CheckpointColliderBP;
 
-	TArray<class ACheckpointCollider*> CheckpointArray;
-	ACheckpointCollider* tempCheckpoint;
-
 	UPROPERTY(EditAnywhere, Category = "GameModeVariable")
 	TSubclassOf<class ATarget> TargetBP;
 
-	TArray<class ATarget*> TargetArray;
-	ATarget* tempTarget;
-
 	UPROPERTY(EditAnywhere, Category = "GameModeVariable")
 	TSubclassOf<class ASpeedBoosterv1> SpeedboostBP;
+
+	TArray<class ACheckpointCollider*> CheckpointArray;
+	ACheckpointCollider* tempCheckpoint;
+
+	TArray<class ATarget*> TargetArray;
+	ATarget* tempTarget;
 
 	TArray<class ASpeedBoosterv1*> SpeedBoostArray;
 	ASpeedBoosterv1* tempSpeedBoost;
@@ -49,12 +49,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
 	USoundCue* GameWonSound{ nullptr };
 
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
 	USoundCue* GameWonGoldSound{ nullptr };
 
 	
-
 	class APlayerCar* Player{ nullptr };
 
 	/** Default Values */
@@ -110,94 +108,92 @@ public:
 
 	// SpeedBoosters
 
-	FVector SpeedBoost1Vector = FVector(-14150.f, 14350.f, 22650.f);
-	FRotator SpeedBoost1Rotator = FRotator(0.f, -150.f, 0.f);
+	FVector SpeedBoost1Vector = FVector(-10170.f, 13630.f, 23560.f);
+	FRotator SpeedBoost1Rotator = FRotator(0.f, -200.f, 0.f);
 
-	FVector SpeedBoost2Vector = FVector(8550.f, 6000.f, 24200.f);
-	FRotator SpeedBoost2Rotator = FRotator(0.f, 170.f, 0.f);
+	FVector SpeedBoost2Vector = FVector(13730.f, 4980.f, 23170.f);
+	FRotator SpeedBoost2Rotator = FRotator(0.f, -200.f, 0.f);
 
-	FVector SpeedBoost3Vector = FVector(27000.f, 2080.f, 23170.f);
-	FRotator SpeedBoost3Rotator = FRotator(0.f, -190.f, 0.f);
+	FVector SpeedBoost3Vector = FVector(-5900.f, -7810.f, 12120.f);
+	FRotator SpeedBoost3Rotator = FRotator(0.f, 50.f, 0.f);
 
-	FVector SpeedBoost4Vector = FVector(22350.f, -1440.f, 15310.f);
-	FRotator SpeedBoost4Rotator = FRotator(0.f, -80.f, 0.f);
+	FVector SpeedBoost4Vector = FVector(15480.f, -26230.f, 5530.f);
+	FRotator SpeedBoost4Rotator = FRotator(0.f, -110.f, 0.f);
 
-	FVector SpeedBoost5Vector = FVector(-5350.f, -7350.f, 12130.f);
-	FRotator SpeedBoost5Rotator = FRotator(0.f, 40.f, 0.f);
+	FVector SpeedBoost5Vector = FVector(28760.f, -31960.f, 4030.f);
+	FRotator SpeedBoost5Rotator = FRotator(0.f, -150.f, 0.f);
 
-	FVector SpeedBoost6Vector = FVector(15410.f, -26260.f, 5540.f);
-	FRotator SpeedBoost6Rotator = FRotator(0.f, -90.f, 0.f);
+	FVector SpeedBoost6Vector = FVector(37210.f, -17800.f, 7100.f);
+	FRotator SpeedBoost6Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector SpeedBoost7Vector = FVector(23690.f, -34370.f, 4380.f);
-	FRotator SpeedBoost7Rotator = FRotator(0.f, -190.f, 0.f);
+	FVector SpeedBoost7Vector = FVector(33790.f, -12470.f, 11310.f);
+	FRotator SpeedBoost7Rotator = FRotator(0.f, -170.f, 0.f);
 
-	FVector SpeedBoost8Vector = FVector(30460.f, -16640.f,8050.f);
+	FVector SpeedBoost8Vector = FVector(29770.f, 12520.f,14980.f);
 	FRotator SpeedBoost8Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector SpeedBoost9Vector = FVector(32940.f, -12470.f, 11220.f);
+	FVector SpeedBoost9Vector = FVector(1590.f, 980.f, 21580.f); // Speed 200 ? - Playtest
 	FRotator SpeedBoost9Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector SpeedBoost10Vector = FVector(10580.f, 9250.f, 20530.f);
-	FRotator SpeedBoost10Rotator = FRotator(0.f, 70.f, 0.f);
 
 
 	// Targets
 
-	FVector Target1Vector = FVector(30800.f, -5950.f, 17660.f);
-	FRotator Target1Rotator = FRotator(0.f, 50.f, 0.f);
+	FVector Target1Vector = FVector(-15740.f, 14170.f, 22690.f);
+	FRotator Target1Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector Target2Vector = FVector(37110.f, -530.f, 19910.f);
-	FRotator Target2Rotator = FRotator(0.f, 120.f, 0.f);
+	FVector Target2Vector = FVector(8040.f, 8070.f, 23340.f);
+	FRotator Target2Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector Target3Vector = FVector(33280.f, 7770.f, 22190.f);
-	FRotator Target3Rotator = FRotator(0.f, -140.f, 0.f);
+	FVector Target3Vector = FVector(35380.f, 6350.f, 22270.f); // Lower Speed
+	FRotator Target3Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector Target4Vector = FVector(44690.f, -27970.f, 5940.f);
-	FRotator Target4Rotator = FRotator(0.f, 160.f, 0.f);
+	FVector Target4Vector = FVector(31280.f, -5620.f, 17940.f);
+	FRotator Target4Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector Target5Vector = FVector(45840.f, -27500.f, 5970.f);
-	FRotator Target5Rotator = FRotator(0.f, 170.f, 0.f);
+	FVector Target5Vector = FVector(18490.f, 1050.f, 15810.f);
+	FRotator Target5Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector Target6Vector = FVector(46660.f, -26830.f, 6060.f);
-	FRotator Target6Rotator = FRotator(0.f, 190.f, 0.f);
+	FVector Target6Vector = FVector(17190.f, -6170.f, 16500.f);
+	FRotator Target6Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector Target7Vector = FVector(35550.f, -13600.f, 11850.f);
+	FVector Target7Vector = FVector(17980.f, 3120.f, 24210.f);
 	FRotator Target7Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector Target8Vector = FVector(43250.f, 4420.f, 13950.f);
-	FRotator Target8Rotator = FRotator(0.f, -120.f, 0.f);
+	FVector Target8Vector = FVector(4410.f, -17390.f, 10900.f);
+	FRotator Target8Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector Target9Vector = FVector(32070.f, 14190.f, 14960.f);
-	FRotator Target9Rotator = FRotator(0.f, -70.f, 0.f);
+	FVector Target9Vector = FVector(12640.f, -16670.f, 8430.f);
+	FRotator Target9Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector Target10Vector = FVector(-15700.f, 14060.f, 22710.f);
-	FRotator Target10Rotator = FRotator(0.f, -70.f, 0.f);
+	FVector Target10Vector = FVector(18470.f, -20480.f, 6870.f);
+	FRotator Target10Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector Target11Vector = FVector(-6950.f, 10310.f, 24510.f);
-	FRotator Target11Rotator = FRotator(0.f, 110.f, 0.f);
+	FVector Target11Vector = FVector(19500.f, -34350.f, 5940.f);
+	FRotator Target11Rotator = FRotator(0.f, 0.f, 0.f);
 
 	FVector Target12Vector = FVector(34950.f, -13050.f, 12070.f);
 	FRotator Target12Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector Target13Vector = FVector(6220.f, 2660.f, 21680.f);
+	FVector Target13Vector = FVector(44660.f, -28100.f, 6160.f);
 	FRotator Target13Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector Target14Vector = FVector(3090.f, 150.f, 21990.f);
+	FVector Target14Vector = FVector(45470.f, -27150.f, 6200.f);
 	FRotator Target14Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector Target15Vector = FVector(7980.f, 10260.f, 25100.f);
+	FVector Target15Vector = FVector(46350.f, -26090.f, 6240.f);
 	FRotator Target15Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector Target16Vector = FVector(20310.f, 3490.f, 15870.f);
+	FVector Target16Vector = FVector(35780.f, -13650.f, 11930.f);
 	FRotator Target16Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector Target17Vector = FVector(9860.f, -39660.f, 5720.f);
+	FVector Target17Vector = FVector(40720.f, -5260.f, 14530.f);
 	FRotator Target17Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector Target18Vector = FVector(8000.f, -5380.f, 13470.f);
+	FVector Target18Vector = FVector(31970.f, 14230.f, 15260.f);
 	FRotator Target18Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector Target19Vector = FVector(11600.f, -17580.f, 9010.f);
+	FVector Target19Vector = FVector(-2040.f, 890.f, 22480.f);
 	FRotator Target19Rotator = FRotator(0.f, 0.f, 0.f);
 
 	/** Save Data */
