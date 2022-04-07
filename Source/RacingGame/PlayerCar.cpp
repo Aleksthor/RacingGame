@@ -214,17 +214,17 @@ void APlayerCar::Right(float value)
 
 	if (FMath::IsNearlyZero(value))
 	{
-		factor = 0.f;
+		factor = FMath::FInterpTo(factor, 0.f, UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 10.f);
 	}
 
 	
 	if (bDrifting)
 	{
-		factor = FMath::FInterpTo(factor, 0.325, UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 5.f);
+		factor = FMath::FInterpTo(factor, 0.325, UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 10.f);
 	}
 	else
 	{
-		factor = FMath::FInterpTo(factor, 0.25, UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 5.f);
+		factor = FMath::FInterpTo(factor, 0.25, UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 10.f);
 	}
 
 

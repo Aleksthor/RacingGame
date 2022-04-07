@@ -108,7 +108,7 @@ public:
 
 	// SpeedBoosters
 
-	FVector SpeedBoost1Vector = FVector(-10170.f, 13630.f, 23560.f);
+	FVector SpeedBoost1Vector = FVector(-10170.f, 13630.f, 23530.f);
 	FRotator SpeedBoost1Rotator = FRotator(0.f, -200.f, 0.f);
 
 	FVector SpeedBoost2Vector = FVector(13730.f, 4980.f, 23170.f);
