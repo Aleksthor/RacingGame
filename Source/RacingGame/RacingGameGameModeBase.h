@@ -126,7 +126,7 @@ public:
 	FVector SpeedBoost6Vector = FVector(37210.f, -17800.f, 7100.f);
 	FRotator SpeedBoost6Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector SpeedBoost7Vector = FVector(33790.f, -12470.f, 11310.f);
+	FVector SpeedBoost7Vector = FVector(33790.f, -12470.f, 11280.f);
 	FRotator SpeedBoost7Rotator = FRotator(0.f, -170.f, 0.f);
 
 	FVector SpeedBoost8Vector = FVector(29770.f, 12520.f,14980.f);
