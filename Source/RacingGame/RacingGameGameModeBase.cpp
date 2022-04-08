@@ -20,6 +20,9 @@ ARacingGameGameModeBase::ARacingGameGameModeBase()
 
 void ARacingGameGameModeBase::BeginPlay()
 {
+
+	Super::BeginPlay();
+
 	Saved = false;
 
 	LoadGame();
