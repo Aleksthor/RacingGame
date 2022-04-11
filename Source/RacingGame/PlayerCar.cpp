@@ -3,7 +3,7 @@
 
 #include "PlayerCar.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Components/BoxComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "GameFramework/PlayerInput.h"
 #include "Components/InputComponent.h"
 #include "Camera/CameraComponent.h"
@@ -28,7 +28,7 @@ APlayerCar::APlayerCar()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	/** Collider Default Values */
-	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
+	Collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collider"));
 	SetRootComponent(Collider);
 	Collider->SetSimulatePhysics(true);
 	Collider->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
@@ -141,6 +141,21 @@ void APlayerCar::Tick(float DeltaTime)
 		}
 	}
 
+	if (bLowAmmo)
+	{
+		LowAmmo = "Ammo Left : ";
+		LowAmmo += FString::FromInt(Ammo);
+		LowAmmoClock += DeltaTime;
+		if (LowAmmoClock > LowAmmoTimer)
+		{
+			LowAmmoClock = 0.f;
+			bLowAmmo = false;
+		}
+	}
+	else
+	{
+		LowAmmo = "";
+	}
 
 
 
@@ -297,14 +312,28 @@ void APlayerCar::StopDrift()
 void APlayerCar::StartShooting()
 {
 	
-	if (bCanShoot)
+	if (bCanShoot && bGameStarted)
 	{
-		if (ShootSound)
+		if (Ammo > 0)
 		{
-			UGameplayStatics::PlaySound2D(this, ShootSound);
+			if (ShootSound)
+			{
+				UGameplayStatics::PlaySound2D(this, ShootSound);
+			}
+			GetWorld()->SpawnActor<ABomb>(BombBP, GetActorLocation() + GetActorForwardVector() * 100.f, FRotator(0.f, PlayerMesh->GetComponentRotation().Yaw, 0.f));
+			Ammo--;
+			if (Ammo < 4)
+			{
+				bLowAmmo = true;
+				LowAmmoClock = 0.f;
+			}
+			bCanShoot = false;
 		}
-		GetWorld()->SpawnActor<ABomb>(BombBP, GetActorLocation() + GetActorForwardVector() * 100.f, FRotator(0.f, PlayerMesh->GetComponentRotation().Yaw, 0.f));
-		bCanShoot = false;
+		else
+		{
+			bNoAmmo = true;
+			// Cannot Shoot
+		}
 	}
 	else
 	{
@@ -635,6 +664,11 @@ void APlayerCar::LoseHealth()
 void APlayerCar::GivePoints(int Value)
 {
 	Points += Value;
+}
+
+void APlayerCar::ReloadEggs(int amount)
+{
+	Ammo += amount;
 }
 
 

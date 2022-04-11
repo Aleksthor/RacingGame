@@ -17,10 +17,13 @@ public:
 
 	/** Collision Box */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HealthPackVariables")
-		class UBoxComponent* Collider{ nullptr };
+	class USphereComponent* Collider{ nullptr };
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HealthPackVariables")
-		class UStaticMeshComponent* HealthPackMesh{ nullptr };
+	USphereComponent* MagnetCollider{ nullptr };
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HealthPackVariables")
+	class UStaticMeshComponent* HealthPackMesh{ nullptr };
 
 	float InitTimer = 30.f;
 	float InitClock = 0.f;
@@ -38,4 +41,14 @@ public:
 	UFUNCTION()
 	void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
+
+	UFUNCTION()
+	void MagnetOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void MagnetOnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex);
+
+	bool bMagnetPull = false;
+
+	float InterSpeed = 10.f;
 };

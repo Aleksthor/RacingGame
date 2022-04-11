@@ -113,12 +113,12 @@ public:
 	FLevelStats Level1Stats;
 
 	UPROPERTY(VisibleAnywhere, Category = Basic)
-	FLevelStats Level1StatsRacing;
+	FLevelStats Level1StatsTimeAttack;
 
 	UPROPERTY(VisibleAnywhere, Category = Basic)
 	bool ShooterMode;
 
 	UPROPERTY(VisibleAnywhere, Category = Basic)
-	bool RacingMode;
+	bool TimeAttack;
 
 };

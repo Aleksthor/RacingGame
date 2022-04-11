@@ -2,7 +2,7 @@
 
 
 #include "HealthPack.h"
-#include "Components/BoxComponent.h"
+#include "Components/SphereComponent.h"
 #include "PlayerCar.h"
 
 
@@ -12,12 +12,18 @@ AHealthPack::AHealthPack()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
+	Collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));
 	SetRootComponent(Collider);
+	Collider->OnComponentBeginOverlap.AddDynamic(this, &AHealthPack::OnOverlap);
 	
+	MagnetCollider = CreateDefaultSubobject<USphereComponent>(TEXT("MagnetCollider"));
+	MagnetCollider->SetupAttachment(GetRootComponent());
+
+	MagnetCollider->OnComponentBeginOverlap.AddDynamic(this, &AHealthPack::MagnetOnOverlapBegin);
+	MagnetCollider->OnComponentEndOverlap.AddDynamic(this, &AHealthPack::MagnetOnOverlapEnd);
 
 	HealthPackMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SpeedBoostMesh"));
-	HealthPackMesh->SetupAttachment(Collider);
+	HealthPackMesh->SetupAttachment(GetRootComponent());
 	HealthPackMesh->SetHiddenInGame(true);
 }
 
@@ -25,7 +31,7 @@ AHealthPack::AHealthPack()
 void AHealthPack::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 // Called every frame
@@ -33,13 +39,24 @@ void AHealthPack::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (bMagnetPull && Init)
+	{
+		APlayerCar* PlayerCar = Cast<APlayerCar>(GetWorld()->GetFirstPlayerController()->GetPawn());
+		if (PlayerCar)
+		{
+			InterSpeed = FMath::FInterpTo(InterSpeed, 25.f, DeltaTime, 5.f);
+			FVector InterpLocation = FMath::VInterpTo(GetActorLocation(), PlayerCar->GetActorLocation(), DeltaTime, InterSpeed);
+			SetActorLocation(InterpLocation);
+		}
+		
+	}
+
 	if (!Init)
 	{
 		InitClock += DeltaTime;
 		if (InitClock > InitTimer)
 		{
 			HealthPackMesh->SetHiddenInGame(false);
-			Collider->OnComponentBeginOverlap.AddDynamic(this, &AHealthPack::OnOverlap);
 			Init = true;
 		}
 
@@ -57,7 +74,7 @@ void AHealthPack::Tick(float DeltaTime)
 void AHealthPack::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	APlayerCar* Player = Cast<APlayerCar>(OtherActor);
-	if (Player)
+	if (Player && Init)
 	{
 		Player->Lives++;
 
@@ -65,5 +82,19 @@ void AHealthPack::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 		SetActorEnableCollision(false);
 		this->Destroy();
 	}
+}
+
+void AHealthPack::MagnetOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	APlayerCar* Player = Cast<APlayerCar>(OtherActor);
+	if (Player)
+	{
+		bMagnetPull = true;
+	}
+}
+
+void AHealthPack::MagnetOnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex)
+{
+
 }
 

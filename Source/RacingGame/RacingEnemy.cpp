@@ -20,7 +20,7 @@ ARacingEnemy::ARacingEnemy()
 	LocationsArray.Add(FVector(-12800.f, 2680.f, 22610.f));
 	LocationsArray.Add(FVector(10320.f, 9100.f, 20610.f));
 	LocationsArray.Add(FVector(26300.f, 13100.f, 15870.f));
-	LocationsArray.Add( FVector(41990.f, 7960.f, 14530.f));
+	LocationsArray.Add(FVector(41990.f, 7960.f, 14530.f));
 
 	LocationsArray.Add(FVector(39950.f, -8830.f, 13340.f));
 	LocationsArray.Add(FVector(45320.f, -23420.f, 5880.f));
@@ -67,25 +67,25 @@ void ARacingEnemy::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 
-	APlayerCar* Player = Cast<APlayerCar>(GetWorld()->GetFirstPlayerController()->GetPawn());
-	if (Player)
-	{
-		if (Player->bGameStarted && !init)
-		{
-			init = true;
-			MoveToLocation(LocationsArray[CurrentLocation]);
-		}
-	}
+	//APlayerCar* Player = Cast<APlayerCar>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	//if (Player)
+	//{
+	//	if (Player->bGameStarted && !init)
+	//	{
+	//		init = true;
+	//		MoveToLocation(LocationsArray[CurrentLocation]);
+	//	}
+	//}
 
 
-	float LengthFromNextArray =(GetActorLocation() - (LocationsArray[CurrentLocation])).Size();
-	//UE_LOG(LogTemp,Warning,TEXT("%f"), LengthFromNextArray)
+	//float LengthFromNextArray =(GetActorLocation() - (LocationsArray[CurrentLocation])).Size();
+	////UE_LOG(LogTemp,Warning,TEXT("%f"), LengthFromNextArray)
 
-	if (LengthFromNextArray < 500.f)
-	{
-		CurrentLocation++;
-		MoveToLocation(LocationsArray[CurrentLocation]);
-	}
+	//if (LengthFromNextArray < 500.f)
+	//{
+	//	CurrentLocation++;
+	//	MoveToLocation(LocationsArray[CurrentLocation]);
+	//}
 
 }
 

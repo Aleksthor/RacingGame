@@ -88,7 +88,7 @@ public:
 	FVector Checkpoint1Vector = FVector(30700.f, 5700.f, 22750.f);
 	FRotator Checkpoint1Rotator = FRotator(0.f,-60.f,0.f);
 
-	FVector Checkpoint2Vector = FVector(5900.f,-6600.f,13000.f);
+	FVector Checkpoint2Vector = FVector(9750.f,-7000.f,13200.f);
 	FRotator Checkpoint2Rotator = FRotator(0.f,90.f,0.f);
 
 	FVector Checkpoint3Vector = FVector(44800.f,-23500.f,5950.f);
@@ -145,7 +145,7 @@ public:
 	FVector Target2Vector = FVector(8040.f, 8070.f, 23340.f);
 	FRotator Target2Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector Target3Vector = FVector(35380.f, 6350.f, 22270.f); // Lower Speed
+	FVector Target3Vector = FVector(35380.f, 6350.f, 22270.f); 
 	FRotator Target3Rotator = FRotator(0.f, 0.f, 0.f);
 
 	FVector Target4Vector = FVector(31280.f, -5620.f, 17940.f);
@@ -196,6 +196,14 @@ public:
 	FVector Target19Vector = FVector(-2040.f, 890.f, 22480.f);
 	FRotator Target19Rotator = FRotator(0.f, 0.f, 0.f);
 
+	FVector Target20Vector = FVector(-1500.f, -7540.f, 13180.f);
+	FRotator Target20Rotator = FRotator(0.f, 0.f, 0.f);
+
+	FVector Target21Vector = FVector(37610.f, -40480.f, 7050.f);
+	FRotator Target21Rotator = FRotator(0.f, 0.f, 0.f);
+
+
+
 	/** Save Data */
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
@@ -204,6 +212,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 	bool GameLoaded = false;
 	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	float CurrentSectionBest;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 	float Section1BestTime;
@@ -334,10 +344,29 @@ public:
 	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 	//	float WorldCheckpoint21;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	float NextBest;
+
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	float DeathTimer = 20.f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
+	FString DeathTimeAdded;
+
+	bool DeathTimerHUD = false;
+
+	float ShowDeathTimer = 2.f;
+
+	float ShowDeathClock = 0.f;
+
 	/** Functions */
 
 	UFUNCTION()
 	void GameWon();
+
+	UFUNCTION()
+	void GameLost();
 
 	UFUNCTION(BlueprintCallable)
 	void Reset();
@@ -364,6 +393,9 @@ public:
 	UFUNCTION()
 	void SwitchTimer();
 
+	UFUNCTION()
+	void AddToDeathTimer(float input);
+
 
 	/** Used for countdown before start */
 
@@ -374,7 +406,7 @@ public:
 	float PreGameClock = 0.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
-	bool RacingMode = false;
+	bool TimeAttack = false;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
 	bool ShooterMode = true;

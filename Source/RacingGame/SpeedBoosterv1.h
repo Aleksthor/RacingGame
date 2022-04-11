@@ -18,7 +18,10 @@ public:
 
 	/** Collision Box */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpeedBoostVariables")
-	class UBoxComponent* Collider{ nullptr };
+	class USphereComponent* Collider{ nullptr };
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpeedBoostVariables")
+	USphereComponent* MagnetCollider{ nullptr };
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpeedBoostVariables")
 	class UStaticMeshComponent* SpeedBoostMesh{ nullptr };
@@ -32,6 +35,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpeedBoostVariables")
 	bool isHit = false;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpeedBoostVariables")
+	FVector StartLocation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpeedBoostVariables")
+	FRotator StartRotation;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpeedBoostVariables")
 	class USoundCue* OnHitSound{ nullptr };
@@ -46,4 +54,14 @@ public:
 
 	UFUNCTION()
 	void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void MagnetOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void MagnetOnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex);
+
+	bool bMagnetPull = false;
+
+	float InterSpeed = 10.f;
 };

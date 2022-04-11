@@ -26,7 +26,7 @@ public:
 
 	/** Collision Box */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
-	class UBoxComponent* Collider{ nullptr };
+	class UCapsuleComponent* Collider{ nullptr };
 
 	/** Spring Arm */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
@@ -165,8 +165,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Logic")
 	float factor;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Logic")
+	bool bLowAmmo = false;
 
-	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Logic")
+	float LowAmmoTimer = 2.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Logic")
+	float LowAmmoClock = 0.f;
 
 	/** Input Functions */
 	
@@ -262,9 +268,21 @@ public:
 	UFUNCTION()
 	void GivePoints(int Value);
 
+	UFUNCTION()
+	void ReloadEggs(int amount);
+
 
 
 	/** Player Variables that HUD access */
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
+	int Ammo = 10;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
+	FString LowAmmo;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
+	bool bNoAmmo = false;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
 	float WorldTimer;
@@ -277,6 +295,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
 	float WorldAggregate;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
+	FString CurrentSection = "Section 1";
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | HUD")
 	float LastCheckPointTimer;

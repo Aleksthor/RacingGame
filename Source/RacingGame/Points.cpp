@@ -2,7 +2,7 @@
 
 
 #include "Points.h"
-#include "Components/BoxComponent.h"
+#include "Components/SphereComponent.h"
 #include "PlayerCar.h"
 #include "RacingGameGameModeBase.h"
 #include "Kismet/GameplayStatics.h"
@@ -14,9 +14,11 @@ APoints::APoints()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
+	Collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));
 	SetRootComponent(Collider);
-	Collider->OnComponentBeginOverlap.AddDynamic(this, &APoints::OnOverlap);
+
+	MagnetCollider = CreateDefaultSubobject<USphereComponent>(TEXT("MagnetCollider"));
+	MagnetCollider->SetupAttachment(GetRootComponent());
 
 	PointsMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PointsMesh"));
 	PointsMesh->SetupAttachment(Collider);
@@ -27,6 +29,17 @@ void APoints::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	Collider->OnComponentBeginOverlap.AddDynamic(this, &APoints::OnOverlap);
+
+	MagnetCollider->OnComponentBeginOverlap.AddDynamic(this, &APoints::MagnetOnOverlapBegin);
+	MagnetCollider->OnComponentEndOverlap.AddDynamic(this, &APoints::MagnetOnOverlapEnd);
+
+
+
+	StartLocation = GetActorLocation();
+	StartRotation = GetActorRotation();
+
+	GameModeBase = Cast<ARacingGameGameModeBase>(GetWorld()->GetAuthGameMode());
 }
 
 // Called every frame
@@ -34,24 +47,45 @@ void APoints::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-
-	AGameModeBase* GameMode = GetWorld()->GetAuthGameMode();
-	if (GameMode)
+	if (bMagnetPull)
 	{
-		if (Cast<ARacingGameGameModeBase>(GameMode)->CurrentRound == 2 && !Round2)
+		APlayerCar* PlayerCar = Cast<APlayerCar>(GetWorld()->GetFirstPlayerController()->GetPawn());
+		if (PlayerCar)
 		{
+			InterSpeed = FMath::FInterpTo(InterSpeed, 25.f, DeltaTime, 5.f);
+			FVector InterpLocation = FMath::VInterpTo(GetActorLocation(), PlayerCar->GetActorLocation(), DeltaTime, InterSpeed);
+			SetActorLocation(InterpLocation);
+		}
+
+	}
+	
+	if (GameModeBase)
+	{
+		if (GameModeBase->CurrentRound == 2 && !Round2)
+		{
+			bMagnetPull = false;
+			SetActorLocation(StartLocation);
+			SetActorRotation(StartRotation);
 			SetActorHiddenInGame(false);
 			SetActorEnableCollision(true);
 			Round2 = true;
 		}
-		if (Cast<ARacingGameGameModeBase>(GameMode)->CurrentRound == 3 && !Round3)
+		if (GameModeBase->CurrentRound == 3 && !Round3)
 		{
+			bMagnetPull = false;
+			SetActorLocation(StartLocation);
+			SetActorRotation(StartRotation);
 			SetActorHiddenInGame(false);
 			SetActorEnableCollision(true);
 			Round3 = true;
 		}
 
-
+		if (GameModeBase->TimeAttack)
+		{
+			SetActorHiddenInGame(true);
+			SetActorEnableCollision(false);
+			this->Destroy();
+		}
 
 	}
 
@@ -86,5 +120,19 @@ void APoints::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherA
 		SetActorEnableCollision(false);
 
 	}
+}
+
+void APoints::MagnetOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	APlayerCar* Player = Cast<APlayerCar>(OtherActor);
+	if (Player)
+	{
+		bMagnetPull = true;
+	}
+}
+
+void APoints::MagnetOnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex)
+{
+
 }
 

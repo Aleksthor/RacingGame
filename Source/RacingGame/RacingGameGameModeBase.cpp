@@ -77,9 +77,9 @@ void ARacingGameGameModeBase::BeginPlay()
 
 				InitItems();
 			}
-			else if (RacingMode)
+			else if (TimeAttack)
 			{
-				//UE_LOG(LogTemp, Warning, TEXT("RacingMode"));
+				//UE_LOG(LogTemp, Warning, TEXT("TimeAttack"));
 				Player->SetActorLocation(FVector(-15000.f, 7550.f, 22210.f));
 				Player->SetActorRotation(FRotator(0.f, 280.f, 0.f));
 
@@ -110,7 +110,8 @@ void ARacingGameGameModeBase::BeginPlay()
 		
 	}
 	
-	
+	CurrentSectionBest = Section1BestTime;
+	NextBest = WorldCheckpoint1;
 
 }
 
@@ -139,6 +140,39 @@ void ARacingGameGameModeBase::Tick(float DeltaSeconds)
 
 
 	CurrentRoundFunction();
+
+
+	if (TimeAttack)
+	{
+		if (Player)
+		{
+			if (Player->bGameStarted)
+			{
+				DeathTimer -= DeltaSeconds;
+			}
+
+			if (DeathTimer < 0.f)
+			{
+				DeathTimer = 0.f;
+
+				GameLost();
+
+			}
+
+		}
+	}
+
+
+	if (DeathTimerHUD)
+	{
+		ShowDeathClock += DeltaSeconds;
+		if (ShowDeathClock > ShowDeathTimer)
+		{
+			DeathTimeAdded = "";
+			DeathTimerHUD = false;
+			ShowDeathClock = 0.f;
+		}
+	}
 
 	
 }
@@ -273,201 +307,235 @@ void ARacingGameGameModeBase::GameWon()
 {
 	if (!Saved)
 	{
-		bGameWon = true;
-		SwitchTimer();
-		TotalPlayerScore = (TimeScore * TotalPoints) / 1000;
-	
-		if (TotalPlayerScore > 16500)
+		if (ShooterMode)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Bronze Tier Achieved"));
-			BronzeMedal = true;
-			HUDMedalString = "Bronze";
-			if (GameWonSound)
-			{
-				UGameplayStatics::PlaySound2D(this, GameWonSound);
-			}
-		}
-		if (TotalPlayerScore > 18300)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Silver Tier Achieved"));
-			SilverMedal = true;
-			HUDMedalString = "Silver";
-			if (GameWonSound)
-			{
-				UGameplayStatics::PlaySound2D(this, GameWonSound);
-			}
-		}
-		if (TotalPlayerScore > 20500)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Gold Tier Achieved"));
-			GoldMedal = true;
-			HUDMedalString = "Gold";
-			if (GameWonGoldSound)
-			{
-				UGameplayStatics::PlaySound2D(this, GameWonGoldSound);
-			}
-		}
-		if (TotalPlayerScore > 26000)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Epic Tier Achieved"));
-			EpicMedal = true;
-			HUDMedalString = "Epic";
-			if (GameWonGoldSound)
-			{
-				UGameplayStatics::PlaySound2D(this, GameWonGoldSound);
-			}
-		}
+			bGameWon = true;
+			SwitchTimer();
+			TotalPlayerScore = (TimeScore * TotalPoints) / 1000;
 
-		SaveGame();
-		UE_LOG(LogTemp, Warning, TEXT("Game Won"));
-		Player->bGameOver = true;
-		Saved = true;
+			if (TotalPlayerScore > 15000)
+			{
+				//UE_LOG(LogTemp, Warning, TEXT("Bronze Tier Achieved"));
+				BronzeMedal = true;
+				HUDMedalString = "Bronze";
+				if (GameWonSound)
+				{
+					UGameplayStatics::PlaySound2D(this, GameWonSound);
+				}
+			}
+			if (TotalPlayerScore > 16000)
+			{
+				//UE_LOG(LogTemp, Warning, TEXT("Silver Tier Achieved"));
+				SilverMedal = true;
+				HUDMedalString = "Silver";
+				if (GameWonSound)
+				{
+					UGameplayStatics::PlaySound2D(this, GameWonSound);
+				}
+			}
+			if (TotalPlayerScore > 18500)
+			{
+				//UE_LOG(LogTemp, Warning, TEXT("Gold Tier Achieved"));
+				GoldMedal = true;
+				HUDMedalString = "Gold";
+				if (GameWonGoldSound)
+				{
+					UGameplayStatics::PlaySound2D(this, GameWonGoldSound);
+				}
+			}
+			if (TotalPlayerScore > 23000)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Epic Tier Achieved"));
+				EpicMedal = true;
+				HUDMedalString = "Epic";
+				if (GameWonGoldSound)
+				{
+					UGameplayStatics::PlaySound2D(this, GameWonGoldSound);
+				}
+			}
+
+			SaveGame();
+			UE_LOG(LogTemp, Warning, TEXT("Game Won"));
+			Player->bGameOver = true;
+			Saved = true;
+		}
+		
+
+		if (TimeAttack)
+		{
+			bGameWon = true;
+			SaveGame();
+			UE_LOG(LogTemp, Warning, TEXT("Game Won"));
+			if (Player)
+			{
+				Player->bGameOver = true;
+			}
+			Saved = true;
+		}
 	}
 
 
+}
+
+void ARacingGameGameModeBase::GameLost()
+{
+	if (Player)
+	{
+		Player->bGameOver = true;
+		Player->bDead = true;
+	}
 }
 
 void ARacingGameGameModeBase::SwitchTimer()
 {
 
 	// calucluation done in Excel and here I set the values based on our sheet. // ( 1 / Time ) * 1000
-	if (TotalTime < 580.f)
+	if (TotalTime < 480.f)
 	{
 		TimeScore = 2075;
 	}
-	if (TotalTime < 570.f)
+	if (TotalTime < 470.f)
 	{
 		TimeScore = 2125;
 	}
-	if (TotalTime < 560.f)
+	if (TotalTime < 460.f)
 	{
 		TimeScore = 2175;
 	}
-	if (TotalTime < 550.f)
+	if (TotalTime < 450.f)
 	{
 		TimeScore = 2225;
 	}
-	if (TotalTime < 540.f)
+	if (TotalTime < 440.f)
 	{
 		TimeScore = 2275;
 	}
-	 if (TotalTime < 530.f)
+	 if (TotalTime < 430.f)
 	{
 		TimeScore = 2325;
 	}
-	 if (TotalTime < 520.f)
+	 if (TotalTime < 420.f)
 	{
 		TimeScore = 2400;
 	}
-	 if (TotalTime < 510.f)
+	 if (TotalTime < 410.f)
 	{
 		TimeScore = 2450;
 	}
-	 if (TotalTime < 500.f)
+	 if (TotalTime < 400.f)
 	{
 		TimeScore = 2500;
 	}
-	 if (TotalTime < 490.f)
+	 if (TotalTime < 390.f)
 	{
 		TimeScore = 2550;
 	}
-	 if (TotalTime < 480.f)
+	 if (TotalTime < 380.f)
 	{
 		TimeScore = 2600;
 	}
-	 if (TotalTime < 470.f)
+	 if (TotalTime < 370.f)
 	{
 		TimeScore = 2700;
 	}
-	 if (TotalTime < 460.f)
+	 if (TotalTime < 360.f)
 	{
 		TimeScore = 2750;
 	}
-	 if (TotalTime < 450.f)
+	 if (TotalTime < 350.f)
 	{
 		TimeScore = 2850;
 	}
-	if (TotalTime < 440.f)
+	if (TotalTime < 340.f)
 	{
 		TimeScore = 2950;
 	}
-	 if (TotalTime < 430.f)
+	 if (TotalTime < 330.f)
 	{
 		TimeScore = 3025;
 	}
-	 if (TotalTime < 420.f)
+	 if (TotalTime < 320.f)
 	{
 		TimeScore = 3125;
 	}
-	 if (TotalTime < 410.f)
+	 if (TotalTime < 310.f)
 	{
 		TimeScore = 3250;
 	}
-	 if (TotalTime < 400.f)
+	 if (TotalTime < 300.f)
 	{
 		TimeScore = 3350;
 	}
-	 if (TotalTime < 390.f)
+	 if (TotalTime < 290.f)
 	{
 		TimeScore = 3450;
 	}
-	 if (TotalTime < 380.f)
+	 if (TotalTime < 280.f)
 	{
 		TimeScore = 3550;
 	}
-	 if (TotalTime < 370.f)
+	 if (TotalTime < 270.f)
 	{
 		TimeScore = 3700;
 	}
-	 if (TotalTime < 360.f)
+	 if (TotalTime < 260.f)
 	{
 		TimeScore = 3850;
 	}
-	 if (TotalTime < 350.f)
+	 if (TotalTime < 250.f)
 	{
 		TimeScore = 4000;
 	}
-	 if (TotalTime < 340.f)
+	 if (TotalTime < 240.f)
 	{
 		TimeScore = 4150;
 	}
-	 if (TotalTime < 330.f)
+	 if (TotalTime < 230.f)
 	{
 		TimeScore = 4350;
 	}
-	 if (TotalTime < 320.f)
+	 if (TotalTime < 220.f)
 	{
 		TimeScore = 4550;
 	}
-	 if (TotalTime < 310.f)
+	 if (TotalTime < 210.f)
 	{
 		TimeScore = 4750;
 	}
-	 if (TotalTime < 300.f)
+	 if (TotalTime < 200.f)
 	{
 		TimeScore = 5000;
 	}
-	 if (TotalTime < 290.f)
+	 if (TotalTime < 190.f)
 	{
 		TimeScore = 5250;
 	}
-	 if (TotalTime < 280.f)
+	 if (TotalTime < 180.f)
 	{
 		TimeScore = 5550;
 	}
-	 if (TotalTime < 270.f)
+	 if (TotalTime < 170.f)
 	{
 		TimeScore = 5900;
 	}
-	 if (TotalTime < 260.f)
+	 if (TotalTime < 160.f)
 	{
 		TimeScore = 6250;
 	}
-	 if (TotalTime < 250.f)
+	 if (TotalTime < 150.f)
 	{
 		TimeScore = 6650;
 	}
 
+}
+
+void ARacingGameGameModeBase::AddToDeathTimer(float input)
+{
+	DeathTimer += input;
+	DeathTimeAdded = "+";
+	DeathTimeAdded += FString::FromInt((int)input);
+	DeathTimerHUD = true;
+	ShowDeathClock = 0.f;
 }
 
 void ARacingGameGameModeBase::Reset()
@@ -666,7 +734,7 @@ void ARacingGameGameModeBase::SaveGame()
 			}
 			SaveInstance->Level1Stats.BestPoints = SetBestScore;
 
-			SaveInstance->RacingMode = RacingMode;
+			SaveInstance->TimeAttack = TimeAttack;
 			SaveInstance->ShooterMode = ShooterMode;
 
 			// Save Game to slot
@@ -676,31 +744,31 @@ void ARacingGameGameModeBase::SaveGame()
 		
 
 	}
-	else if (RacingMode)
+	else if (TimeAttack)
 	{
 	// Getting a RacingSaveGame Instance
 	URacingSaveGame* SaveInstance = Cast<URacingSaveGame>(UGameplayStatics::CreateSaveGameObject(URacingSaveGame::StaticClass()));
 
 		if (SaveInstance)
 		{
-			SaveInstance->Level1StatsRacing.LevelName = CurrentLevel;
+			SaveInstance->Level1StatsTimeAttack.LevelName = CurrentLevel;
 
 
 
 			// Check all sections
 
 
-			SaveInstance->Level1Stats.Section1Best = Section1BestTime;
+			SaveInstance->Level1StatsTimeAttack.Section1Best = Section1BestTime;
 
-			SaveInstance->Level1Stats.Section2Best = Section2BestTime;
+			SaveInstance->Level1StatsTimeAttack.Section2Best = Section2BestTime;
 
-			SaveInstance->Level1Stats.Section3Best = Section3BestTime;
+			SaveInstance->Level1StatsTimeAttack.Section3Best = Section3BestTime;
 
-			SaveInstance->Level1Stats.Section4Best = Section4BestTime;
+			SaveInstance->Level1StatsTimeAttack.Section4Best = Section4BestTime;
 
-			SaveInstance->Level1Stats.Section5Best = Section5BestTime;
+			SaveInstance->Level1StatsTimeAttack.Section5Best = Section5BestTime;
 
-			SaveInstance->Level1Stats.Section6Best = Section6BestTime;
+			SaveInstance->Level1StatsTimeAttack.Section6Best = Section6BestTime;
 
 			//SaveInstance->Level1Stats.Section7Best = Section7BestTime;
 			
@@ -719,7 +787,7 @@ void ARacingGameGameModeBase::SaveGame()
 			{
 				SetBestRound = RoundBestTime;
 			}
-			SaveInstance->Level1Stats.RoundBest = SetBestRound;
+			SaveInstance->Level1StatsTimeAttack.RoundBest = SetBestRound;
 
 
 
@@ -734,54 +802,54 @@ void ARacingGameGameModeBase::SaveGame()
 			{
 				SetTotalTime = TotalBestTime;
 			}
-			SaveInstance->Level1Stats.TotalBest = SetTotalTime;
+			SaveInstance->Level1StatsTimeAttack.TotalBest = SetTotalTime;
 
 
-			SaveInstance->Level1Stats.WorldCheckpoint1Best = WorldCheckpoint1;
+			SaveInstance->Level1StatsTimeAttack.WorldCheckpoint1Best = WorldCheckpoint1;
 
-			SaveInstance->Level1Stats.WorldCheckpoint2Best = WorldCheckpoint2;
+			SaveInstance->Level1StatsTimeAttack.WorldCheckpoint2Best = WorldCheckpoint2;
 
-			SaveInstance->Level1Stats.WorldCheckpoint3Best = WorldCheckpoint3;
+			SaveInstance->Level1StatsTimeAttack.WorldCheckpoint3Best = WorldCheckpoint3;
 
-			SaveInstance->Level1Stats.WorldCheckpoint4Best = WorldCheckpoint4;
+			SaveInstance->Level1StatsTimeAttack.WorldCheckpoint4Best = WorldCheckpoint4;
 
-			SaveInstance->Level1Stats.WorldCheckpoint5Best = WorldCheckpoint5;
+			SaveInstance->Level1StatsTimeAttack.WorldCheckpoint5Best = WorldCheckpoint5;
 
-			SaveInstance->Level1Stats.WorldCheckpoint6Best = WorldCheckpoint6;
+			SaveInstance->Level1StatsTimeAttack.WorldCheckpoint6Best = WorldCheckpoint6;
 
 			//if (SaveInstance->Level1Stats.WorldCheckpoint7Best > WorldCheckpoint7 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint7Best))
 			//{
 			//	SaveInstance->Level1Stats.WorldCheckpoint7Best = WorldCheckpoint7;
 			//}
 
-			SaveInstance->Level1Stats.WorldCheckpoint8Best = WorldCheckpoint8;
+			SaveInstance->Level1StatsTimeAttack.WorldCheckpoint8Best = WorldCheckpoint8;
 
-			SaveInstance->Level1Stats.WorldCheckpoint9Best = WorldCheckpoint9;
+			SaveInstance->Level1StatsTimeAttack.WorldCheckpoint9Best = WorldCheckpoint9;
 
-			SaveInstance->Level1Stats.WorldCheckpoint10Best = WorldCheckpoint10;
+			SaveInstance->Level1StatsTimeAttack.WorldCheckpoint10Best = WorldCheckpoint10;
 
-			SaveInstance->Level1Stats.WorldCheckpoint11Best = WorldCheckpoint11;
+			SaveInstance->Level1StatsTimeAttack.WorldCheckpoint11Best = WorldCheckpoint11;
 
-			SaveInstance->Level1Stats.WorldCheckpoint12Best = WorldCheckpoint12;
+			SaveInstance->Level1StatsTimeAttack.WorldCheckpoint12Best = WorldCheckpoint12;
 
-			SaveInstance->Level1Stats.WorldCheckpoint13Best = WorldCheckpoint13;
+			SaveInstance->Level1StatsTimeAttack.WorldCheckpoint13Best = WorldCheckpoint13;
 
 			//if (SaveInstance->Level1Stats.WorldCheckpoint14Best > WorldCheckpoint14 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint14Best))
 			//{
 			//	SaveInstance->Level1Stats.WorldCheckpoint14Best = WorldCheckpoint14;
 			//}
 
-			SaveInstance->Level1Stats.WorldCheckpoint15Best = WorldCheckpoint15;
+			SaveInstance->Level1StatsTimeAttack.WorldCheckpoint15Best = WorldCheckpoint15;
 
-			SaveInstance->Level1Stats.WorldCheckpoint16Best = WorldCheckpoint16;
+			SaveInstance->Level1StatsTimeAttack.WorldCheckpoint16Best = WorldCheckpoint16;
 
-			SaveInstance->Level1Stats.WorldCheckpoint17Best = WorldCheckpoint17;
+			SaveInstance->Level1StatsTimeAttack.WorldCheckpoint17Best = WorldCheckpoint17;
 
-			SaveInstance->Level1Stats.WorldCheckpoint18Best = WorldCheckpoint18;
+			SaveInstance->Level1StatsTimeAttack.WorldCheckpoint18Best = WorldCheckpoint18;
 
-			SaveInstance->Level1Stats.WorldCheckpoint19Best = WorldCheckpoint19;
+			SaveInstance->Level1StatsTimeAttack.WorldCheckpoint19Best = WorldCheckpoint19;
 
-			SaveInstance->Level1Stats.WorldCheckpoint20Best = WorldCheckpoint20;
+			SaveInstance->Level1StatsTimeAttack.WorldCheckpoint20Best = WorldCheckpoint20;
 
 			//if (SaveInstance->Level1Stats.WorldCheckpoint21Best > WorldCheckpoint21 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint21Best))
 			//{
@@ -798,9 +866,9 @@ void ARacingGameGameModeBase::SaveGame()
 			{
 				SetBestScore = TotalBestScore;
 			}
-			SaveInstance->Level1Stats.BestPoints = SetBestScore;
+			SaveInstance->Level1StatsTimeAttack.BestPoints = SetBestScore;
 
-			SaveInstance->RacingMode = RacingMode;
+			SaveInstance->TimeAttack = TimeAttack;
 			SaveInstance->ShooterMode = ShooterMode;
 
 			// Save Game to slot
@@ -831,11 +899,24 @@ void ARacingGameGameModeBase::LoadGame()
 	{
 		GameLoaded = true;
 		ShooterMode = LoadInstance->ShooterMode;
-		RacingMode = LoadInstance->RacingMode;
+		TimeAttack = LoadInstance->TimeAttack;
 	}
 
+	if (ShooterMode)
+	{
+		if (FMath::IsNearlyZero(LoadInstance->Level1Stats.Section1Best))
+		{
+			GameLoaded = false;
+		}
+	}
 
-
+	if (TimeAttack)
+	{
+		if (FMath::IsNearlyZero(LoadInstance->Level1StatsTimeAttack.Section1Best))
+		{
+			GameLoaded = false;
+		}
+	}
 	
 	if (ShooterMode)
 	{
@@ -882,48 +963,48 @@ void ARacingGameGameModeBase::LoadGame()
 		}
 
 	}
-	else if (RacingMode)
+	else if (TimeAttack)
 	{
 		
 
 		if (LoadInstance)
 		{
-			Section1BestTime = LoadInstance->Level1StatsRacing.Section1Best;
-			Section2BestTime = LoadInstance->Level1StatsRacing.Section2Best;
-			Section3BestTime = LoadInstance->Level1StatsRacing.Section3Best;
-			Section4BestTime = LoadInstance->Level1StatsRacing.Section4Best;
-			Section5BestTime = LoadInstance->Level1StatsRacing.Section5Best;
-			Section6BestTime = LoadInstance->Level1StatsRacing.Section6Best;
+			Section1BestTime = LoadInstance->Level1StatsTimeAttack.Section1Best;
+			Section2BestTime = LoadInstance->Level1StatsTimeAttack.Section2Best;
+			Section3BestTime = LoadInstance->Level1StatsTimeAttack.Section3Best;
+			Section4BestTime = LoadInstance->Level1StatsTimeAttack.Section4Best;
+			Section5BestTime = LoadInstance->Level1StatsTimeAttack.Section5Best;
+			Section6BestTime = LoadInstance->Level1StatsTimeAttack.Section6Best;
 			/*	Section7BestTime = LoadInstance->Level1Stats.Section7Best;*/
 
-			WorldCheckpoint1 = LoadInstance->Level1StatsRacing.WorldCheckpoint1Best;
-			WorldCheckpoint2 = LoadInstance->Level1StatsRacing.WorldCheckpoint2Best;
-			WorldCheckpoint3 = LoadInstance->Level1StatsRacing.WorldCheckpoint3Best;
-			WorldCheckpoint4 = LoadInstance->Level1StatsRacing.WorldCheckpoint4Best;
-			WorldCheckpoint5 = LoadInstance->Level1StatsRacing.WorldCheckpoint5Best;
-			WorldCheckpoint6 = LoadInstance->Level1StatsRacing.WorldCheckpoint6Best;
+			WorldCheckpoint1 = LoadInstance->Level1StatsTimeAttack.WorldCheckpoint1Best;
+			WorldCheckpoint2 = LoadInstance->Level1StatsTimeAttack.WorldCheckpoint2Best;
+			WorldCheckpoint3 = LoadInstance->Level1StatsTimeAttack.WorldCheckpoint3Best;
+			WorldCheckpoint4 = LoadInstance->Level1StatsTimeAttack.WorldCheckpoint4Best;
+			WorldCheckpoint5 = LoadInstance->Level1StatsTimeAttack.WorldCheckpoint5Best;
+			WorldCheckpoint6 = LoadInstance->Level1StatsTimeAttack.WorldCheckpoint6Best;
 			/*WorldCheckpoint7 = LoadInstance->Level1Stats.WorldCheckpoint7Best;*/
-			WorldCheckpoint8 = LoadInstance->Level1StatsRacing.WorldCheckpoint8Best;
-			WorldCheckpoint9 = LoadInstance->Level1StatsRacing.WorldCheckpoint9Best;
-			WorldCheckpoint10 = LoadInstance->Level1StatsRacing.WorldCheckpoint10Best;
-			WorldCheckpoint11 = LoadInstance->Level1StatsRacing.WorldCheckpoint11Best;
-			WorldCheckpoint12 = LoadInstance->Level1StatsRacing.WorldCheckpoint12Best;
-			WorldCheckpoint13 = LoadInstance->Level1StatsRacing.WorldCheckpoint13Best;
+			WorldCheckpoint8 = LoadInstance->Level1StatsTimeAttack.WorldCheckpoint8Best;
+			WorldCheckpoint9 = LoadInstance->Level1StatsTimeAttack.WorldCheckpoint9Best;
+			WorldCheckpoint10 = LoadInstance->Level1StatsTimeAttack.WorldCheckpoint10Best;
+			WorldCheckpoint11 = LoadInstance->Level1StatsTimeAttack.WorldCheckpoint11Best;
+			WorldCheckpoint12 = LoadInstance->Level1StatsTimeAttack.WorldCheckpoint12Best;
+			WorldCheckpoint13 = LoadInstance->Level1StatsTimeAttack.WorldCheckpoint13Best;
 			/*WorldCheckpoint14= LoadInstance->Level1Stats.WorldCheckpoint14Best;*/
-			WorldCheckpoint15 = LoadInstance->Level1StatsRacing.WorldCheckpoint15Best;
-			WorldCheckpoint16 = LoadInstance->Level1StatsRacing.WorldCheckpoint16Best;
-			WorldCheckpoint17 = LoadInstance->Level1StatsRacing.WorldCheckpoint17Best;
-			WorldCheckpoint18 = LoadInstance->Level1StatsRacing.WorldCheckpoint18Best;
-			WorldCheckpoint19 = LoadInstance->Level1StatsRacing.WorldCheckpoint19Best;
-			WorldCheckpoint20 = LoadInstance->Level1StatsRacing.WorldCheckpoint20Best;
+			WorldCheckpoint15 = LoadInstance->Level1StatsTimeAttack.WorldCheckpoint15Best;
+			WorldCheckpoint16 = LoadInstance->Level1StatsTimeAttack.WorldCheckpoint16Best;
+			WorldCheckpoint17 = LoadInstance->Level1StatsTimeAttack.WorldCheckpoint17Best;
+			WorldCheckpoint18 = LoadInstance->Level1StatsTimeAttack.WorldCheckpoint18Best;
+			WorldCheckpoint19 = LoadInstance->Level1StatsTimeAttack.WorldCheckpoint19Best;
+			WorldCheckpoint20 = LoadInstance->Level1StatsTimeAttack.WorldCheckpoint20Best;
 			/*WorldCheckpoint21= LoadInstance->Level1Stats.WorldCheckpoint21Best;*/
 
-			RoundBestTime = LoadInstance->Level1StatsRacing.RoundBest;
-			TotalBestTime = LoadInstance->Level1StatsRacing.TotalBest;
+			RoundBestTime = LoadInstance->Level1StatsTimeAttack.RoundBest;
+			TotalBestTime = LoadInstance->Level1StatsTimeAttack.TotalBest;
 
-			TotalBestScore = LoadInstance->Level1StatsRacing.BestPoints;
+			TotalBestScore = LoadInstance->Level1StatsTimeAttack.BestPoints;
 
-			CurrentLevel = LoadInstance->Level1StatsRacing.LevelName;
+			CurrentLevel = LoadInstance->Level1StatsTimeAttack.LevelName;
 		}
 	}
 
@@ -1091,6 +1172,16 @@ void ARacingGameGameModeBase::InitItems()
 		TargetArray.Add(tempTarget);
 		TargetArray[18]->SetActorHiddenInGame(false);
 		TargetArray[18]->SetActorEnableCollision(true);
+
+		tempTarget = World->SpawnActor<ATarget>(TargetBP, Target20Vector, Target20Rotator);
+		TargetArray.Add(tempTarget);
+		TargetArray[19]->SetActorHiddenInGame(false);
+		TargetArray[19]->SetActorEnableCollision(true);
+
+		tempTarget = World->SpawnActor<ATarget>(TargetBP, Target21Vector, Target21Rotator);
+		TargetArray.Add(tempTarget);
+		TargetArray[20]->SetActorHiddenInGame(false);
+		TargetArray[20]->SetActorEnableCollision(true);
 		
 	}
 
@@ -1103,8 +1194,11 @@ void ARacingGameGameModeBase::RespawnItems()
 	{
 		if (SpeedBoostArray[i]->isHit)
 		{
-			SpeedBoostArray[i]->SetActorEnableCollision(true);
+			SpeedBoostArray[i]->bMagnetPull = false;
+			SpeedBoostArray[i]->SetActorLocation(SpeedBoostArray[i]->StartLocation);
+			SpeedBoostArray[i]->SetActorRotation(SpeedBoostArray[i]->StartRotation);
 			SpeedBoostArray[i]->SetActorHiddenInGame(false);
+			SpeedBoostArray[i]->SetActorEnableCollision(true);
 			SpeedBoostArray[i]->isHit = false;
 		}
 	}

@@ -4,53 +4,36 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Points.generated.h"
+#include "EggBaskets.generated.h"
 
 UCLASS()
-class RACINGGAME_API APoints : public AActor
+class RACINGGAME_API AEggBaskets : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	APoints();
-
+	AEggBaskets();
 
 	/** Collision Box */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EggBasketVariables")
 	class USphereComponent* Collider{ nullptr };
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpeedBoostVariables")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EggBasketVariables")
 	USphereComponent* MagnetCollider { nullptr };
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
-	class UStaticMeshComponent* PointsMesh{ nullptr };
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EggBasketVariables")
+	class UStaticMeshComponent* EggBasketMesh{ nullptr };
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
-	float PointsGiven = 20.f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
-	bool isHit = false;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
-	bool Round2 = false;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
-	bool Round3 = false;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
-	class USoundCue* OnHitSound1{ nullptr };
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
-	class USoundCue* OnHitSound2{ nullptr };
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EggBasketVariables")
+	int ReloadAmount = 10;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpeedBoostVariables")
 	FVector StartLocation;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpeedBoostVariables")
 	FRotator StartRotation;
-
-	class ARacingGameGameModeBase* GameModeBase;
 
 protected:
 	// Called when the game starts or when spawned
@@ -59,6 +42,8 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+
 
 	UFUNCTION()
 	void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
@@ -69,9 +54,12 @@ public:
 	UFUNCTION()
 	void MagnetOnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
 	bool bMagnetPull = false;
 
 	float InterSpeed = 10.f;
+
+	bool Round2 = false;
+
+	bool Round3 = false;
 
 };
