@@ -87,7 +87,7 @@ void AHealthPack::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 void AHealthPack::MagnetOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	APlayerCar* Player = Cast<APlayerCar>(OtherActor);
-	if (Player)
+	if (Player && Init)
 	{
 		bMagnetPull = true;
 	}
