@@ -25,13 +25,13 @@ void ARacingGameGameModeBase::BeginPlay()
 
 	Saved = false;
 
-	LoadGame();
+	
 	CurrentLevel = UGameplayStatics::GetCurrentLevelName(GetWorld());
 
 	if (CurrentLevel == Level1)
 	{
 
-		
+		LoadGame();
 		APawn* Temp = GetWorld()->GetFirstPlayerController()->GetPawn();
 
 		if (Temp)
@@ -902,21 +902,7 @@ void ARacingGameGameModeBase::LoadGame()
 		TimeAttack = LoadInstance->TimeAttack;
 	}
 
-	if (ShooterMode)
-	{
-		if (FMath::IsNearlyZero(LoadInstance->Level1Stats.Section1Best))
-		{
-			GameLoaded = false;
-		}
-	}
 
-	if (TimeAttack)
-	{
-		if (FMath::IsNearlyZero(LoadInstance->Level1StatsTimeAttack.Section1Best))
-		{
-			GameLoaded = false;
-		}
-	}
 	
 	if (ShooterMode)
 	{
@@ -960,6 +946,13 @@ void ARacingGameGameModeBase::LoadGame()
 			TotalBestScore = LoadInstance->Level1Stats.BestPoints;
 
 			CurrentLevel = LoadInstance->Level1Stats.LevelName;
+
+
+			
+		}
+		if (Section1BestTime == 0.f)
+		{
+			GameLoaded = false;
 		}
 
 	}
@@ -1005,6 +998,12 @@ void ARacingGameGameModeBase::LoadGame()
 			TotalBestScore = LoadInstance->Level1StatsTimeAttack.BestPoints;
 
 			CurrentLevel = LoadInstance->Level1StatsTimeAttack.LevelName;
+
+			
+		}
+		if (Section1BestTime == 0.f)
+		{
+			GameLoaded = false;
 		}
 	}
 
