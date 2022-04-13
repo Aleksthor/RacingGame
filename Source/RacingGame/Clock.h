@@ -4,51 +4,52 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Points.generated.h"
+#include "Clock.generated.h"
 
 UCLASS()
-class RACINGGAME_API APoints : public AActor
+class RACINGGAME_API AClock : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	APoints();
-
+	AClock();
 
 	/** Collision Box */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ClockVariables")
 	class USphereComponent* Collider{ nullptr };
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ClockVariables")
 	USphereComponent* MagnetCollider { nullptr };
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
-	class UStaticMeshComponent* PointsMesh{ nullptr };
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ClockVariables")
+	class UStaticMeshComponent* ClockMesh{ nullptr };
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
-	float PointsGiven = 20.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ClockVariables")
+	float TimeGiven = 5.f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ClockVariables")
 	bool isHit = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ClockVariables")
 	bool Round2 = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ClockVariables")
 	bool Round3 = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ClockVariables")
 	class USoundCue* OnHitSound1{ nullptr };
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
-	class USoundCue* OnHitSound2{ nullptr };
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ClockVariables")
 	FVector StartLocation;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ClockVariables")
 	FRotator StartRotation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ClockVariables")
+	bool bMagnetPull = false;
+
+	float InterSpeed = 10.f;
 
 	class ARacingGameGameModeBase* GameModeBase;
 
@@ -68,10 +69,5 @@ public:
 
 	UFUNCTION()
 	void MagnetOnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex);
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PointsVariables")
-	bool bMagnetPull = false;
-
-	float InterSpeed = 10.f;
 
 };

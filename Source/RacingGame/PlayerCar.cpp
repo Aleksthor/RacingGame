@@ -312,7 +312,7 @@ void APlayerCar::StopDrift()
 void APlayerCar::StartShooting()
 {
 	
-	if (bCanShoot && bGameStarted)
+	if (bCanShoot && bGameStarted && !bCanNeverShoot)
 	{
 		if (Ammo > 0)
 		{

@@ -206,153 +206,197 @@ public:
 
 	/** Save Data */
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	bool Saved = false;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	bool GameLoaded = false;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	float CurrentSectionBest;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	float Section1BestTime;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	float Section2BestTime;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	float Section3BestTime;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	float Section4BestTime;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	float Section5BestTime;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	float Section6BestTime;
 
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	bool Section1NewBestTime = false;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	bool Section2NewBestTime = false;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	bool Section3NewBestTime = false;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	bool Section4NewBestTime = false;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	bool Section5NewBestTime = false;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	bool Section6NewBestTime = false;
 
 	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 	//float Section7BestTime;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	float Round1Time;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	float Round2Time;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	float Round3Time;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	float BestRound;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	float TotalTime;
 
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	float RoundBestTime;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	float TotalBestTime;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	int TotalPoints;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	bool BronzeMedal = false;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	bool SilverMedal = false;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	bool GoldMedal = false;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	bool EpicMedal = false;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	bool NewRoundBest = false;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	bool NewTotalBest = false;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	FString HUDMedalString{""};
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-		float WorldCheckpoint1;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-		float WorldCheckpoint2;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-		float WorldCheckpoint3;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-		float WorldCheckpoint4;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-		float WorldCheckpoint5;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-		float WorldCheckpoint6;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	float WorldCheckpoint1;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	float WorldCheckpoint2;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	float WorldCheckpoint3;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	float WorldCheckpoint4;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	float WorldCheckpoint5;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	float WorldCheckpoint6;
+
 	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 	//	float WorldCheckpoint7;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-		float WorldCheckpoint8;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-		float WorldCheckpoint9;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-		float WorldCheckpoint10;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-		float WorldCheckpoint11;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-		float WorldCheckpoint12;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-		float WorldCheckpoint13;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	float WorldCheckpoint8;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	float WorldCheckpoint9;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	float WorldCheckpoint10;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	float WorldCheckpoint11;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	float WorldCheckpoint12;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	float WorldCheckpoint13;
+
 	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 	//	float WorldCheckpoint14;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-		float WorldCheckpoint15;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-		float WorldCheckpoint16;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-		float WorldCheckpoint17;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-		float WorldCheckpoint18;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-		float WorldCheckpoint19;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
-		float WorldCheckpoint20;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	float WorldCheckpoint15;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	float WorldCheckpoint16;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	float WorldCheckpoint17;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	float WorldCheckpoint18;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	float WorldCheckpoint19;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	float WorldCheckpoint20;
+
 	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
 	//	float WorldCheckpoint21;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	int MainMenuShooterBronze;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	int MainMenuShooterSilver;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	int MainMenuShooterGold;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	int MainMenuShooterEpic;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	int MainMenuTimeAttackBronze;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	int MainMenuTimeAttackSilver;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	int MainMenuTimeAttackGold;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	int MainMenuTimeAttackEpic;
+
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	float NextBest;
 
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	float DeathTimer = 20.f;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	FString DeathTimeAdded;
+
 
 	bool DeathTimerHUD = false;
 
@@ -374,7 +418,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void LoadMap1();
 
-
 	UFUNCTION(BlueprintCallable)
 	void LoadMainMenu();
 
@@ -395,6 +438,9 @@ public:
 
 	UFUNCTION()
 	void AddToDeathTimer(float input);
+
+	UFUNCTION()
+	void LoadMainMenuStats();
 
 
 	/** Used for countdown before start */

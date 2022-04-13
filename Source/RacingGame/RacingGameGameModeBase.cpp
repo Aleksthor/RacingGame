@@ -9,6 +9,7 @@
 #include "RacingSaveGame.h"
 #include "SpeedBoosterv1.h"
 #include "Target.h"
+#include "GameFramework/FloatingPawnMovement.h"
 
 
 ARacingGameGameModeBase::ARacingGameGameModeBase()
@@ -24,14 +25,14 @@ void ARacingGameGameModeBase::BeginPlay()
 	Super::BeginPlay();
 
 	Saved = false;
-
+	LoadGame();
 	
 	CurrentLevel = UGameplayStatics::GetCurrentLevelName(GetWorld());
 
 	if (CurrentLevel == Level1)
 	{
 
-		LoadGame();
+		
 		APawn* Temp = GetWorld()->GetFirstPlayerController()->GetPawn();
 
 		if (Temp)
@@ -39,73 +40,127 @@ void ARacingGameGameModeBase::BeginPlay()
 			Player = Cast<APlayerCar>(Temp);
 		}
 	
-
-
-		if (!GameLoaded)
+		if (Player)
 		{
-			Player->FirstRun = true;
-		}
-		UWorld* World = GetWorld();
-		
-		if (World )
-		{
+			if (!GameLoaded)
+			{
+				Player->FirstRun = true;
+			}
+			UWorld* World = GetWorld();
 
-			if (ShooterMode)
+			if (World)
 			{
 
-				Player->SetActorLocation(FVector(-15000.f, 7550.f, 22210.f));
-				Player->SetActorRotation(FRotator(0.f, 100.f, 0.f));
+				if (ShooterMode)
+				{
 
-				//SpawnCheckpoints
-				tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint1Vector, Checkpoint1Rotator);
-				CheckpointArray.Add(tempCheckpoint);
+					Player->SetActorLocation(FVector(-15000.f, 7550.f, 22210.f));
+					Player->SetActorRotation(FRotator(0.f, 100.f, 0.f));
+					Player->bCanNeverShoot = false;
+					Cast<UFloatingPawnMovement>(Player->MovementComponent)->MaxSpeed = Player->PlayerMaxSpeed;
+					//SpawnCheckpoints
+					tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint1Vector, Checkpoint1Rotator);
+					CheckpointArray.Add(tempCheckpoint);
 
-				tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint2Vector, Checkpoint2Rotator);
-				CheckpointArray.Add(tempCheckpoint);
+					tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint2Vector, Checkpoint2Rotator);
+					CheckpointArray.Add(tempCheckpoint);
 
-				tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint3Vector, Checkpoint3Rotator);
-				CheckpointArray.Add(tempCheckpoint);
+					tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint3Vector, Checkpoint3Rotator);
+					CheckpointArray.Add(tempCheckpoint);
 
-				tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint4Vector, Checkpoint4Rotator);
-				CheckpointArray.Add(tempCheckpoint);
+					tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint4Vector, Checkpoint4Rotator);
+					CheckpointArray.Add(tempCheckpoint);
 
-				tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint5Vector, Checkpoint5Rotator);
-				CheckpointArray.Add(tempCheckpoint);
+					tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint5Vector, Checkpoint5Rotator);
+					CheckpointArray.Add(tempCheckpoint);
 
-				tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint6Vector, Checkpoint6Rotator);
-				CheckpointArray.Add(tempCheckpoint);
+					tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint6Vector, Checkpoint6Rotator);
+					CheckpointArray.Add(tempCheckpoint);
 
-				InitItems();
+					InitItems();
+				}
+				else if (TimeAttack)
+				{
+					//UE_LOG(LogTemp, Warning, TEXT("TimeAttack"));
+					Player->SetActorLocation(FVector(-15000.f, 7550.f, 22210.f));
+					Player->SetActorRotation(FRotator(0.f, 280.f, 0.f));
+					Player->bCanNeverShoot = true;
+					Cast<UFloatingPawnMovement>(Player->MovementComponent)->MaxSpeed = 3500.f;
+					//SpawnCheckpoints
+					tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint5Vector, Checkpoint5Rotator);
+					CheckpointArray.Add(tempCheckpoint);
+
+					tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint4Vector, Checkpoint4Rotator);
+					CheckpointArray.Add(tempCheckpoint);
+
+					tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint3Vector, Checkpoint3Rotator);
+					CheckpointArray.Add(tempCheckpoint);
+
+					tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint2Vector, Checkpoint2Rotator);
+					CheckpointArray.Add(tempCheckpoint);
+
+					tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint1Vector, Checkpoint1Rotator);
+					CheckpointArray.Add(tempCheckpoint);
+
+					tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint6Vector, Checkpoint6Rotator);
+					CheckpointArray.Add(tempCheckpoint);
+
+
+					// Also spawn some boosters so we can gain more speed without shooting
+					tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost1Vector, SpeedBoost1Rotator);
+					SpeedBoostArray.Add(tempSpeedBoost);
+					SpeedBoostArray[0]->SetActorHiddenInGame(false);
+					SpeedBoostArray[0]->SetActorEnableCollision(true);
+
+					tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost2Vector, SpeedBoost2Rotator);
+					SpeedBoostArray.Add(tempSpeedBoost);
+					SpeedBoostArray[1]->SetActorHiddenInGame(false);
+					SpeedBoostArray[1]->SetActorEnableCollision(true);
+
+					tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost3Vector, SpeedBoost3Rotator);
+					SpeedBoostArray.Add(tempSpeedBoost);
+					SpeedBoostArray[2]->SetActorHiddenInGame(false);
+					SpeedBoostArray[2]->SetActorEnableCollision(true);
+
+					tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost4Vector, SpeedBoost4Rotator);
+					SpeedBoostArray.Add(tempSpeedBoost);
+					SpeedBoostArray[3]->SetActorHiddenInGame(false);
+					SpeedBoostArray[3]->SetActorEnableCollision(true);
+
+					tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost5Vector, SpeedBoost5Rotator);
+					SpeedBoostArray.Add(tempSpeedBoost);
+					SpeedBoostArray[4]->SetActorHiddenInGame(false);
+					SpeedBoostArray[4]->SetActorEnableCollision(true);
+
+					tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost6Vector, SpeedBoost6Rotator);
+					SpeedBoostArray.Add(tempSpeedBoost);
+					SpeedBoostArray[5]->SetActorHiddenInGame(false);
+					SpeedBoostArray[5]->SetActorEnableCollision(true);
+
+					tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost7Vector, SpeedBoost7Rotator);
+					SpeedBoostArray.Add(tempSpeedBoost);
+					SpeedBoostArray[6]->SetActorHiddenInGame(false);
+					SpeedBoostArray[6]->SetActorEnableCollision(true);
+
+					tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost8Vector, SpeedBoost8Rotator);
+					SpeedBoostArray.Add(tempSpeedBoost);
+					SpeedBoostArray[7]->SetActorHiddenInGame(false);
+					SpeedBoostArray[7]->SetActorEnableCollision(true);
+
+					tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost9Vector, SpeedBoost9Rotator);
+					SpeedBoostArray.Add(tempSpeedBoost);
+					SpeedBoostArray[8]->SetActorHiddenInGame(false);
+					SpeedBoostArray[8]->SetActorEnableCollision(true);
+
+
+
+				}
+
+
 			}
-			else if (TimeAttack)
-			{
-				//UE_LOG(LogTemp, Warning, TEXT("TimeAttack"));
-				Player->SetActorLocation(FVector(-15000.f, 7550.f, 22210.f));
-				Player->SetActorRotation(FRotator(0.f, 280.f, 0.f));
-
-
-				//SpawnCheckpoints
-				tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint5Vector, Checkpoint5Rotator);
-				CheckpointArray.Add(tempCheckpoint);
-
-				tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint4Vector, Checkpoint4Rotator);
-				CheckpointArray.Add(tempCheckpoint);
-
-				tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint3Vector, Checkpoint3Rotator);
-				CheckpointArray.Add(tempCheckpoint);
-
-				tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint2Vector, Checkpoint2Rotator);
-				CheckpointArray.Add(tempCheckpoint);
-
-				tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint1Vector, Checkpoint1Rotator);
-				CheckpointArray.Add(tempCheckpoint);
-
-				tempCheckpoint = World->SpawnActor<ACheckpointCollider>(CheckpointColliderBP, Checkpoint6Vector, Checkpoint6Rotator);
-				CheckpointArray.Add(tempCheckpoint);
-			}
-		
-		
 		}
+
+		
 
 		
 	}
@@ -118,6 +173,8 @@ void ARacingGameGameModeBase::BeginPlay()
 void ARacingGameGameModeBase::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
+
+	// Pre Game Clock
 	if (Player)
 	{
 		if (!Player->bGameStarted)
@@ -138,7 +195,7 @@ void ARacingGameGameModeBase::Tick(float DeltaSeconds)
 	}
 
 
-
+	// Switch function for current checkpoint/round
 	CurrentRoundFunction();
 
 
@@ -203,10 +260,9 @@ void ARacingGameGameModeBase::CurrentRoundFunction()
 			/*	CheckpointArray[6]->isValid = false;
 				CheckpointArray[6]->isHit = false;*/
 
-				if (ShooterMode)
-				{
-					RespawnItems();
-				}
+			
+				RespawnItems();
+				
 
 				CurrentCheckpoint = 0;
 				Round1Time = Player->WorldTimer;
@@ -232,10 +288,9 @@ void ARacingGameGameModeBase::CurrentRoundFunction()
 			/*	CheckpointArray[6]->isValid = false;
 				CheckpointArray[6]->isHit = false;*/
 
-				if (ShooterMode)
-				{
-					RespawnItems();
-				}
+				
+				RespawnItems();
+				
 				
 
 				CurrentCheckpoint = 0;
@@ -317,6 +372,7 @@ void ARacingGameGameModeBase::GameWon()
 			{
 				//UE_LOG(LogTemp, Warning, TEXT("Bronze Tier Achieved"));
 				BronzeMedal = true;
+				MainMenuShooterBronze++;
 				HUDMedalString = "Bronze";
 				if (GameWonSound)
 				{
@@ -327,6 +383,7 @@ void ARacingGameGameModeBase::GameWon()
 			{
 				//UE_LOG(LogTemp, Warning, TEXT("Silver Tier Achieved"));
 				SilverMedal = true;
+				MainMenuShooterSilver++;
 				HUDMedalString = "Silver";
 				if (GameWonSound)
 				{
@@ -337,6 +394,7 @@ void ARacingGameGameModeBase::GameWon()
 			{
 				//UE_LOG(LogTemp, Warning, TEXT("Gold Tier Achieved"));
 				GoldMedal = true;
+				MainMenuShooterGold++;
 				HUDMedalString = "Gold";
 				if (GameWonGoldSound)
 				{
@@ -347,6 +405,7 @@ void ARacingGameGameModeBase::GameWon()
 			{
 				UE_LOG(LogTemp, Warning, TEXT("Epic Tier Achieved"));
 				EpicMedal = true;
+				MainMenuShooterEpic++;
 				HUDMedalString = "Epic";
 				if (GameWonGoldSound)
 				{
@@ -538,6 +597,10 @@ void ARacingGameGameModeBase::AddToDeathTimer(float input)
 	ShowDeathClock = 0.f;
 }
 
+void ARacingGameGameModeBase::LoadMainMenuStats()
+{
+}
+
 void ARacingGameGameModeBase::Reset()
 {
 	WorldCheckpoint1 = 0.f;
@@ -611,10 +674,24 @@ void ARacingGameGameModeBase::LoadMainMenu()
 
 void ARacingGameGameModeBase::SaveGame()
 {
+	// Getting a RacingSaveGame Instance
+	URacingSaveGame* SaveInstance = Cast<URacingSaveGame>(UGameplayStatics::CreateSaveGameObject(URacingSaveGame::StaticClass()));
+
+	if (SaveInstance)
+	{
+		SaveInstance->StatsShooter.BronzeMedals = MainMenuShooterBronze;
+		SaveInstance->StatsShooter.SilverMedals = MainMenuShooterSilver;
+		SaveInstance->StatsShooter.GoldMedals = MainMenuShooterGold;
+		SaveInstance->StatsShooter.EpicMedals = MainMenuShooterEpic;
+
+		SaveInstance->StatsShooter.BronzeMedals = MainMenuShooterBronze;
+		SaveInstance->StatsShooter.SilverMedals = MainMenuShooterSilver;
+		SaveInstance->StatsShooter.GoldMedals = MainMenuShooterGold;
+		SaveInstance->StatsShooter.EpicMedals = MainMenuShooterEpic;
+	}
 	if (ShooterMode)
 	{
-		// Getting a RacingSaveGame Instance
-		URacingSaveGame* SaveInstance = Cast<URacingSaveGame>(UGameplayStatics::CreateSaveGameObject(URacingSaveGame::StaticClass()));
+		
 
 		if (SaveInstance)
 		{
@@ -747,7 +824,7 @@ void ARacingGameGameModeBase::SaveGame()
 	else if (TimeAttack)
 	{
 	// Getting a RacingSaveGame Instance
-	URacingSaveGame* SaveInstance = Cast<URacingSaveGame>(UGameplayStatics::CreateSaveGameObject(URacingSaveGame::StaticClass()));
+	
 
 		if (SaveInstance)
 		{
@@ -900,6 +977,17 @@ void ARacingGameGameModeBase::LoadGame()
 		GameLoaded = true;
 		ShooterMode = LoadInstance->ShooterMode;
 		TimeAttack = LoadInstance->TimeAttack;
+
+		MainMenuShooterBronze = LoadInstance->StatsShooter.BronzeMedals;
+		MainMenuShooterSilver = LoadInstance->StatsShooter.SilverMedals;
+		MainMenuShooterGold = LoadInstance->StatsShooter.GoldMedals;
+		MainMenuShooterEpic = LoadInstance->StatsShooter.EpicMedals;
+
+		MainMenuShooterBronze = LoadInstance->StatsShooter.BronzeMedals;
+		MainMenuShooterSilver = LoadInstance->StatsShooter.SilverMedals;
+		MainMenuShooterGold = LoadInstance->StatsShooter.GoldMedals;
+		MainMenuShooterEpic = LoadInstance->StatsShooter.EpicMedals;
+
 	}
 
 
@@ -1188,26 +1276,31 @@ void ARacingGameGameModeBase::InitItems()
 
 void ARacingGameGameModeBase::RespawnItems()
 {
-
-	for (int i{}; i < SpeedBoostArray.Num(); i++)
+	if (SpeedBoostArray.Num() > 0)
 	{
-		if (SpeedBoostArray[i]->isHit)
+		for (int i{}; i < SpeedBoostArray.Num(); i++)
 		{
-			SpeedBoostArray[i]->bMagnetPull = false;
-			SpeedBoostArray[i]->SetActorLocation(SpeedBoostArray[i]->StartLocation);
-			SpeedBoostArray[i]->SetActorRotation(SpeedBoostArray[i]->StartRotation);
-			SpeedBoostArray[i]->SetActorHiddenInGame(false);
-			SpeedBoostArray[i]->SetActorEnableCollision(true);
-			SpeedBoostArray[i]->isHit = false;
+			if (SpeedBoostArray[i]->isHit)
+			{
+				SpeedBoostArray[i]->bMagnetPull = false;
+				SpeedBoostArray[i]->SetActorLocation(SpeedBoostArray[i]->StartLocation);
+				SpeedBoostArray[i]->SetActorRotation(SpeedBoostArray[i]->StartRotation);
+				SpeedBoostArray[i]->SetActorHiddenInGame(false);
+				SpeedBoostArray[i]->SetActorEnableCollision(true);
+				SpeedBoostArray[i]->isHit = false;
+			}
 		}
 	}
-	for (int i{}; i < TargetArray.Num(); i++)
+	if (TargetArray.Num() > 0)
 	{
-		if (TargetArray[i]->isHit)
+		for (int i{}; i < TargetArray.Num(); i++)
 		{
-			TargetArray[i]->SetActorEnableCollision(true);
-			TargetArray[i]->SetActorHiddenInGame(false);
-			TargetArray[i]->isHit = false;
+			if (TargetArray[i]->isHit)
+			{
+				TargetArray[i]->SetActorEnableCollision(true);
+				TargetArray[i]->SetActorHiddenInGame(false);
+				TargetArray[i]->isHit = false;
+			}
 		}
 	}
 }

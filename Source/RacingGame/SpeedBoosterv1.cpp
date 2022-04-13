@@ -6,6 +6,7 @@
 #include "PlayerCar.h"
 
 #include "GameFramework/FloatingPawnMovement.h"
+#include "RacingGameGameModeBase.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
 
@@ -35,7 +36,15 @@ void ASpeedBoosterv1::BeginPlay()
 	MagnetCollider->OnComponentBeginOverlap.AddDynamic(this, &ASpeedBoosterv1::MagnetOnOverlapBegin);
 	MagnetCollider->OnComponentEndOverlap.AddDynamic(this, &ASpeedBoosterv1::MagnetOnOverlapEnd);
 
-
+	ARacingGameGameModeBase* GameMode = Cast<ARacingGameGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (GameMode)
+	{
+		if (GameMode->TimeAttack)
+		{
+			Timer = 6.f;
+			SpeedGiven = 600.f;
+		}
+	}
 	StartLocation = GetActorLocation();
 	StartRotation = GetActorRotation();
 }

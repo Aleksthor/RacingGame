@@ -7,6 +7,29 @@
 #include "RacingSaveGame.generated.h"
 
 USTRUCT(BlueprintType)
+struct FMainMenuStats
+{
+	GENERATED_BODY()
+
+
+	UPROPERTY(VisibleAnywhere, Category = "SaveGameData")
+	int BronzeMedals;
+
+	UPROPERTY(VisibleAnywhere, Category = "SaveGameData")
+	int SilverMedals;
+
+	UPROPERTY(VisibleAnywhere, Category = "SaveGameData")
+	int GoldMedals;
+
+	UPROPERTY(VisibleAnywhere, Category = "SaveGameData")
+	int EpicMedals;
+
+	UPROPERTY(VisibleAnywhere, Category = "SaveGameData")
+	float TrackBest;
+
+};
+
+USTRUCT(BlueprintType)
 struct FLevelStats
 {
 	GENERATED_BODY()
@@ -114,6 +137,12 @@ public:
 
 	UPROPERTY(VisibleAnywhere, Category = Basic)
 	FLevelStats Level1StatsTimeAttack;
+
+	UPROPERTY(VisibleAnywhere, Category = Basic)
+	FMainMenuStats StatsShooter;
+
+	UPROPERTY(VisibleAnywhere, Category = Basic)
+	FMainMenuStats StatsTimeAttack;
 
 	UPROPERTY(VisibleAnywhere, Category = Basic)
 	bool ShooterMode;

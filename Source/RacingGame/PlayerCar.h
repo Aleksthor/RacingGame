@@ -147,6 +147,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Logic")
 	bool LookingBehind = false;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Logic")
+	bool bCanNeverShoot = false;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

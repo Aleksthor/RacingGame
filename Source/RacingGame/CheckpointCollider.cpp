@@ -283,7 +283,7 @@ void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AA
 
 			case 5:
 				Cast<APlayerCar>(OtherActor)->CurrentSection = "Section 1";
-				Cast<ARacingGameGameModeBase>(GameModeBase)->AddToDeathTimer(10.f);
+				Cast<ARacingGameGameModeBase>(GameModeBase)->AddToDeathTimer(15.f);
 				Cast<APlayerCar>(OtherActor)->SectionAggregate = Cast<APlayerCar>(OtherActor)->SectionTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->Section6BestTime;
 				Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentSectionBest = Cast<ARacingGameGameModeBase>(GameModeBase)->Section1BestTime;
 

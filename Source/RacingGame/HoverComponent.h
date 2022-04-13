@@ -33,8 +33,8 @@ public:
 	FHitResult HitResult;
 
 
-	float LinearDampingDefault = 8.f;
-	float AngularDampingDefault = 8.f;
+	float LinearDampingDefault = 5.f;
+	float AngularDampingDefault = 5.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HoverVariables")
 	class APlayerCar* PlayerCar;
