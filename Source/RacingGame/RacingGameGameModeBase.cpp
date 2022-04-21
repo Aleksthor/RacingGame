@@ -152,6 +152,21 @@ void ARacingGameGameModeBase::BeginPlay()
 					SpeedBoostArray[8]->SetActorHiddenInGame(false);
 					SpeedBoostArray[8]->SetActorEnableCollision(true);
 
+					tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost10Vector, SpeedBoost10Rotator);
+					SpeedBoostArray.Add(tempSpeedBoost);
+					SpeedBoostArray[9]->SetActorHiddenInGame(false);
+					SpeedBoostArray[9]->SetActorEnableCollision(true);
+
+					tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost11Vector, SpeedBoost11Rotator);
+					SpeedBoostArray.Add(tempSpeedBoost);
+					SpeedBoostArray[10]->SetActorHiddenInGame(false);
+					SpeedBoostArray[10]->SetActorEnableCollision(true);
+
+					tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost12Vector, SpeedBoost12Rotator);
+					SpeedBoostArray.Add(tempSpeedBoost);
+					SpeedBoostArray[11]->SetActorHiddenInGame(false);
+					SpeedBoostArray[11]->SetActorEnableCollision(true);
+
 
 
 				}
@@ -368,7 +383,7 @@ void ARacingGameGameModeBase::GameWon()
 			SwitchTimer();
 			TotalPlayerScore = (TimeScore * TotalPoints) / 1000;
 
-			if (TotalPlayerScore > 15000)
+			if (TotalPlayerScore > 12000)
 			{
 				//UE_LOG(LogTemp, Warning, TEXT("Bronze Tier Achieved"));
 				BronzeMedal = true;
@@ -379,7 +394,7 @@ void ARacingGameGameModeBase::GameWon()
 					UGameplayStatics::PlaySound2D(this, GameWonSound);
 				}
 			}
-			if (TotalPlayerScore > 16000)
+			if (TotalPlayerScore > 14000)
 			{
 				//UE_LOG(LogTemp, Warning, TEXT("Silver Tier Achieved"));
 				SilverMedal = true;
@@ -390,7 +405,7 @@ void ARacingGameGameModeBase::GameWon()
 					UGameplayStatics::PlaySound2D(this, GameWonSound);
 				}
 			}
-			if (TotalPlayerScore > 18500)
+			if (TotalPlayerScore > 16000)
 			{
 				//UE_LOG(LogTemp, Warning, TEXT("Gold Tier Achieved"));
 				GoldMedal = true;
@@ -401,7 +416,7 @@ void ARacingGameGameModeBase::GameWon()
 					UGameplayStatics::PlaySound2D(this, GameWonGoldSound);
 				}
 			}
-			if (TotalPlayerScore > 23000)
+			if (TotalPlayerScore > 22000)
 			{
 				UE_LOG(LogTemp, Warning, TEXT("Epic Tier Achieved"));
 				EpicMedal = true;
@@ -1150,6 +1165,21 @@ void ARacingGameGameModeBase::InitItems()
 		SpeedBoostArray.Add(tempSpeedBoost);
 		SpeedBoostArray[8]->SetActorHiddenInGame(false);
 		SpeedBoostArray[8]->SetActorEnableCollision(true);
+
+		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost10Vector, SpeedBoost10Rotator);
+		SpeedBoostArray.Add(tempSpeedBoost);
+		SpeedBoostArray[9]->SetActorHiddenInGame(false);
+		SpeedBoostArray[9]->SetActorEnableCollision(true);
+
+		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost11Vector, SpeedBoost11Rotator);
+		SpeedBoostArray.Add(tempSpeedBoost);
+		SpeedBoostArray[10]->SetActorHiddenInGame(false);
+		SpeedBoostArray[10]->SetActorEnableCollision(true);
+
+		tempSpeedBoost = World->SpawnActor<ASpeedBoosterv1>(SpeedboostBP, SpeedBoost12Vector, SpeedBoost12Rotator);
+		SpeedBoostArray.Add(tempSpeedBoost);
+		SpeedBoostArray[11]->SetActorHiddenInGame(false);
+		SpeedBoostArray[11]->SetActorEnableCollision(true);
 
 
 

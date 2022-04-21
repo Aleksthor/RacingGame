@@ -7,6 +7,7 @@
 #include "Bees.generated.h"
 
 class USphereComponent;
+class UStaticMesh;
 
 UCLASS()
 class RACINGGAME_API ABees : public APawn
@@ -38,6 +39,15 @@ public:
 	// Mesh Component
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BeeVariables")
 	class UStaticMeshComponent* BeeMesh{ nullptr };
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TargetVariables")
+	UStaticMesh* Normal;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TargetVariables")
+	UStaticMesh* Attack;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BeeHiveVariables")
+	class USoundCue* OnAttackSound{ nullptr };
 
 
 	// MovementComponent 

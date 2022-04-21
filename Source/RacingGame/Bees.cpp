@@ -4,13 +4,13 @@
 #include "Bees.h"
 #include "Target.h"
 #include "Components/SphereComponent.h"
-
+#include "Sound/SoundCue.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "GameFramework/PawnMovementComponent.h"
 #include "PlayerCar.h"
 #include "Bomb.h"
 #include "AIController.h"
-
+#include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
@@ -42,7 +42,13 @@ ABees::ABees()
 	BeeMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BeeMesh"));
 	BeeMesh->SetupAttachment(GetRootComponent());
 
+	Normal = CreateDefaultSubobject<UStaticMesh>(TEXT("Normal"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> Mesh1(TEXT("StaticMesh'/Game/Meshes/Enemies/Beezzzzzzz/Bee_big.Bee_big'"));
+	Normal = Mesh1.Object;
 
+	Attack = CreateDefaultSubobject<UStaticMesh>(TEXT("Attack"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> Mesh2(TEXT("StaticMesh'/Game/Meshes/Enemies/Beezzzzzzz/bee_damaged.bee_damaged'"));
+	Attack = Mesh2.Object;
 	
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 }
@@ -68,6 +74,8 @@ void ABees::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	FVector ForwardVector = UKismetMathLibrary::GetForwardVector(GetControlRotation());
+
 	if (bGivenDamage)
 	{
 		bCanGiveDamage = false;
@@ -75,6 +83,9 @@ void ABees::Tick(float DeltaTime)
 
 		if (DamageClock > DamageTimer)
 		{
+			BeeMesh->SetStaticMesh(Normal);
+			BeeMesh->SetWorldRotation(ForwardVector.Rotation());
+			BeeMesh->SetRelativeScale3D(FVector(2.5f, 2.5f, 2.5f));
 			DamageClock = 0.f;
 			bCanGiveDamage = true;
 			bGivenDamage = false;
@@ -84,40 +95,32 @@ void ABees::Tick(float DeltaTime)
 	{
 		if (bCanGiveDamage)
 		{
+			if (OnAttackSound)
+			{
+				UGameplayStatics::PlaySound2D(this, OnAttackSound);
+			}
+			BeeMesh->SetStaticMesh(Attack);
+			BeeMesh->SetWorldRotation(ForwardVector.Rotation());
+			BeeMesh->SetRelativeScale3D(FVector(3.f, 3.f, 3.f));
 			APawn* Pawn = GetWorld()->GetFirstPlayerController()->GetPawn();
 			APlayerCar* Player = Cast<APlayerCar>(Pawn);
 			Player->LoseHealth();
 			bGivenDamage = true;
 		}
 	}
-	// Some Random Movement if enemy is not targeting player
-	FVector CurrentLocation = GetActorLocation();
-	if (!bOverlapping)
-	{
-		RoamClock += DeltaTime;
 
-		if (RoamClock > RoamTimer)
-		{
-			FVector Rand = FVector(0.f, 0.f, CurrentLocation.Z);
-			Rand.X = FMath::FRandRange(CurrentLocation.X - 500.f, CurrentLocation.X + 500.f);
-			Rand.Y = FMath::FRandRange(CurrentLocation.Y - 500.f, CurrentLocation.Y + 500.f);
-
-			AIController->MoveTo(Rand);
-			RoamClock = 0.f;
-		}
-	}
 
 	// There is no bOrientRotationToMovement in FloatingPawnMovement
-	FVector ForwardVector = UKismetMathLibrary::GetForwardVector(GetControlRotation());
+
 	ForwardVector *= -1.f;
 	BeeMesh->SetWorldRotation(ForwardVector.Rotation());
 
-	if (bOverlapping)
+	if (bOverlapping && !bAttacking)
 	{
 		APawn* Pawn = GetWorld()->GetFirstPlayerController()->GetPawn();
 		APlayerCar* Player = Cast<APlayerCar>(Pawn);
 
-		AIController->MoveToActor(Player, 10.f);
+		AIController->MoveToActor(Player, 2.f);
 		
 
 

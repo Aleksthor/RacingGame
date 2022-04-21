@@ -8,6 +8,7 @@
 #include "Components/SphereComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
+#include "RacingGameGameModeBase.h"
 
 // Sets default values
 ABeeHive::ABeeHive()
@@ -43,30 +44,45 @@ void ABeeHive::BeginPlay()
 void ABeeHive::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	if (BeeArray.Num() < NumberOfBees && bIsHit)
+	
+	ARacingGameGameModeBase* GameMode = Cast<ARacingGameGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (GameMode)
 	{
-		UWorld* World = GetWorld();
-		if (World)
+		if (GameMode->ShooterMode)
 		{
-			FVector Centre = SpawnLocation;
+			if (BeeArray.Num() < NumberOfBees && !bIsHit)
+			{
+				SpawnClock += DeltaTime;
+				if (SpawnClock > SpawnTimer)
+				{
+					UWorld* World = GetWorld();
+					if (World)
+					{
+						FVector Centre = SpawnLocation;
 
-			float RandX = FMath::FRandRange(Centre.X - 300.f, Centre.X + 300.f);
-			float RandY = FMath::FRandRange(Centre.Y - 300.f, Centre.Y + 300.f);
-			FVector Location = FVector(RandX, RandY, SpawnLocation.Z);
+						float RandX = FMath::FRandRange(Centre.X - 300.f, Centre.X + 300.f);
+						float RandY = FMath::FRandRange(Centre.Y - 300.f, Centre.Y + 300.f);
+						FVector Location = FVector(RandX, RandY, SpawnLocation.Z);
 
-			tempBee = World->SpawnActor<ABees>(BeesBP, Location, FRotator::ZeroRotator);
-			BeeArray.Add(tempBee);
+						tempBee = World->SpawnActor<ABees>(BeesBP, Location, FRotator::ZeroRotator);
+						SpawnClock = 0.f;
+						BeeArray.Add(tempBee);
+					}
+				}
+
+			}
+			for (int i{}; i < BeeArray.Num(); i++)
+			{
+				if (BeeArray[i]->bDead)
+				{
+					BeeArray[i]->Destroy();
+					BeeArray.RemoveAt(i);
+				}
+			}
 		}
 	}
-	for (int i{}; i < BeeArray.Num(); i++)
-	{
-		if (BeeArray[i]->bDead)
-		{
-			BeeArray[i]->Destroy();
-			BeeArray.RemoveAt(i);
-		}
-	}
+
+
 }
 
 void ABeeHive::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

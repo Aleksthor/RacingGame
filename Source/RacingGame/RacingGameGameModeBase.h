@@ -132,8 +132,18 @@ public:
 	FVector SpeedBoost8Vector = FVector(29770.f, 12520.f,14980.f);
 	FRotator SpeedBoost8Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector SpeedBoost9Vector = FVector(1590.f, 980.f, 21580.f); // Speed 200 ? - Playtest
+	FVector SpeedBoost9Vector = FVector(1590.f, 980.f, 21580.f); 
 	FRotator SpeedBoost9Rotator = FRotator(0.f, 0.f, 0.f);
+
+	FVector SpeedBoost10Vector = FVector(13570.f, 6300.f, 13100.f);
+	FRotator SpeedBoost10Rotator = FRotator(0.f, 0.f, 0.f);
+
+	FVector SpeedBoost11Vector = FVector(4950.f, -25300.f, 7030.f);
+	FRotator SpeedBoost11Rotator = FRotator(0.f, 0.f, 0.f);
+
+	FVector SpeedBoost12Vector = FVector(19750.f, -11960.f, 10480.f);
+	FRotator SpeedBoost12Rotator = FRotator(0.f, 0.f, 0.f);
+
 
 
 

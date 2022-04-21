@@ -131,7 +131,7 @@ void ATarget::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherA
 
 		// Raise Movement Speed by 300
 		UPawnMovementComponent* Movement = Player->GetMovementComponent();
-		Player->SpeedBoostSpeed = Cast<UFloatingPawnMovement>(Movement)->MaxSpeed + SpeedGiven;
+		Player->SpeedBoostSpeed = Player->SpeedBoostSpeed + SpeedGiven;
 
 		}
 	

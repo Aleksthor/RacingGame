@@ -21,19 +21,19 @@ public:
 
 	/** Component Body */
 	/** Skeletal Mesh */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class USkeletalMeshComponent* PlayerMesh{ nullptr };
 
 	/** Collision Box */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UCapsuleComponent* Collider{ nullptr };
 
 	/** Spring Arm */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class USpringArmComponent* SpringArm{ nullptr };
 
 	/** Camera */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UCameraComponent* Camera{ nullptr };
 
 	//** MovementComponent */
@@ -41,16 +41,16 @@ public:
 	class UPawnMovementComponent* MovementComponent;
 
 	/** Hover Components | Line trace by channel and Add Force */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UHoverComponent* HoverComponent1;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UHoverComponent* HoverComponent2;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UHoverComponent* HoverComponent3;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UHoverComponent* HoverComponent4;
 
 
@@ -89,6 +89,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float SpeedBoostSpeed = PlayerMaxSpeed;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
+	int SpeedBoostLevel = 0;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerVariables | Logic")
 	float CheckpointTimer = 2.f;

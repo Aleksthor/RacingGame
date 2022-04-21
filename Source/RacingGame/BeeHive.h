@@ -17,13 +17,13 @@ public:
 	// Sets default values for this actor's properties
 	ABeeHive();
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BeeHiveVariables")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class UBoxComponent* Collider{ nullptr };
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BeeHiveVariables")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class USphereComponent* SpawnLocationComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BeeHiveVariables")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class UStaticMeshComponent* BeehiveMesh{ nullptr };
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BeeHiveVariables")
@@ -44,6 +44,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BeeHiveVariables")
 	bool bIsHit = false;
+
+	float SpawnClock = 0.f;
+
+	float SpawnTimer = 2.f;
 
 protected:
 	// Called when the game starts or when spawned
