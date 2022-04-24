@@ -35,9 +35,9 @@ void ACheckpointCollider::Tick(float DeltaTime)
 
 void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	Player = Cast<APlayerCar>(OtherActor);
 
-
-	if (OtherActor->IsA<APlayerCar>() && !isHit)
+	if (Player && !isHit)
 	{
 		if (isValid)
 		{
@@ -45,282 +45,283 @@ void ACheckpointCollider::OnOverlap(UPrimitiveComponent* OverlappedComponent, AA
 			isHit = true;
 
 			AGameModeBase* GameModeBase = GetWorld()->GetAuthGameMode();
-
+			ARacingGameGameModeBase* RacingGameModeBase = Cast<ARacingGameGameModeBase>(GameModeBase);
 			
 
 
-			switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentCheckpoint)
+			switch (RacingGameModeBase->CurrentCheckpoint)
 			{
 			case 0:
-				Cast<ARacingGameGameModeBase>(GameModeBase)->AddToDeathTimer(10.f);
-				Cast<APlayerCar>(OtherActor)->CurrentSection = "Section 2";
-				Cast<APlayerCar>(OtherActor)->SectionAggregate = Cast<APlayerCar>(OtherActor)->SectionTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->Section1BestTime;
-				Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentSectionBest = Cast<ARacingGameGameModeBase>(GameModeBase)->Section2BestTime;
+				RacingGameModeBase->AddToDeathTimer(10.f);
+				Player->CurrentSection = "Section 2";
+				Player->SectionAggregate = Player->SectionTimer - RacingGameModeBase->Section1BestTime;
+				RacingGameModeBase->CurrentSectionBest = RacingGameModeBase->Section2BestTime;
 
-				switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentRound)
+				switch (RacingGameModeBase->CurrentRound)
 				{
 				case 1:
-					if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint1))
+					if (FMath::IsNearlyZero(RacingGameModeBase->WorldCheckpoint1))
 					{
 						if (Player)
 						{
 							Player->FirstRun = true;
 						}
 					}
-					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint1;
-					if (Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint1 > Cast<APlayerCar>(OtherActor)->WorldTimer || FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint1))
+					Player->WorldAggregate = Player->WorldTimer - RacingGameModeBase->WorldCheckpoint1;
+					if (RacingGameModeBase->WorldCheckpoint1 > Player->WorldTimer || FMath::IsNearlyZero(RacingGameModeBase->WorldCheckpoint1))
 					{
-						Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint1 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+						RacingGameModeBase->WorldCheckpoint1 = Player->WorldTimer;
 					}
-					Cast<ARacingGameGameModeBase>(GameModeBase)->NextBest = Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint2;
+					RacingGameModeBase->NextBest = RacingGameModeBase->WorldCheckpoint2;
 					
 					break;
 				case 2:
-					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint8;
-					if (Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint8 > Cast<APlayerCar>(OtherActor)->WorldTimer || FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint8))
+					Player->WorldAggregate = Player->WorldTimer - RacingGameModeBase->WorldCheckpoint8;
+					if (RacingGameModeBase->WorldCheckpoint8 > Player->WorldTimer || FMath::IsNearlyZero(RacingGameModeBase->WorldCheckpoint8))
 					{
-						Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint8 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+						RacingGameModeBase->WorldCheckpoint8 = Player->WorldTimer;
 					}
-					Cast<ARacingGameGameModeBase>(GameModeBase)->NextBest = Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint9;
+					RacingGameModeBase->NextBest = RacingGameModeBase->WorldCheckpoint9;
 					break;
 				case 3:
-					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint15;
-					if (Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint15 > Cast<APlayerCar>(OtherActor)->WorldTimer || FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint15))
+					Player->WorldAggregate = Player->WorldTimer - RacingGameModeBase->WorldCheckpoint15;
+					if (RacingGameModeBase->WorldCheckpoint15 > Player->WorldTimer || FMath::IsNearlyZero(RacingGameModeBase->WorldCheckpoint15))
 					{
-						Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint15 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+						RacingGameModeBase->WorldCheckpoint15 = Player->WorldTimer;
 					}
-					Cast<ARacingGameGameModeBase>(GameModeBase)->NextBest = Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint16;
+					RacingGameModeBase->NextBest = RacingGameModeBase->WorldCheckpoint16;
 				
 					break;
 				default:
 					break;
 				}
 
-				if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->Section1BestTime) || Cast<APlayerCar>(OtherActor)->SectionTimer < Cast<ARacingGameGameModeBase>(GameModeBase)->Section1BestTime)
+				if (FMath::IsNearlyZero(RacingGameModeBase->Section1BestTime) || Player->SectionTimer < RacingGameModeBase->Section1BestTime)
 				{
-					Cast<ARacingGameGameModeBase>(GameModeBase)->Section1BestTime = Cast<APlayerCar>(OtherActor)->SectionTimer;
-					Cast<ARacingGameGameModeBase>(GameModeBase)->Section1NewBestTime = true;
+					RacingGameModeBase->Section1BestTime = Player->SectionTimer;
+					RacingGameModeBase->Section1NewBestTime = true;
 				}
 				break;
 
 			case 1:
 
-				Cast<APlayerCar>(OtherActor)->CurrentSection = "Section 3";
-				Cast<ARacingGameGameModeBase>(GameModeBase)->AddToDeathTimer(15.f);
-				Cast<APlayerCar>(OtherActor)->SectionAggregate = Cast<APlayerCar>(OtherActor)->SectionTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->Section2BestTime;
-				Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentSectionBest = Cast<ARacingGameGameModeBase>(GameModeBase)->Section3BestTime;
+				Player->CurrentSection = "Section 3";
+				RacingGameModeBase->AddToDeathTimer(15.f);
+				Player->SectionAggregate = Player->SectionTimer - RacingGameModeBase->Section2BestTime;
+				RacingGameModeBase->CurrentSectionBest = RacingGameModeBase->Section3BestTime;
 
-				switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentRound)
+				switch (RacingGameModeBase->CurrentRound)
 				{
 				case 1:
-					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint2;
-					if (Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint2 > Cast<APlayerCar>(OtherActor)->WorldTimer || FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint2))
+					Player->WorldAggregate = Player->WorldTimer - RacingGameModeBase->WorldCheckpoint2;
+					if (RacingGameModeBase->WorldCheckpoint2 > Player->WorldTimer || FMath::IsNearlyZero(RacingGameModeBase->WorldCheckpoint2))
 					{
-						Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint2 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+						RacingGameModeBase->WorldCheckpoint2 = Player->WorldTimer;
 					}
-					Cast<ARacingGameGameModeBase>(GameModeBase)->NextBest = Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint3;
+					RacingGameModeBase->NextBest = RacingGameModeBase->WorldCheckpoint3;
 					break;
 				case 2:	
-					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint9;
-					if (Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint9 > Cast<APlayerCar>(OtherActor)->WorldTimer || FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint9))
+					Player->WorldAggregate = Player->WorldTimer - RacingGameModeBase->WorldCheckpoint9;
+					if (RacingGameModeBase->WorldCheckpoint9 > Player->WorldTimer || FMath::IsNearlyZero(RacingGameModeBase->WorldCheckpoint9))
 					{
-						Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint9 = Cast<APlayerCar>(OtherActor)->WorldTimer;
-					}Cast<ARacingGameGameModeBase>(GameModeBase)->NextBest = Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint10;
+						RacingGameModeBase->WorldCheckpoint9 = Player->WorldTimer;
+					}
+					RacingGameModeBase->NextBest = RacingGameModeBase->WorldCheckpoint10;
 				
 					break;
 				case 3:
-					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint16;
-					if (Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint16 > Cast<APlayerCar>(OtherActor)->WorldTimer || FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint16))
+					Player->WorldAggregate = Player->WorldTimer - RacingGameModeBase->WorldCheckpoint16;
+					if (RacingGameModeBase->WorldCheckpoint16 > Player->WorldTimer || FMath::IsNearlyZero(RacingGameModeBase->WorldCheckpoint16))
 					{
-						Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint16 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+						RacingGameModeBase->WorldCheckpoint16 = Player->WorldTimer;
 					}
-					Cast<ARacingGameGameModeBase>(GameModeBase)->NextBest = Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint17;
+					RacingGameModeBase->NextBest = RacingGameModeBase->WorldCheckpoint17;
 					break;
 				default:
 					break;
 				}
 
-				if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->Section2BestTime) || Cast<APlayerCar>(OtherActor)->SectionTimer < Cast<ARacingGameGameModeBase>(GameModeBase)->Section2BestTime)
+				if (FMath::IsNearlyZero(RacingGameModeBase->Section2BestTime) || Player->SectionTimer < RacingGameModeBase->Section2BestTime)
 				{
-					Cast<ARacingGameGameModeBase>(GameModeBase)->Section2BestTime = Cast<APlayerCar>(OtherActor)->SectionTimer;
-					Cast<ARacingGameGameModeBase>(GameModeBase)->Section2NewBestTime = true;
+					RacingGameModeBase->Section2BestTime = Player->SectionTimer;
+					RacingGameModeBase->Section2NewBestTime = true;
 				}
 				break;
 
 			case 2:
-				Cast<APlayerCar>(OtherActor)->CurrentSection = "Section 4";
-				Cast<ARacingGameGameModeBase>(GameModeBase)->AddToDeathTimer(15.f);
-				Cast<APlayerCar>(OtherActor)->SectionAggregate = Cast<APlayerCar>(OtherActor)->SectionTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->Section3BestTime;
-				Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentSectionBest = Cast<ARacingGameGameModeBase>(GameModeBase)->Section4BestTime;
+				Player->CurrentSection = "Section 4";
+				RacingGameModeBase->AddToDeathTimer(15.f);
+				Player->SectionAggregate = Player->SectionTimer - RacingGameModeBase->Section3BestTime;
+				RacingGameModeBase->CurrentSectionBest = RacingGameModeBase->Section4BestTime;
 
-				switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentRound)
+				switch (RacingGameModeBase->CurrentRound)
 				{
 				case 1:
-					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint3;
-					if (Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint3 > Cast<APlayerCar>(OtherActor)->WorldTimer || FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint3))
+					Player->WorldAggregate = Player->WorldTimer - RacingGameModeBase->WorldCheckpoint3;
+					if (RacingGameModeBase->WorldCheckpoint3 > Player->WorldTimer || FMath::IsNearlyZero(RacingGameModeBase->WorldCheckpoint3))
 					{
-						Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint3 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+						RacingGameModeBase->WorldCheckpoint3 = Player->WorldTimer;
 					}
-					Cast<ARacingGameGameModeBase>(GameModeBase)->NextBest = Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint4;
+					RacingGameModeBase->NextBest = RacingGameModeBase->WorldCheckpoint4;
 					break;
 				case 2:
-					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint10;
-					if (Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint10 > Cast<APlayerCar>(OtherActor)->WorldTimer || FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint10))
+					Player->WorldAggregate = Player->WorldTimer - RacingGameModeBase->WorldCheckpoint10;
+					if (RacingGameModeBase->WorldCheckpoint10 > Player->WorldTimer || FMath::IsNearlyZero(RacingGameModeBase->WorldCheckpoint10))
 					{
-						Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint10 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+						RacingGameModeBase->WorldCheckpoint10 = Player->WorldTimer;
 					}
-					Cast<ARacingGameGameModeBase>(GameModeBase)->NextBest = Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint11;
+					RacingGameModeBase->NextBest = RacingGameModeBase->WorldCheckpoint11;
 					break;
 				case 3:
-					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint17;
-					if (Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint17 > Cast<APlayerCar>(OtherActor)->WorldTimer || FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint17))
+					Player->WorldAggregate = Player->WorldTimer - RacingGameModeBase->WorldCheckpoint17;
+					if (RacingGameModeBase->WorldCheckpoint17 > Player->WorldTimer || FMath::IsNearlyZero(RacingGameModeBase->WorldCheckpoint17))
 					{
-						Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint17 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+						RacingGameModeBase->WorldCheckpoint17 = Player->WorldTimer;
 					}
-					Cast<ARacingGameGameModeBase>(GameModeBase)->NextBest = Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint18;
+					RacingGameModeBase->NextBest = RacingGameModeBase->WorldCheckpoint18;
 					break;
 				default:
 					break;
 				}
 
-				if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->Section3BestTime) || Cast<APlayerCar>(OtherActor)->SectionTimer < Cast<ARacingGameGameModeBase>(GameModeBase)->Section3BestTime)
+				if (FMath::IsNearlyZero(RacingGameModeBase->Section3BestTime) || Player->SectionTimer < RacingGameModeBase->Section3BestTime)
 				{
-					Cast<ARacingGameGameModeBase>(GameModeBase)->Section3BestTime = Cast<APlayerCar>(OtherActor)->SectionTimer;
-					Cast<ARacingGameGameModeBase>(GameModeBase)->Section3NewBestTime = true;
+					RacingGameModeBase->Section3BestTime = Player->SectionTimer;
+					RacingGameModeBase->Section3NewBestTime = true;
 				}
 				break;
 
 			case 3:
-				Cast<APlayerCar>(OtherActor)->CurrentSection = "Section 5";
-				Cast<ARacingGameGameModeBase>(GameModeBase)->AddToDeathTimer(10.f);
-				Cast<APlayerCar>(OtherActor)->SectionAggregate = Cast<APlayerCar>(OtherActor)->SectionTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->Section4BestTime;
-				Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentSectionBest = Cast<ARacingGameGameModeBase>(GameModeBase)->Section5BestTime;
+				Player->CurrentSection = "Section 5";
+				RacingGameModeBase->AddToDeathTimer(10.f);
+				Player->SectionAggregate = Player->SectionTimer - RacingGameModeBase->Section4BestTime;
+				RacingGameModeBase->CurrentSectionBest = RacingGameModeBase->Section5BestTime;
 
-				switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentRound)
+				switch (RacingGameModeBase->CurrentRound)
 				{
 				case 1:
 					
-					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint4;
-					if (Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint4 > Cast<APlayerCar>(OtherActor)->WorldTimer || FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint4))
+					Player->WorldAggregate = Player->WorldTimer - RacingGameModeBase->WorldCheckpoint4;
+					if (RacingGameModeBase->WorldCheckpoint4 > Player->WorldTimer || FMath::IsNearlyZero(RacingGameModeBase->WorldCheckpoint4))
 					{
-						Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint4 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+						RacingGameModeBase->WorldCheckpoint4 = Player->WorldTimer;
 					}
-					Cast<ARacingGameGameModeBase>(GameModeBase)->NextBest = Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint5;
+					RacingGameModeBase->NextBest = RacingGameModeBase->WorldCheckpoint5;
 					break;
 				case 2:
 					
-					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint11;
-					if (Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint11 > Cast<APlayerCar>(OtherActor)->WorldTimer || FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint11))
+					Player->WorldAggregate = Player->WorldTimer - RacingGameModeBase->WorldCheckpoint11;
+					if (RacingGameModeBase->WorldCheckpoint11 > Player->WorldTimer || FMath::IsNearlyZero(RacingGameModeBase->WorldCheckpoint11))
 					{
-						Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint11 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+						RacingGameModeBase->WorldCheckpoint11 = Player->WorldTimer;
 					}
-					Cast<ARacingGameGameModeBase>(GameModeBase)->NextBest = Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint12;
+					RacingGameModeBase->NextBest = RacingGameModeBase->WorldCheckpoint12;
 					break;
 				case 3:
 					
-					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint18;
-					if (Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint18 > Cast<APlayerCar>(OtherActor)->WorldTimer || FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint18))
+					Player->WorldAggregate = Player->WorldTimer - RacingGameModeBase->WorldCheckpoint18;
+					if (RacingGameModeBase->WorldCheckpoint18 > Player->WorldTimer || FMath::IsNearlyZero(RacingGameModeBase->WorldCheckpoint18))
 					{
-						Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint18 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+						RacingGameModeBase->WorldCheckpoint18 = Player->WorldTimer;
 					}
-					Cast<ARacingGameGameModeBase>(GameModeBase)->NextBest = Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint19;
+					RacingGameModeBase->NextBest = RacingGameModeBase->WorldCheckpoint19;
 					break;
 				default:
 					break;
 				}
-				if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->Section4BestTime) || Cast<APlayerCar>(OtherActor)->SectionTimer < Cast<ARacingGameGameModeBase>(GameModeBase)->Section4BestTime)
+				if (FMath::IsNearlyZero(RacingGameModeBase->Section4BestTime) || Player->SectionTimer < RacingGameModeBase->Section4BestTime)
 				{
-					Cast<ARacingGameGameModeBase>(GameModeBase)->Section4BestTime = Cast<APlayerCar>(OtherActor)->SectionTimer;
-					Cast<ARacingGameGameModeBase>(GameModeBase)->Section4NewBestTime = true;
+					RacingGameModeBase->Section4BestTime = Player->SectionTimer;
+					RacingGameModeBase->Section4NewBestTime = true;
 				}
 				break;
 
 			case 4:
-				Cast<APlayerCar>(OtherActor)->CurrentSection = "Section 6";
-				Cast<ARacingGameGameModeBase>(GameModeBase)->AddToDeathTimer(10.f);
-				Cast<APlayerCar>(OtherActor)->SectionAggregate = Cast<APlayerCar>(OtherActor)->SectionTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->Section5BestTime;
-				Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentSectionBest = Cast<ARacingGameGameModeBase>(GameModeBase)->Section6BestTime;
+				Player->CurrentSection = "Section 6";
+				RacingGameModeBase->AddToDeathTimer(10.f);
+				Player->SectionAggregate = Player->SectionTimer - RacingGameModeBase->Section5BestTime;
+				RacingGameModeBase->CurrentSectionBest = RacingGameModeBase->Section6BestTime;
 
-				switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentRound)
+				switch (RacingGameModeBase->CurrentRound)
 				{
 				case 1:
 				
-					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint5;	
-					if (Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint5 > Cast<APlayerCar>(OtherActor)->WorldTimer || FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint5))
+					Player->WorldAggregate = Player->WorldTimer - RacingGameModeBase->WorldCheckpoint5;
+					if (RacingGameModeBase->WorldCheckpoint5 > Player->WorldTimer || FMath::IsNearlyZero(RacingGameModeBase->WorldCheckpoint5))
 					{
-						Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint5 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+						RacingGameModeBase->WorldCheckpoint5 = Player->WorldTimer;
 					}
-					Cast<ARacingGameGameModeBase>(GameModeBase)->NextBest = Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint5;
+					RacingGameModeBase->NextBest = RacingGameModeBase->WorldCheckpoint5;
 					break;
 				case 2:
 					
-					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint12;
-					if (Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint12 > Cast<APlayerCar>(OtherActor)->WorldTimer || FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint12))
+					Player->WorldAggregate = Player->WorldTimer - RacingGameModeBase->WorldCheckpoint12;
+					if (RacingGameModeBase->WorldCheckpoint12 > Player->WorldTimer || FMath::IsNearlyZero(RacingGameModeBase->WorldCheckpoint12))
 					{
-						Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint12 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+						RacingGameModeBase->WorldCheckpoint12 = Player->WorldTimer;
 					}
-					Cast<ARacingGameGameModeBase>(GameModeBase)->NextBest = Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint13;
+					RacingGameModeBase->NextBest = RacingGameModeBase->WorldCheckpoint13;
 					break;
 				case 3:
 					
-					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint19;
+					Player->WorldAggregate = Player->WorldTimer - RacingGameModeBase->WorldCheckpoint19;
 
-					if (Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint19 > Cast<APlayerCar>(OtherActor)->WorldTimer || FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint19))
+					if (RacingGameModeBase->WorldCheckpoint19 > Player->WorldTimer || FMath::IsNearlyZero(RacingGameModeBase->WorldCheckpoint19))
 					{
-						Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint19 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+						RacingGameModeBase->WorldCheckpoint19 = Player->WorldTimer;
 					}
-					Cast<ARacingGameGameModeBase>(GameModeBase)->NextBest = Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint20;
+					RacingGameModeBase->NextBest = RacingGameModeBase->WorldCheckpoint20;
 					break;
 				default:
 					break;
 				}
-				if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->Section5BestTime) || Cast<APlayerCar>(OtherActor)->SectionTimer < Cast<ARacingGameGameModeBase>(GameModeBase)->Section5BestTime)
+				if (FMath::IsNearlyZero(RacingGameModeBase->Section5BestTime) || Player->SectionTimer < RacingGameModeBase->Section5BestTime)
 				{
-					Cast<ARacingGameGameModeBase>(GameModeBase)->Section5BestTime = Cast<APlayerCar>(OtherActor)->SectionTimer;
-					Cast<ARacingGameGameModeBase>(GameModeBase)->Section5NewBestTime = true;
+					RacingGameModeBase->Section5BestTime = Player->SectionTimer;
+					RacingGameModeBase->Section5NewBestTime = true;
 				}
 				break;
 
 			case 5:
-				Cast<APlayerCar>(OtherActor)->CurrentSection = "Section 1";
-				Cast<ARacingGameGameModeBase>(GameModeBase)->AddToDeathTimer(15.f);
-				Cast<APlayerCar>(OtherActor)->SectionAggregate = Cast<APlayerCar>(OtherActor)->SectionTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->Section6BestTime;
-				Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentSectionBest = Cast<ARacingGameGameModeBase>(GameModeBase)->Section1BestTime;
+				Player->CurrentSection = "Section 1";
+				RacingGameModeBase->AddToDeathTimer(15.f);
+				Player->SectionAggregate = Player->SectionTimer - RacingGameModeBase->Section6BestTime;
+				RacingGameModeBase->CurrentSectionBest = RacingGameModeBase->Section1BestTime;
 
-				switch (Cast<ARacingGameGameModeBase>(GameModeBase)->CurrentRound)
+				switch (RacingGameModeBase->CurrentRound)
 				{
 				case 1:
-					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint6;
-					if (Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint6 > Cast<APlayerCar>(OtherActor)->WorldTimer || FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint6))
+					Player->WorldAggregate = Player->WorldTimer - RacingGameModeBase->WorldCheckpoint6;
+					if (RacingGameModeBase->WorldCheckpoint6 > Player->WorldTimer || FMath::IsNearlyZero(RacingGameModeBase->WorldCheckpoint6))
 					{
-						Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint6 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+						RacingGameModeBase->WorldCheckpoint6 = Player->WorldTimer;
 					}
-					Cast<ARacingGameGameModeBase>(GameModeBase)->NextBest = Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint8;
+					RacingGameModeBase->NextBest = RacingGameModeBase->WorldCheckpoint8;
 					break;
 				case 2:
 	
-					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint13;
-					if (Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint13 > Cast<APlayerCar>(OtherActor)->WorldTimer || FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint13))
+					Player->WorldAggregate = Player->WorldTimer - RacingGameModeBase->WorldCheckpoint13;
+					if (RacingGameModeBase->WorldCheckpoint13 > Player->WorldTimer || FMath::IsNearlyZero(RacingGameModeBase->WorldCheckpoint13))
 					{
-						Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint13 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+						RacingGameModeBase->WorldCheckpoint13 = Player->WorldTimer;
 					}
-					Cast<ARacingGameGameModeBase>(GameModeBase)->NextBest = Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint15;
+					RacingGameModeBase->NextBest = RacingGameModeBase->WorldCheckpoint15;
 					break;
 				case 3:
 					
-					Cast<APlayerCar>(OtherActor)->WorldAggregate = Cast<APlayerCar>(OtherActor)->WorldTimer - Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint20;
-					if (Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint20 > Cast<APlayerCar>(OtherActor)->WorldTimer || FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint20))
+					Player->WorldAggregate = Player->WorldTimer - RacingGameModeBase->WorldCheckpoint20;
+					if (RacingGameModeBase->WorldCheckpoint20 > Player->WorldTimer || FMath::IsNearlyZero(RacingGameModeBase->WorldCheckpoint20))
 					{
-						Cast<ARacingGameGameModeBase>(GameModeBase)->WorldCheckpoint20 = Cast<APlayerCar>(OtherActor)->WorldTimer;
+						RacingGameModeBase->WorldCheckpoint20 = Player->WorldTimer;
 					}
 					break;
 				default:
 					break;
 				}
-				if (FMath::IsNearlyZero(Cast<ARacingGameGameModeBase>(GameModeBase)->Section6BestTime) || Cast<APlayerCar>(OtherActor)->SectionTimer < Cast<ARacingGameGameModeBase>(GameModeBase)->Section6BestTime)
+				if (FMath::IsNearlyZero(RacingGameModeBase->Section6BestTime) || Player->SectionTimer < RacingGameModeBase->Section6BestTime)
 				{
-					Cast<ARacingGameGameModeBase>(GameModeBase)->Section6BestTime = Cast<APlayerCar>(OtherActor)->SectionTimer;
-					Cast<ARacingGameGameModeBase>(GameModeBase)->Section6NewBestTime = true;
+					RacingGameModeBase->Section6BestTime = Player->SectionTimer;
+					RacingGameModeBase->Section6NewBestTime = true;
 				}
 				break;
 

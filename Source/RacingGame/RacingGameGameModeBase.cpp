@@ -847,7 +847,7 @@ void ARacingGameGameModeBase::SaveGame()
 
 
 
-			// Check all sections
+		
 
 
 			SaveInstance->Level1StatsTimeAttack.Section1Best = Section1BestTime;
@@ -865,10 +865,10 @@ void ARacingGameGameModeBase::SaveGame()
 			//SaveInstance->Level1Stats.Section7Best = Section7BestTime;
 			
 
-				// Check all 3 rounds
+				
 
 
-			// Check all 3 rounds
+			
 			float SetBestRound;
 			if (BestRound < RoundBestTime || FMath::IsNearlyZero(RoundBestTime))
 			{
@@ -883,7 +883,7 @@ void ARacingGameGameModeBase::SaveGame()
 
 
 
-			// Check Total Time for all 3 rounds
+			// Check Total Time 
 			float SetTotalTime;
 			if (TotalTime < TotalBestTime || TotalBestTime == 0.f)
 			{
