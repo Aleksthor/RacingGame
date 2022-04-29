@@ -111,6 +111,12 @@ struct FLevelStats
 	UPROPERTY(VisibleAnywhere, Category = "SaveGameData")
 	int BestPoints;
 
+	UPROPERTY(VisibleAnywhere, Category = "SaveGameData")
+	TArray<FVector> GhostLocationArray;
+
+	UPROPERTY(VisibleAnywhere, Category = "SaveGameData")
+	TArray<FRotator> GhostRotationArray;
+
 };
 
 /**

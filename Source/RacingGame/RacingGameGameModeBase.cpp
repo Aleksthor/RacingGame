@@ -9,6 +9,8 @@
 #include "RacingSaveGame.h"
 #include "SpeedBoosterv1.h"
 #include "Target.h"
+
+#include "RacingEnemy.h"
 #include "GameFramework/FloatingPawnMovement.h"
 
 
@@ -183,6 +185,21 @@ void ARacingGameGameModeBase::BeginPlay()
 	CurrentSectionBest = Section1BestTime;
 	NextBest = WorldCheckpoint1;
 
+	if (Player)
+	{
+		if (!Player->FirstRun)
+		{
+			UWorld* World = GetWorld();
+			if (GhostLocationArray.IsValidIndex(0) && GhostRotationArray.IsValidIndex(0))
+			{
+				SpawnedGhost = World->SpawnActor<ARacingEnemy>(GhostBP, GhostLocationArray[0], GhostRotationArray[0]);
+			}
+
+		}
+	}
+
+
+
 }
 
 void ARacingGameGameModeBase::Tick(float DeltaSeconds)
@@ -245,6 +262,48 @@ void ARacingGameGameModeBase::Tick(float DeltaSeconds)
 			ShowDeathClock = 0.f;
 		}
 	}
+
+
+
+	SaveGhostDataClock += DeltaSeconds;
+
+	if (SaveGhostDataClock > SaveGhostDataTimer)
+	{
+		SaveGhostDataClock = 0.f;
+		if (Player)
+		{
+			LocationArray.Add(Player->GetActorLocation());
+			RotationArray.Add(Player->GetActorRotation());
+
+			if (!Player->FirstRun)
+			{
+				if (SpawnedGhost)
+				{
+
+				
+
+				
+						
+					if (GhostLocationArray.IsValidIndex(CurrentFrame) && GhostRotationArray.IsValidIndex(CurrentFrame))
+					{
+						SpawnedGhost->SetActorLocation(GhostLocationArray[CurrentFrame]);
+						SpawnedGhost->SetActorRotation(GhostRotationArray[CurrentFrame]);
+						CurrentFrame++;
+					}
+					else
+					{
+						SpawnedGhost->SetActorHiddenInGame(true);
+					}
+
+					
+				}
+			}
+		}
+		
+	}
+	
+
+
 
 	
 }
@@ -791,6 +850,8 @@ void ARacingGameGameModeBase::SaveGame()
 			SaveInstance->Level1Stats.WorldCheckpoint12Best = WorldCheckpoint12;
 			
 			SaveInstance->Level1Stats.WorldCheckpoint13Best = WorldCheckpoint13;
+
+
 			
 			//if (SaveInstance->Level1Stats.WorldCheckpoint14Best > WorldCheckpoint14 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint14Best))
 			//{
@@ -813,6 +874,21 @@ void ARacingGameGameModeBase::SaveGame()
 			//{
 			//	SaveInstance->Level1Stats.WorldCheckpoint21Best = WorldCheckpoint21;
 			//}
+
+
+
+			if (LocationArray.IsValidIndex(0) && RotationArray.IsValidIndex(0))
+			{
+				for (int i{}; i < LocationArray.Num(); i++)
+				{
+					SaveInstance->Level1Stats.GhostLocationArray.Add(LocationArray[i]);
+				}
+
+				for (int i{}; i < RotationArray.Num(); i++)
+				{
+					SaveInstance->Level1Stats.GhostRotationArray.Add(RotationArray[i]);
+				}
+			}
 
 			float SetBestScore;
 			if (TotalBestScore < TotalPlayerScore)
@@ -947,6 +1023,40 @@ void ARacingGameGameModeBase::SaveGame()
 			//{
 			//	SaveInstance->Level1Stats.WorldCheckpoint21Best = WorldCheckpoint21;
 			//}
+			if (TotalTime < TotalBestTime || TotalBestTime == 0.f)
+			{
+
+				if (LocationArray.IsValidIndex(0) && RotationArray.IsValidIndex(0))
+				{
+
+					for (int i{}; i < LocationArray.Num(); i++)
+					{
+						SaveInstance->Level1StatsTimeAttack.GhostLocationArray.Add(LocationArray[i]);
+					}
+
+					for (int i{}; i < RotationArray.Num(); i++)
+					{
+						SaveInstance->Level1StatsTimeAttack.GhostRotationArray.Add(RotationArray[i]);
+					}
+				}
+			}
+			else
+			{
+				if (GhostLocationArray.IsValidIndex(0) && GhostRotationArray.IsValidIndex(0))
+				{
+
+					for (int i{}; i < GhostLocationArray.Num(); i++)
+					{
+						SaveInstance->Level1StatsTimeAttack.GhostLocationArray.Add(GhostLocationArray[i]);
+					}
+
+					for (int i{}; i < GhostRotationArray.Num(); i++)
+					{
+						SaveInstance->Level1StatsTimeAttack.GhostRotationArray.Add(GhostRotationArray[i]);
+					}
+				}
+			}
+
 
 			float SetBestScore;
 			if (TotalPlayerScore < TotalBestScore)
@@ -969,11 +1079,6 @@ void ARacingGameGameModeBase::SaveGame()
 
 
 	}
-	
-	
-	
-
-	
 	
 	
 }
@@ -1042,6 +1147,22 @@ void ARacingGameGameModeBase::LoadGame()
 			WorldCheckpoint19 = LoadInstance->Level1Stats.WorldCheckpoint19Best;
 			WorldCheckpoint20 = LoadInstance->Level1Stats.WorldCheckpoint20Best;
 			/*WorldCheckpoint21= LoadInstance->Level1Stats.WorldCheckpoint21Best;*/
+
+			if (LoadInstance->Level1Stats.GhostLocationArray.IsValidIndex(0) && LoadInstance->Level1Stats.GhostRotationArray.IsValidIndex(0))
+			{
+
+				
+				for (int i{}; i < LoadInstance->Level1Stats.GhostLocationArray.Num(); i++)
+				{
+					GhostLocationArray.Add(LoadInstance->Level1Stats.GhostLocationArray[i]);
+				}
+
+				for (int i{}; i < LoadInstance->Level1Stats.GhostRotationArray.Num(); i++)
+				{
+					GhostRotationArray.Add(LoadInstance->Level1Stats.GhostRotationArray[i]);
+				}
+			}
+			
 
 			RoundBestTime = LoadInstance->Level1Stats.RoundBest;
 			TotalBestTime = LoadInstance->Level1Stats.TotalBest;

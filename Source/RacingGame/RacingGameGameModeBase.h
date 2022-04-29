@@ -36,6 +36,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = "GameModeVariable")
 	TSubclassOf<class ASpeedBoosterv1> SpeedboostBP;
 
+	UPROPERTY(EditAnywhere, Category = "GameModeVariable")
+	TSubclassOf<class ARacingEnemy> GhostBP;
+	ARacingEnemy* SpawnedGhost;
+
 	TArray<class ACheckpointCollider*> CheckpointArray;
 	ACheckpointCollider* tempCheckpoint;
 
@@ -75,6 +79,25 @@ public:
 	/** Tick Functions */
 
 	void CurrentRoundFunction();
+
+
+
+	/** Ghost Data */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TArray<FVector> LocationArray;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TArray<FRotator> RotationArray;
+
+	float SaveGhostDataTimer = 0.016;
+
+	float SaveGhostDataClock = 0.f;
+
+	float LoadGhostDataTimer = 0.016;
+
+	float LoadGhostDataClock = 0.f;
+
+	int CurrentFrame = 0;
 
 
 	/** Checkpoint Variables*/
@@ -215,6 +238,12 @@ public:
 
 
 	/** Save Data */
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	TArray<FVector> GhostLocationArray;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	TArray<FRotator> GhostRotationArray;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	bool Saved = false;
