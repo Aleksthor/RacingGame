@@ -38,6 +38,8 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "GameModeVariable")
 	TSubclassOf<class ARacingEnemy> GhostBP;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameModeVariable")
 	ARacingEnemy* SpawnedGhost;
 
 	TArray<class ACheckpointCollider*> CheckpointArray;
@@ -98,6 +100,9 @@ public:
 	float LoadGhostDataClock = 0.f;
 
 	int CurrentFrame = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool ShowGhost;
 
 
 	/** Checkpoint Variables*/

@@ -18,6 +18,7 @@ ARacingGameGameModeBase::ARacingGameGameModeBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+	ShowGhost = true;
 
 }
 
@@ -194,10 +195,17 @@ void ARacingGameGameModeBase::BeginPlay()
 			{
 				SpawnedGhost = World->SpawnActor<ARacingEnemy>(GhostBP, GhostLocationArray[0], GhostRotationArray[0]);
 			}
-
+			
+		}
+		else
+		{
+			ShowGhost = true;
 		}
 	}
-
+	if (!ShowGhost)
+	{
+		SpawnedGhost->SetActorHiddenInGame(true);
+	}
 
 
 }
@@ -460,7 +468,7 @@ void ARacingGameGameModeBase::GameWon()
 					UGameplayStatics::PlaySound2D(this, GameWonSound);
 				}
 			}
-			if (TotalPlayerScore > 16000)
+			if (TotalPlayerScore > 15500)
 			{
 				//UE_LOG(LogTemp, Warning, TEXT("Gold Tier Achieved"));
 				GoldMedal = true;
@@ -758,6 +766,9 @@ void ARacingGameGameModeBase::SaveGame()
 		SaveInstance->StatsShooter.SilverMedals = MainMenuShooterSilver;
 		SaveInstance->StatsShooter.GoldMedals = MainMenuShooterGold;
 		SaveInstance->StatsShooter.EpicMedals = MainMenuShooterEpic;
+
+
+		SaveInstance->ShowGhost = ShowGhost;
 	}
 	if (ShooterMode)
 	{
@@ -870,7 +881,7 @@ void ARacingGameGameModeBase::SaveGame()
 			//{
 			//	SaveInstance->Level1Stats.WorldCheckpoint21Best = WorldCheckpoint21;
 			//}
-
+			
 
 
 			if (LocationArray.IsValidIndex(0) && RotationArray.IsValidIndex(0))
@@ -1015,6 +1026,8 @@ void ARacingGameGameModeBase::SaveGame()
 
 			SaveInstance->Level1StatsTimeAttack.WorldCheckpoint20Best = WorldCheckpoint20;
 
+			
+
 			//if (SaveInstance->Level1Stats.WorldCheckpoint21Best > WorldCheckpoint21 || FMath::IsNearlyZero(SaveInstance->Level1Stats.WorldCheckpoint21Best))
 			//{
 			//	SaveInstance->Level1Stats.WorldCheckpoint21Best = WorldCheckpoint21;
@@ -1093,6 +1106,8 @@ void ARacingGameGameModeBase::LoadGame()
 		GameLoaded = true;
 		ShooterMode = LoadInstance->ShooterMode;
 		TimeAttack = LoadInstance->TimeAttack;
+
+		ShowGhost = LoadInstance->ShowGhost;
 
 		MainMenuShooterBronze = LoadInstance->StatsShooter.BronzeMedals;
 		MainMenuShooterSilver = LoadInstance->StatsShooter.SilverMedals;

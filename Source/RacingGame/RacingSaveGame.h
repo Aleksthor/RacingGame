@@ -156,4 +156,7 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = Basic)
 	bool TimeAttack;
 
+	UPROPERTY(VisibleAnywhere, Category = Basic)
+	bool ShowGhost;
+
 };
