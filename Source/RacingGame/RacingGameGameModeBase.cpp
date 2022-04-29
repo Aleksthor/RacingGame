@@ -269,7 +269,7 @@ void ARacingGameGameModeBase::Tick(float DeltaSeconds)
 
 	if (SaveGhostDataClock > SaveGhostDataTimer)
 	{
-		SaveGhostDataClock = 0.f;
+		SaveGhostDataClock -= SaveGhostDataTimer;
 		if (Player)
 		{
 			LocationArray.Add(Player->GetActorLocation());
@@ -279,10 +279,6 @@ void ARacingGameGameModeBase::Tick(float DeltaSeconds)
 			{
 				if (SpawnedGhost)
 				{
-
-				
-
-				
 						
 					if (GhostLocationArray.IsValidIndex(CurrentFrame) && GhostRotationArray.IsValidIndex(CurrentFrame))
 					{
