@@ -678,6 +678,7 @@ void APlayerCar::LoseHealth()
 	{
 		GetWorld()->SpawnActor<AHealthPack>(HealthPackBP, GetActorLocation() - GetActorForwardVector() * 200.f, FRotator(0.f, PlayerMesh->GetComponentRotation().Yaw, 0.f));
 		CanSpawnHealthPack = false;
+		LostHealth = true;
 	}
 	if (Lives > 0)
 	{

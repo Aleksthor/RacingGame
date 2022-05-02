@@ -153,6 +153,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Logic")
 	bool bCanNeverShoot = false;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables | Logic")
+	bool LostHealth = false;
+
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
