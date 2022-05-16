@@ -447,10 +447,28 @@ void ARacingGameGameModeBase::GameWon()
 			// Objectives
 			if (Player)
 			{
-				if (Player->ObjectiveComponent->NoHitRun)
+				// Bee Friendly
+				if (Player->ObjectiveComponent->NoHitRun && Player->ObjectiveComponent->NoBeesHit)
 				{
 					NoHitRun++;
 				}
+
+				// SharpShooter
+				if (TargetArray.Num() > 0)
+				{
+					for (int i{}; i < TargetArray.Num(); i++)
+					{
+						if (!TargetArray[i]->isHit)
+						{
+							BaloonsMissed++;
+						}
+					}
+				}
+				if (BaloonsMissed < 40)
+				{
+					AllBaloonsHit++;
+				}
+				
 			}
 
 
@@ -927,6 +945,7 @@ void ARacingGameGameModeBase::SaveGame()
 			// Objectives
 
 			SaveInstance->Objectives.NoHitRun = NoHitRun;
+			SaveInstance->Objectives.AllBaloonsHit = AllBaloonsHit;
 
 			// Save Game to slot
 			UGameplayStatics::SaveGameToSlot(SaveInstance, TEXT("Player1"), 1);
@@ -1201,7 +1220,7 @@ void ARacingGameGameModeBase::LoadGame()
 			// Objectives
 
 			NoHitRun = LoadInstance->Objectives.NoHitRun;
-			
+			AllBaloonsHit = LoadInstance->Objectives.AllBaloonsHit;
 		}
 		if (Section1BestTime == 0.f)
 		{
@@ -1480,6 +1499,10 @@ void ARacingGameGameModeBase::RespawnItems()
 				TargetArray[i]->SetActorEnableCollision(true);
 				TargetArray[i]->SetActorHiddenInGame(false);
 				TargetArray[i]->isHit = false;
+			}
+			else
+			{
+				BaloonsMissed++;
 			}
 		}
 	}

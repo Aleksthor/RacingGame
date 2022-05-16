@@ -99,6 +99,8 @@ void APlayerCar::BeginPlay()
 	Points = 0;
 
 	ObjectiveComponent->NoHitRun = true;
+	ObjectiveComponent->NoBeesHit = true;
+	ObjectiveComponent->AllBaloonsHit = true;
 
 
 	UKismetSystemLibrary::ExecuteConsoleCommand(GetWorld(), "DisableAllScreenMessages");

@@ -452,6 +452,12 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
 	int NoHitRun;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	int AllBaloonsHit;
+
+	int BaloonsMissed = 0;
+
+
 	/** Functions */
 
 	UFUNCTION()

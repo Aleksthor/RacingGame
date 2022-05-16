@@ -12,6 +12,7 @@
 #include "AIController.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "ObjectiveComponent.h"
 
 // Sets default values
 ABees::ABees()
@@ -167,6 +168,12 @@ void ABees::OnOverlapHealth(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 		SetActorHiddenInGame(true);
 		SetActorEnableCollision(false);
 		bDead = true;
+		
+		APlayerCar* Player = Cast<APlayerCar>(GetWorld()->GetFirstPlayerController()->GetPawn());
+		if (Player)
+		{
+			Player->ObjectiveComponent->NoBeesHit = false;
+		}
 	}
 	
 }

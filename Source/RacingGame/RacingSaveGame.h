@@ -128,6 +128,9 @@ struct FObjectives
 	UPROPERTY(VisibleAnywhere, Category = "SaveGameData")
 	int NoHitRun;
 
+	UPROPERTY(VisibleAnywhere, Category = "SaveGameData")
+	int AllBaloonsHit;
+
 };
 
 /**
