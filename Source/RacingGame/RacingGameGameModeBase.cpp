@@ -464,7 +464,7 @@ void ARacingGameGameModeBase::GameWon()
 						}
 					}
 				}
-				if (BaloonsMissed < 40)
+				if (BaloonsMissed < 20)
 				{
 					AllBaloonsHit++;
 				}
