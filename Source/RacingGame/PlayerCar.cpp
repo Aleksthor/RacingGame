@@ -15,6 +15,7 @@
 #include "Engine/World.h"
 #include "RacingGameGameModeBase.h"
 #include "HealthPack.h"
+#include "ObjectiveComponent.h"
 
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/KismetTextLibrary.h"
@@ -80,6 +81,9 @@ APlayerCar::APlayerCar()
 
 	Cast<UFloatingPawnMovement>(MovementComponent)->MaxSpeed = PlayerMaxSpeed;
 
+
+	ObjectiveComponent = CreateDefaultSubobject<UObjectiveComponent>(TEXT("ObjectiveComponent"));
+
 	Lives = 3;
 	bDead = false;
 	
@@ -93,6 +97,8 @@ void APlayerCar::BeginPlay()
 	Super::BeginPlay();
 	
 	Points = 0;
+
+	ObjectiveComponent->NoHitRun = true;
 
 
 	UKismetSystemLibrary::ExecuteConsoleCommand(GetWorld(), "DisableAllScreenMessages");
@@ -172,6 +178,9 @@ void APlayerCar::Tick(float DeltaTime)
 			TryToShoot = false;
 		}
 	}
+
+
+	
 
 }
 
@@ -682,6 +691,7 @@ void APlayerCar::LoseHealth()
 	}
 	if (Lives > 0)
 	{
+		ObjectiveComponent->NoHitRun = false;
 		Lives--;
 	}
 	

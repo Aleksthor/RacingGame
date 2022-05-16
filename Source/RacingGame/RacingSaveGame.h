@@ -119,6 +119,17 @@ struct FLevelStats
 
 };
 
+
+USTRUCT(BlueprintType)
+struct FObjectives
+{
+	GENERATED_BODY()
+
+	UPROPERTY(VisibleAnywhere, Category = "SaveGameData")
+	int NoHitRun;
+
+};
+
 /**
  * 
  */
@@ -149,6 +160,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, Category = Basic)
 	FMainMenuStats StatsTimeAttack;
+
+	UPROPERTY(VisibleAnywhere, Category = Basic)
+	FObjectives Objectives;
 
 	UPROPERTY(VisibleAnywhere, Category = Basic)
 	bool ShooterMode;

@@ -40,6 +40,9 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	class UPawnMovementComponent* MovementComponent;
 
+	UPROPERTY(VisibleAnywhere)
+	class UObjectiveComponent* ObjectiveComponent;
+
 	/** Hover Components | Line trace by channel and Add Force */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UHoverComponent* HoverComponent1;

@@ -448,6 +448,10 @@ public:
 
 	float ShowDeathClock = 0.f;
 
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GameModeVariable | SaveData")
+	int NoHitRun;
+
 	/** Functions */
 
 	UFUNCTION()

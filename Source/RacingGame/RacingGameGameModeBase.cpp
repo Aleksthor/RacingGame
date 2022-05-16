@@ -10,6 +10,8 @@
 #include "SpeedBoosterv1.h"
 #include "Target.h"
 
+#include "ObjectiveComponent.h"
+
 #include "RacingEnemy.h"
 #include "GameFramework/FloatingPawnMovement.h"
 
@@ -442,6 +444,16 @@ void ARacingGameGameModeBase::GameWon()
 	{
 		if (ShooterMode)
 		{
+			// Objectives
+			if (Player)
+			{
+				if (Player->ObjectiveComponent->NoHitRun)
+				{
+					NoHitRun++;
+				}
+			}
+
+
 			bGameWon = true;
 			SwitchTimer();
 			TotalPlayerScore = (TimeScore * TotalPoints) / 1000;
@@ -912,6 +924,10 @@ void ARacingGameGameModeBase::SaveGame()
 			SaveInstance->TimeAttack = TimeAttack;
 			SaveInstance->ShooterMode = ShooterMode;
 
+			// Objectives
+
+			SaveInstance->Objectives.NoHitRun = NoHitRun;
+
 			// Save Game to slot
 			UGameplayStatics::SaveGameToSlot(SaveInstance, TEXT("Player1"), 1);
 		}
@@ -1182,7 +1198,9 @@ void ARacingGameGameModeBase::LoadGame()
 
 			CurrentLevel = LoadInstance->Level1Stats.LevelName;
 
+			// Objectives
 
+			NoHitRun = LoadInstance->Objectives.NoHitRun;
 			
 		}
 		if (Section1BestTime == 0.f)
