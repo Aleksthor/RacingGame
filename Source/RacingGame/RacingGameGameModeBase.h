@@ -160,7 +160,7 @@ public:
 	FVector SpeedBoost8Vector = FVector(29770.f, 12520.f,14980.f);
 	FRotator SpeedBoost8Rotator = FRotator(0.f, 0.f, 0.f);
 
-	FVector SpeedBoost9Vector = FVector(1590.f, 980.f, 21580.f); 
+	FVector SpeedBoost9Vector = FVector(1590.f, 980.f, 21300.f); 
 	FRotator SpeedBoost9Rotator = FRotator(0.f, 0.f, 0.f);
 
 	FVector SpeedBoost10Vector = FVector(13570.f, 6300.f, 13100.f);

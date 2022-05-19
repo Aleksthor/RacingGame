@@ -509,7 +509,7 @@ void ARacingGameGameModeBase::GameWon()
 					UGameplayStatics::PlaySound2D(this, GameWonGoldSound);
 				}
 			}
-			if (TotalPlayerScore > 22000)
+			if (TotalPlayerScore > 20000)
 			{
 				UE_LOG(LogTemp, Warning, TEXT("Epic Tier Achieved"));
 				EpicMedal = true;

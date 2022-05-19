@@ -52,6 +52,8 @@ APlayerCar::APlayerCar()
 	SpringArm->SetupAttachment(Collider);
 	SpringArm->bDoCollisionTest = false;
 	SpringArm->SetRelativeRotation(FRotator(-15.f, 0.f, 0.f));
+	SpringArm->bEnableCameraLag = true;
+	SpringArm->CameraLagSpeed = 15.f;
 	
 
 	/** Movement Component Default Values*/
