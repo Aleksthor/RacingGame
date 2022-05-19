@@ -914,16 +914,37 @@ void ARacingGameGameModeBase::SaveGame()
 			
 
 
-			if (LocationArray.IsValidIndex(0) && RotationArray.IsValidIndex(0))
+			if (TotalTime < TotalBestTime || TotalBestTime == 0.f)
 			{
-				for (int i{}; i < LocationArray.Num(); i++)
-				{
-					SaveInstance->Level1Stats.GhostLocationArray.Add(LocationArray[i]);
-				}
 
-				for (int i{}; i < RotationArray.Num(); i++)
+				if (LocationArray.IsValidIndex(0) && RotationArray.IsValidIndex(0))
 				{
-					SaveInstance->Level1Stats.GhostRotationArray.Add(RotationArray[i]);
+
+					for (int i{}; i < LocationArray.Num(); i++)
+					{
+						SaveInstance->Level1Stats.GhostLocationArray.Add(LocationArray[i]);
+					}
+
+					for (int i{}; i < RotationArray.Num(); i++)
+					{
+						SaveInstance->Level1Stats.GhostRotationArray.Add(RotationArray[i]);
+					}
+				}
+			}
+			else
+			{
+				if (GhostLocationArray.IsValidIndex(0) && GhostRotationArray.IsValidIndex(0))
+				{
+
+					for (int i{}; i < GhostLocationArray.Num(); i++)
+					{
+						SaveInstance->Level1Stats.GhostLocationArray.Add(GhostLocationArray[i]);
+					}
+
+					for (int i{}; i < GhostRotationArray.Num(); i++)
+					{
+						SaveInstance->Level1Stats.GhostRotationArray.Add(GhostRotationArray[i]);
+					}
 				}
 			}
 
